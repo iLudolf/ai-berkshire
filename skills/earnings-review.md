@@ -2,7 +2,7 @@
 
 Perform an earnings deep read analysis on $ARGUMENTS.
 
-**Supported input formats**: `Company Quarter`, e.g.: `Tencent 2025Q4`, `PDD FY2025`, `Meituan latest` (defaults to most recent period)
+**Supported input formats**: `Company Quarter`, e.g.: `PETR4 2025Q4`, `VALE3 FY2025`, `MXRF11 latest`, `ITUB4 2025Q3` (defaults to most recent period)
 
 > "I never read sell-side research. I only read the original filings." — Li Lu
 >
@@ -33,12 +33,23 @@ This Skill reads primary sources directly, focusing on what Buffett and Li Lu ac
 
 Use the Task tool to launch multiple background Agents **in parallel** to retrieve the following original materials:
 
-1. **Original financial report**: Obtain from the company's IR page, SEC EDGAR (US stocks 10-K/10-Q), HKEX Disclosure Easy (HK stocks), CNINFO (A-shares)
-2. **Earnings call transcript / recording**: Obtain from Seeking Alpha, company IR page, Xueqiu, etc.
-3. **Management letter to shareholders** (if annual report): Read in full
-4. **Investor Day / Analyst Day materials** (if recent)
+**For Brazilian equities (B3):**
+1. **DFP** (Demonstrações Financeiras Padronizadas) — annual report filed with CVM; obtain from cvmweb.cvm.gov.br or the company's RI (Relações com Investidores) page
+2. **ITR** (Informações Trimestrais) — quarterly report filed with CVM; same sources
+3. **Release de Resultados** — earnings press release, typically PDF on the RI page
+4. **Teleconferência de Resultados** (earnings call): transcript or audio from the company's RI page; some companies post on YouTube or publish a transcript
+5. **Carta aos Acionistas** (shareholder letter, if annual): read in full
 
-If the full original text cannot be obtained, piece together from standard data sources per `skills/financial-data.md` (US stocks: macrotrends + stockanalysis; HK stocks: aastocks + macrotrends; A-shares: East Money + CNINFO), but must label "not original filing, sourced from third-party aggregator," and flag key data points where two sources diverge by >1%.
+**For FIIs:**
+1. **Informe Mensal** (monthly CVM filing) — most critical primary source; cvmweb.cvm.gov.br → Fundos → Informes Mensais
+2. **Relatório Gerencial** — monthly management report published by the fund manager (PDF on fund's website or FundsExplorer)
+3. **Fato Relevante** — material fact disclosure (extraordinary events); cvmweb.cvm.gov.br
+
+**For US stocks:**
+1. **10-K / 10-Q**: SEC EDGAR (sec.gov/cgi-bin/browse-edgar)
+2. **Earnings call transcript**: Seeking Alpha or company IR page
+
+If the full original text cannot be obtained, piece together from standard data sources per `skills/financial-data.md` (B3 stocks: Fundamentus + Status Invest; FIIs: FundsExplorer + CVM Informe Mensal; US stocks: Macrotrends + Stock Analysis), but must label "not original filing, sourced from third-party aggregator," and flag key data points where two sources diverge by >1%.
 
 ### Step 2: Core Financial Data Extraction and Validation
 
@@ -188,7 +199,7 @@ VII. Conclusion: What Did This Earnings Report Change?
 
 ### Step 7: Save the Report
 
-Write the report to `reports/{CompanyName}-earnings-{Period}.md`, e.g. `reports/Tencent-earnings-2025Q4.md`
+Write the report to `reports/{CompanyName}/{CompanyName}-earnings-{Period}.md`, e.g. `reports/Petrobras/Petrobras-earnings-2025Q4.md` or `reports/MXRF11/MXRF11-results-2025-06.md`
 
 ### Step 8: Data Spot-Check (Release Gate)
 

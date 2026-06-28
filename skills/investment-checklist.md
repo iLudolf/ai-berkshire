@@ -2,7 +2,7 @@
 
 Run a Buffett value investing pre-purchase Checklist analysis on $ARGUMENTS.
 
-**Supported input formats**: Single or multiple companies, separated by commas / Chinese enumeration marks / spaces. Example: `Tencent, Moutai, Nvidia` or `NVDA AAPL MSFT`
+**Supported input formats**: Single or multiple companies/tickers, separated by commas or spaces. Example: `PETR4, VALE3, ITUB4` or `WEGE3 ABEV3 RENT3` or `MXRF11, KNRI11`
 
 ## Execution Flow
 
@@ -54,7 +54,7 @@ Must answer:
 - [ ] Is your understanding of this industry based on deep research or hearsay?
 
 **Scoring criteria** (★1–5):
-- ★★★★★: Business model is extremely simple and clear; 10-year certainty is high (e.g., Moutai: brew and sell liquor)
+- ★★★★★: Business model is extremely simple and clear; 10-year certainty is high (e.g., Ambev: brew and sell beer; Itaú: lend money and earn spread; Transmissão Paulista: collect regulated tariff on power lines)
 - ★★★★☆: Model is clear but has a technical threshold; requires some domain knowledge to understand
 - ★★★☆☆: Model is understandable but 10-year certainty is low; industry changes fast
 - ★★☆☆☆: Business lines are complex or the industry is in upheaval; future is hard to predict
@@ -220,7 +220,7 @@ Give a clear conclusion for each company (no hedging):
 - ❓ **Gray Area** — State what the key point of contention is and what the investor needs to judge for themselves
 - N/A — Not listed / cannot be purchased
 
-Write the complete report to `~/Buffett-Checklist-[company name or "multi-company-comparison"].md`
+Write the complete report to `reports/{CompanyName}/{CompanyName}-checklist-{YYYYMMDD}.md` (or `reports/multi-company-checklist-{YYYYMMDD}.md` for comparisons)
 
 ## Output Format Requirements
 
