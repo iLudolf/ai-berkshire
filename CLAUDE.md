@@ -3,7 +3,8 @@
 ## Project Overview
 
 A collection of Value Investment Research Skills built on Claude Code. Four Masters framework: Buffett, Munger, Duan Yongping, Li Lu.
-GitHub: xbtlin/ai-berkshire
+**Focus: Brazilian equities (B3) and FIIs (Fundos de Investimento Imobiliário / Brazilian REITs).**
+GitHub: iLudolf/ai-berkshire
 
 ## Project Structure
 
@@ -20,38 +21,33 @@ All reports are organized by **company name** in individual folders:
 
 ```
 reports/
-├── AI-Industry-Research/        — AI industry chain panoramic research (pinned)
-│   ├── AI-Five-Layer-Cake-Industry-Research-20260605.md
-│   └── AI-Five-Layer-Cake-WeChat-20260605.md
-├── Tencent/                     — All Tencent research reports
-│   ├── Tencent-research-20260408.md
-│   ├── Tencent-earnings-2025Q4.md
-│   ├── Tencent-management-20260409.md
-│   └── Tencent-thesis.md
-├── Pinduoduo/                   — All Pinduoduo research reports
-├── PopMart/                     — All Pop Mart research reports
-├── nuclear-power-industry-20260409.md   — Industry reports go in root
-├── AI-compute-funnel-20260509.md        — Funnel screening reports go in root
-├── AI-rotation-decision-20260509.md     — Theme-level synthesis reports go in root
-├── portfolio-latest.md                  — Portfolio report goes in root
-└── multi-company-checklist-20260408.md  — Multi-company reports go in root
+├── Petrobras/                   — All Petrobras (PETR4) research reports
+│   ├── Petrobras-research-20260701.md
+│   ├── Petrobras-earnings-2025Q4.md
+│   └── Petrobras-thesis.md
+├── Vale/                        — All Vale (VALE3) research reports
+├── MXRF11/                      — All MXRF11 FII research reports
+├── real-estate-fii-industry-20260701.md  — Industry reports go in root
+├── b3-quality-funnel-20260701.md         — Funnel screening reports go in root
+├── portfolio-latest.md                   — Portfolio report goes in root
+└── multi-company-checklist-20260701.md   — Multi-company reports go in root
 ```
 
 ## Report Naming Conventions
 
 | Skill | File Naming Format | Example |
 |-------|-------------------|---------|
-| /investment-team | `{company}/` folder with 4 perspectives + final report | `reports/Pinduoduo/final-report.md` |
-| /investment-research | `{company}-research-{YYYYMMDD}.md` | `reports/Tencent/Tencent-research-20260408.md` |
-| /investment-checklist | `{company}-checklist-{YYYYMMDD}.md` | `reports/Tencent/Tencent-checklist-20260408.md` |
-| /industry-research | `{industry}-industry-{YYYYMMDD}.md` (root) | `reports/nuclear-power-industry-20260409.md` |
-| /industry-funnel | `{industry}-funnel-{YYYYMMDD}.md` (root) | `reports/AI-compute-funnel-20260509.md` |
-| /private-company-research | `{company}-private-{YYYYMMDD}.md` | `reports/ByteDance/ByteDance-private-20260408.md` |
-| /earnings-review | `{company}-earnings-{period}.md` | `reports/Tencent/Tencent-earnings-2025Q4.md` |
-| /earnings-team | `{company}/` folder with 4 master perspectives + research draft + WeChat article + reader review | `reports/Tencent/Tencent-earnings-2025Q4.md` (final WeChat version) |
-| /thesis-tracker | `{company}-thesis.md` (long-term maintenance) | `reports/Tencent/Tencent-thesis.md` |
+| /investment-team | `{company}/` folder with 4 perspectives + final report | `reports/Vale/final-report.md` |
+| /investment-research | `{company}-research-{YYYYMMDD}.md` | `reports/Petrobras/Petrobras-research-20260701.md` |
+| /investment-checklist | `{company}-checklist-{YYYYMMDD}.md` | `reports/Itau/Itau-checklist-20260701.md` |
+| /industry-research | `{industry}-industry-{YYYYMMDD}.md` (root) | `reports/real-estate-fii-industry-20260701.md` |
+| /industry-funnel | `{industry}-funnel-{YYYYMMDD}.md` (root) | `reports/b3-quality-funnel-20260701.md` |
+| /private-company-research | `{company}-private-{YYYYMMDD}.md` | `reports/NuBank/NuBank-private-20260701.md` |
+| /earnings-review | `{company}-earnings-{period}.md` | `reports/Petrobras/Petrobras-earnings-2025Q4.md` |
+| /earnings-team | `{company}/` folder with 4 master perspectives + research draft + final article | `reports/Vale/Vale-earnings-2025Q4.md` |
+| /thesis-tracker | `{company}-thesis.md` (long-term maintenance) | `reports/Petrobras/Petrobras-thesis.md` |
 | /portfolio-review | `portfolio-latest.md` (root, continuously updated) | `reports/portfolio-latest.md` |
-| /management-deep-dive | `{company}-management-{YYYYMMDD}.md` | `reports/Tencent/Tencent-management-20260409.md` |
+| /management-deep-dive | `{company}-management-{YYYYMMDD}.md` | `reports/Ambev/Ambev-management-20260701.md` |
 
 ## /investment-team File Structure
 
@@ -106,6 +102,6 @@ git push origin main
 ## Important Notes
 
 - Market cap must be manually verified: share price × total shares, compare with reported market cap
-- Currency units must be explicit (HKD / CNY / USD) to prevent confusion
+- Currency units must be explicit (BRL / USD) to prevent confusion; FII distributions are always in BRL
 - PE/ROE and similar metrics must be calculated precisely using tools/financial_rigor.py
 - After finishing a report, proactively ask whether to push to GitHub

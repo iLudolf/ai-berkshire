@@ -6,28 +6,61 @@ This standard applies to all research involving company financial data. **Every 
 
 ## Data Source Priority
 
-### US Stocks (PDD, Tencent ADR, NetEase ADR, etc.)
+### Brazilian Equities — B3 (e.g., PETR4, VALE3, ITUB4, ABEV3, WEGE3)
+
+| Priority | Source | URL | Access |
+|----------|--------|-----|--------|
+| 1 (Primary) | **Fundamentus** | fundamentus.com.br/detalhes.php?papel={ticker} | Direct, no login |
+| 2 (Secondary) | **Status Invest** | statusinvest.com.br/acoes/{ticker} | Direct, no login |
+| Official filings | **CVM** | cvmweb.cvm.gov.br (DFP / ITR / FRE forms) | Free, searchable |
+| Official exchange | **B3** | b3.com.br/pt_br/produtos-e-servicos/negociacao/renda-variavel | Direct |
+| Investor relations | **Company RI** | ri.{company}.com.br | Annual reports, earnings releases |
+
+**Key metrics for B3 equities**: P/L (PE), P/VPA (P/B), ROE, Dividend Yield, Dívida Líquida/EBITDA, Margem Líquida, CAGR Receita 5 anos
+
+### FIIs — Fundos de Investimento Imobiliário (e.g., MXRF11, KNRI11, HGLG11, BCFF11)
+
+| Priority | Source | URL | Access |
+|----------|--------|-----|--------|
+| 1 (Primary) | **FundsExplorer** | fundsexplorer.com.br/funds/{ticker} | Direct, no login |
+| 2 (Secondary) | **Status Invest** | statusinvest.com.br/fundos-imobiliarios/{ticker} | Direct, no login |
+| 3 (Supporting) | **Investidor10** | investidor10.com.br/fiis/{ticker} | Direct, no login |
+| Official filings | **CVM — Informe Mensal** | cvmweb.cvm.gov.br → Fundos → Informes Mensais | Free, standardized |
+| Fund reports | **Relatório Gerencial** | Fund manager's official monthly report (PDF) | Fund website |
+
+**Key FII metrics**:
+| Metric | Description |
+|--------|-------------|
+| DY (Dividend Yield) | Monthly distribution ÷ current price × 12 (annualized) |
+| P/VP | Price ÷ Net Asset Value per share (< 1 = discount to book) |
+| Vacância Física | % of physical area unoccupied |
+| Vacância Financeira | % of potential revenue lost to vacancies |
+| Taxa de Gestão | Annual management fee (% of AUM) |
+| Taxa de Administração | Annual administration fee |
+| Liquidez Diária | Average daily trading volume (BRL) |
+| Tipo | Papel (CRI/CRA), Tijolo (physical real estate), Híbrido, FOF |
+
+**FII types — key differences**:
+- **Tijolo**: Physical assets (logistics, office, retail malls, hospitals). Revenue = rent. Analyze vacancy + lease renewals.
+- **Papel**: Invests in CRIs/CRAs (real estate receivables). Revenue = interest. Analyze credit risk + CDI/IPCA indexation.
+- **Híbrido**: Mix of tijolo and papel.
+- **FOF (Fund of Funds)**: Invests in other FIIs. Analyze portfolio composition + management quality.
+
+### US Stocks (e.g., Berkshire, Visa, Apple)
 
 | Priority | Source | URL | Access |
 |----------|--------|-----|--------|
 | 1 (Primary) | **Macrotrends** | macrotrends.net/stocks/charts/{ticker} | Direct, no login |
 | 2 (Secondary) | **Stock Analysis** | stockanalysis.com/stocks/{ticker}/financials | Direct, no login |
-| Primary source | SEC EDGAR | sec.gov/cgi-bin/browse-edgar | 10-K / 10-Q originals |
+| Official filings | **SEC EDGAR** | sec.gov/cgi-bin/browse-edgar | 10-K / 10-Q originals |
 
-### Hong Kong Stocks (Tencent 0700, NetEase 9999, Meituan 3690, etc.)
-
-| Priority | Source | URL | Access |
-|----------|--------|-----|--------|
-| 1 (Primary) | **AAStocks** | aastocks.com/tc/stocks/analysis/company-fundamental | Direct |
-| 2 (Secondary) | **Macrotrends** (ADR ticker) | Tencent → TCEHY; NetEase → NTES | Direct |
-| Primary source | HKEX Disclosure Easy | hkexnews.hk | Annual report PDFs |
-
-### China A-Shares (e.g., 37Games, GigaMedia, etc.)
+### BDRs — Brazilian Depositary Receipts (US/global stocks traded on B3)
 
 | Priority | Source | URL | Access |
 |----------|--------|-----|--------|
-| 1 (Primary) | **Eastmoney** | finance.eastmoney.com → search ticker → financials | Direct |
-| 2 (Secondary) | **CNINFO** | cninfo.com.cn | Official annual/quarterly report PDFs |
+| 1 (Primary) | **Status Invest** | statusinvest.com.br/bdrs/{ticker} | Direct |
+| 2 (Secondary) | **Fundamentus** (BDR section) | fundamentus.com.br/detalhes.php?papel={ticker} | Direct |
+| Underlying stock | Use US stock sources above for the underlying company's financials | | |
 
 ---
 
@@ -36,6 +69,8 @@ This standard applies to all research involving company financial data. **Every 
 ### Step 1: Fetch Data
 
 For each financial metric (revenue, net income, gross margin, operating cash flow, debt ratio, etc.), pull figures separately from **Source 1** and **Source 2**.
+
+For FIIs, additionally verify the **CVM Informe Mensal** as the authoritative official source.
 
 ### Step 2: Calculate and Flag Deviations
 
@@ -46,47 +81,49 @@ Deviation = |Source 1 value − Source 2 value| / Source 1 value × 100%
 | Deviation | Action |
 |-----------|--------|
 | ≤ 1% | ✅ Consistent — use Source 1 value, cite both sources |
-| 1%–5% | ⚠️ Flag as "data discrepancy" — show both values, note likely cause (FX / accounting scope) |
-| > 5% | ❌ Flag as "material data discrepancy" — must verify against original filing before use |
+| 1%–5% | ⚠️ Flag as "data discrepancy" — show both values, note likely cause |
+| > 5% | ❌ Flag as "material data discrepancy" — must verify against official filing before use |
 
 ### Step 3: Data Presentation Format
 
 Every key data point must be annotated in the following format:
 
 ```
-Revenue: $12.39B ✅
-  - Macrotrends: $12.41B
-  - Stock Analysis: $12.37B
-  - Deviation: 0.3%
+Receita Líquida 2024: R$ 539.2B ✅
+  - Fundamentus: R$ 539.2B
+  - Status Invest: R$ 539.1B
+  - Deviation: 0.02%
 ```
 
 Discrepancy example:
 ```
-Net income: $2.45B ⚠️ Data discrepancy
-  - Macrotrends: $2.45B (GAAP)
-  - Stock Analysis: $2.78B (Non-GAAP)
-  - Deviation: 13.5% — Reason: different accounting scope (GAAP vs. Non-GAAP)
+DY MXRF11 (12M): 14.2% ⚠️ Data discrepancy
+  - FundsExplorer: 14.2% (trailing 12 months)
+  - Status Invest: 13.8% (different calculation window)
+  - Reason: different trailing period definition
 ```
 
 ---
 
-## Common Reasons for Discrepancies (not necessarily data errors)
+## Brazilian Market — Special Considerations
 
-| Reason | Explanation |
-|--------|-------------|
-| GAAP vs. Non-GAAP | Most common, especially for earnings metrics |
-| Currency conversion | Different FX rates or conversion dates for HKD/CNY/USD |
-| Fiscal year definition | Calendar year vs. fiscal year (e.g., Apple's fiscal year ends in October) |
-| Consolidation scope | Whether minority interests are included |
-| Data update lag | A platform hasn't yet updated for the latest report period |
+| Issue | Explanation |
+|-------|-------------|
+| IPCA indexation | Many FII CRIs and debentures are indexed to IPCA — distinguish nominal vs. real yield |
+| CDI spread | Papel FIIs often quoted as CDI + X%; verify current CDI rate (≈ Selic - 0.1%) |
+| Selic sensitivity | Rising Selic compresses FII P/VP and competes with DY as risk-free alternative |
+| JCP (Juros sobre Capital Próprio) | Brazilian tax-efficient dividend substitute — counts as deductible expense for companies |
+| IR isento | FII distributions to individuals are tax-exempt if fund has 50+ shareholders and is listed on B3 |
+| Fiscal year | Brazilian companies report by calendar year (Jan–Dec); quarterly ITRs in Mar/Jun/Sep/Dec |
 
 ---
 
 ## Special Rules
 
-1. **Private companies** (e.g., miHoYo, Lilith Games): When only one primary data source is available, mark data as `[Est.]` and do not execute cross-validation
-2. **Quarterly vs. annual data**: Prefer annual data for cross-validation; some sources may lag on quarterly data
-3. **Primary filing takes precedence**: If both sources conflict with the original filing (10-K / annual report PDF), use the original filing and flag the source as incorrect
+1. **FII Informe Mensal is authoritative**: For FII metrics (DY, vacancy, AUM), the CVM Informe Mensal beats any aggregator — use it to cross-check if sources disagree > 5%
+2. **Quarterly vs. annual data**: Prefer annual DFP for cross-validation; ITRs (quarterly) may be restated
+3. **Private companies** (e.g., pre-IPO Brazilian startups): When only one source is available, mark data as `[Est.]` and do not execute cross-validation
+4. **Official filing takes precedence**: If both sources conflict with the DFP/ITR/FRE filing, use the filing and flag the source as incorrect
 
 ---
 
@@ -94,9 +131,11 @@ Net income: $2.45B ⚠️ Data discrepancy
 
 | Scenario | Primary Source | Backup Source |
 |----------|---------------|--------------|
-| PDD / Pinduoduo | macrotrends.net/stocks/charts/PDD | stockanalysis.com/stocks/pdd |
-| Tencent | macrotrends.net/stocks/charts/TCEHY | aastocks (0700.HK) |
-| NetEase | macrotrends.net/stocks/charts/NTES | aastocks (9999.HK) |
-| A-share company | finance.eastmoney.com ({ticker}) | cninfo.com.cn |
-| Nintendo | macrotrends.net/stocks/charts/NTDOY | stockanalysis.com/stocks/ntdoy |
-| Capcom | macrotrends (CCOEY) | stockanalysis (CCOEY) |
+| B3 equity (PETR4, VALE3, WEGE3) | fundamentus.com.br | statusinvest.com.br/acoes |
+| B3 equity (ITUB4, BBDC4 banks) | fundamentus.com.br | statusinvest.com.br/acoes |
+| FII — Tijolo (HGLG11, XPML11) | fundsexplorer.com.br | statusinvest.com.br/fundos-imobiliarios |
+| FII — Papel (MXRF11, KNCR11) | fundsexplorer.com.br | investidor10.com.br/fiis |
+| FII — FOF (BCFF11, RBFF11) | fundsexplorer.com.br | statusinvest.com.br/fundos-imobiliarios |
+| Official filing (any B3 asset) | cvmweb.cvm.gov.br | ri.{company}.com.br |
+| BDR (AAPL34, MSFT34) | statusinvest.com.br/bdrs | fundamentus.com.br |
+| US equity (Berkshire, Visa) | macrotrends.net/stocks/charts/{ticker} | stockanalysis.com/stocks/{ticker} |

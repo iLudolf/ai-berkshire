@@ -35,9 +35,9 @@ Include the information richness rating at the start of the report; at the end, 
 ### Step 1: Data Collection
 
 > **Data source protocol**: See `skills/financial-data.md`. All financial data must come from two independent sources; deviations > 1% must be flagged.
+> - Brazilian equities (B3): Fundamentus (primary) + Status Invest (secondary)
+> - FIIs: FundsExplorer (primary) + Status Invest (secondary); CVM Informe Mensal as official reference
 > - US stocks: Macrotrends (primary) + Stock Analysis (secondary)
-> - HK stocks: AAStocks (primary) + Macrotrends ADR (secondary)
-> - A-shares: Eastmoney (primary) + CNINFO (secondary)
 
 Launch a background agent via the Task tool to collect the following data from the web:
 
@@ -221,7 +221,7 @@ Outputs a JSON template; each item contains `fetched_value` (to be filled in).
 
 **Step 2 — Verify each data point**:
 For each data point in the checklist, retrieve values from reliable sources per `skills/financial-data.md`
-(US stocks: Macrotrends + Stock Analysis; HK stocks: AAStocks + Macrotrends; A-shares: Eastmoney + CNINFO),
+(Brazilian equities: Fundamentus + Status Invest; FIIs: FundsExplorer + CVM Informe Mensal; US stocks: Macrotrends + Stock Analysis),
 fill in `fetched_value` / `fetched_source` / `fetched_value2` / `fetched_source2`.
 
 **Step 3 — Output verdict**:
