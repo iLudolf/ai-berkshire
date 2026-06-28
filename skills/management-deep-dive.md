@@ -2,7 +2,7 @@
 
 Conduct a deep management research on $ARGUMENTS.
 
-**Supported input formats**: `company name` or `person name company name`, e.g.: `Meituan`, `Wang Xing Meituan`, `Jensen Huang Nvidia`
+**Supported input formats**: `company name` or `person name company name`, e.g.: `Weg`, `Décio da Silva Weg`, `Roberto Campos Neto`
 
 > "Buying stocks means buying people. Find people you trust, then hold for the long term." — Duan Yongping
 >
@@ -34,7 +34,7 @@ Use WebSearch to confirm the following key individuals:
 | Actual controller (if different from CEO) | | | | |
 | Other key executives | | | | |
 
-**Note**: Distinguish "who makes decisions" from "whose name is on the title." At some companies, the founder remains the soul of the business even after stepping down (e.g., Colin Huang at Pinduoduo).
+**Note**: Distinguish "who makes decisions" from "whose name is on the title." At some companies, the founder remains the soul of the business even after stepping down (e.g., Jorge Paulo Lemann at 3G Capital / Ambev, or the Da Silva family influence at Weg).
 
 After confirming key individuals, use the Task tool to launch multiple background Agents to **concurrently** collect the following data:
 1. Agent 1: CEO public statements and forecast record (shareholder letters, earnings calls, interviews, social media)
@@ -164,7 +164,7 @@ Use `tools/financial_rigor.py verify-valuation` to verify PE and other valuation
 |------|---------|----------------|
 | Dual-class shares / super-voting rights? | | |
 | Founder / controlling shareholder ownership %? | | |
-| VIE structure in place? | | |
+| Tag-along rights (tag along) in place for minority shareholders? | | |
 | Are independent directors truly independent? | | |
 | Recent insider buying/selling by major shareholders? | | |
 
@@ -186,7 +186,7 @@ AI cannot interact face-to-face with management, but can validate through public
 
 #### 6.1 Employee Perspective
 
-Search for **publicly searchable** employee reviews such as Glassdoor rating summaries, Zhihu discussions, etc. (platforms requiring login, such as Maimai, should be annotated as "user can supplement"):
+Search for **publicly searchable** employee reviews such as Glassdoor rating summaries, LinkedIn discussions, Vagas.com.br reviews, or Reclame Aqui employer mentions (platforms requiring login should be annotated as "user can supplement"):
 
 | Dimension | Rating Trend | Key Feedback |
 |-----------|-------------|--------------|
@@ -269,7 +269,7 @@ VI.  Overall Score and Conclusion
 
 ### Step 9: Save Report
 
-Write the report to `reports/{company-name}-management-{YYYYMMDD}.md`, e.g. `reports/Meituan-management-20260409.md`
+Write the report to `reports/{company-name}-management-{YYYYMMDD}.md`, e.g. `reports/Weg/Weg-management-20260409.md` or `reports/Petrobras/Petrobras-management-20260409.md`
 
 ---
 

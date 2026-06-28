@@ -167,7 +167,7 @@ Search methods:
 
 | Criterion | Requirement | Rationale |
 |-----------|-------------|-----------|
-| Listing status | Already listed (A-share / HK / US / Japan / Taiwan / Europe) | Tradable |
+| Listing status | Already listed (B3 / US / Europe / Japan / Taiwan) | Tradable |
 | Bottleneck revenue exposure | >30% of revenue from the bottleneck segment | Purity |
 | Market cap | Prefer <$10B | Large caps already fully priced |
 | Liquidity | Average daily trading volume >$1M | Can enter and exit |
@@ -357,7 +357,7 @@ Run once per hour using a "report only when there's something worth reporting" a
 
 1. **News scan**: Search supply chain-related news from the past 1–2 hours
    - Keywords: supply chain bottleneck, shortage, capacity constraint, allocation, lead time, sole source, bottleneck, out of stock, capacity, price increase
-   - Coverage: English + Chinese sources
+   - Coverage: English + Portuguese sources
 2. **Market signals**: Check price movements of tracked companies (pay special attention to abnormal moves >5%)
 3. **Earnings / announcements**: Check whether any bottleneck-related companies have released earnings or major announcements
 4. **Valuation opportunities**: Check whether watchlist companies have entered buy zones due to broad market declines or other reasons
@@ -439,7 +439,7 @@ No changes / Changes (list them)
 | Bias | Manifestation | Countermeasure |
 |------|---------------|----------------|
 | Large-cap preference | Search results dominated by large-cap companies | Deliberately search small-cap suppliers; add "small cap" keyword |
-| English-language bias | Missing Japanese, Korean, and Taiwanese companies | Must search suppliers in Japan / Korea / Taiwan markets |
+| Portuguese-language bias | Missing Brazilian and Latin American companies | Must search suppliers on B3 and in Brazilian trade press (Valor Econômico, InfoMoney, Broadcast) |
 | Narrative bias | Attracted by "AI concept" labels | Look only at actual supply chain position, ignore market labels |
 | Confirmation bias | Only seeking positive evidence after finding a bottleneck | Enforce reverse validation (Step 5) |
 | Recency bias | Relying on outdated information | Prioritize data from the past 30 days |

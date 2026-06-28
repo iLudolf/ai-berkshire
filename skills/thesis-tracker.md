@@ -35,7 +35,7 @@ Check whether an investment thesis file already exists for this company (`report
 
 ### A0: Data Collection
 
-Use WebSearch to obtain current price, valuation metrics (PE/PB/dividend yield), and core data from the latest earnings. Use this to fill in the valuation anchor. If an existing `/investment-research` or `/investment-team` report exists for this company, read that first.
+Use WebSearch to obtain current price, valuation metrics (P/L, P/VPA, DY), and core data from the latest results. Primary sources: Fundamentus (equities), FundsExplorer or Status Invest (FIIs), and CVM filings (DFP for annual, ITR for quarterly, Informe Mensal for FIIs). If an existing `/investment-research` or `/investment-team` report exists for this company, read that first.
 
 Use `tools/financial_rigor.py verify-valuation` to validate the valuation data.
 
@@ -48,7 +48,7 @@ I bought {company} at {price} per share because:
 1. The essence of this business is {___}, and I understand how it makes money.
 2. Its economic moat is {___}, and it is widening / stable.
 3. Management {___}; the reason they are trustworthy is {___}.
-4. The current price represents {___} discount to intrinsic value; the margin of safety comes from {___}.
+4. The current price represents {___} discount to intrinsic value; the margin of safety comes from {___}; the expected return justifies the risk versus the Selic/CDI risk-free rate (~14.75%).
 5. Even if I'm wrong, the downside is manageable because {___}.
 ```
 
@@ -60,11 +60,13 @@ Break the investment thesis down into specific, verifiable assumptions:
 
 | # | Core Assumption | Verification Method | Check Frequency | Current Status |
 |---|----------------|--------------------|--------------------|----------------|
-| 1 | E.g.: Revenue growth stays at 15%+ | Quarterly revenue growth | Every quarter | 🟢 Valid |
-| 2 | E.g.: Gross margin stable at 60%+ | Quarterly gross margin | Every quarter | 🟢 Valid |
-| 3 | E.g.: Management continues buybacks | Buyback announcements / cash flow statement | Every quarter | 🟢 Valid |
-| 4 | E.g.: No competitor breakthrough | Industry data / competitor earnings | Every 6 months | 🟢 Valid |
-| 5 | ... | ... | ... | ... |
+| 1 | E.g. (equity): Receita líquida grows 15%+ | ITR quarterly revenue (CVM filing) | Every quarter | 🟢 Valid |
+| 2 | E.g. (equity): Gross margin stable at 40%+ | ITR quarterly gross margin | Every quarter | 🟢 Valid |
+| 3 | E.g. (equity): Management continues buybacks (recompra de ações) | Buyback announcements / cash flow statement | Every quarter | 🟢 Valid |
+| 4 | E.g. (FII): DY stays above CDI + 3% | Informe Mensal / FundsExplorer | Every month | 🟢 Valid |
+| 5 | E.g. (FII): Vacância física below 10% | Relatório Gerencial | Every quarter | 🟢 Valid |
+| 6 | E.g.: No competitor breakthrough | Industry data / competitor results releases | Every 6 months | 🟢 Valid |
+| 7 | ... | ... | ... | ... |
 
 Typically 3–7 assumptions. Too few means insufficient thinking; too many means the thesis isn't focused enough.
 
@@ -84,10 +86,12 @@ Typically 3–7 assumptions. Too few means insufficient thinking; too many means
 
 | Metric | At Time of Purchase | Optimistic Target | Neutral Target | Pessimistic Scenario |
 |--------|--------------------|--------------------|----------------|---------------------|
-| Stock price | | | | |
-| PE | | | | |
-| Market cap | | | | |
-| Intrinsic value estimate | | | | |
+| Stock price (R$) | | | | |
+| P/L — equities | | | | |
+| P/VPA — equities or FIIs | | | | |
+| DY (12M) — equities or FIIs | | | | |
+| Market cap (R$ bi) | | | | |
+| Intrinsic value estimate (R$) | | | | |
 | Margin of safety | | | | |
 
 ### A5: Save the Thesis
@@ -116,10 +120,10 @@ Read `reports/{company-name}-thesis.md` and load:
 ### B2: Collect Latest Data
 
 Use WebSearch to collect:
-1. Latest earnings data (if a new quarterly/annual report is available)
-2. Recent major events (management changes, regulatory policy, competitive dynamics)
-3. Current price and valuation metrics
-4. Insider trading record (major shareholders buying/selling)
+1. Latest results data: Release de Resultados (equities) or Relatório Gerencial (FIIs); check ITR/DFP on CVM or company RI page for equities, Informe Mensal on CVM for FIIs
+2. Recent major events (management changes, CVM regulatory policy, competitive dynamics, Selic rate changes)
+3. Current price and valuation metrics from Fundamentus (equities) or FundsExplorer / Status Invest (FIIs)
+4. Insider trading record (major shareholders buying/selling via CVM sistema de participações)
 
 ### B3: Check Core Assumptions One by One
 
@@ -127,8 +131,8 @@ For each core assumption, validate using the latest data:
 
 | # | Core Assumption | Previous Status | Latest Evidence | Current Status | Change |
 |---|----------------|----------------|-----------------|----------------|--------|
-| 1 | Revenue growth 15%+ | 🟢 Valid | Q4 revenue growth 12% | 🟡 Marginally weakening | ⚠️ |
-| 2 | Gross margin 60%+ | 🟢 Valid | Gross margin 61.2% | 🟢 Valid | — |
+| 1 | Receita líquida growth 15%+ | 🟢 Valid | Q4 ITR revenue growth 12% | 🟡 Marginally weakening | ⚠️ |
+| 2 | Gross margin 40%+ | 🟢 Valid | Gross margin 41.2% | 🟢 Valid | — |
 | 3 | ... | ... | ... | ... | ... |
 
 Status definitions:
@@ -152,9 +156,13 @@ Check each red line one by one:
 
 | Metric | At Purchase | Last Check | Current | Change |
 |--------|------------|-----------|---------|--------|
-| Stock price | | | | |
-| PE (TTM) | | | | |
-| Intrinsic value estimate | | | | |
+| Stock price (R$) | | | | |
+| P/L (TTM) — equities | | | | |
+| P/VPA — equities or FIIs | | | | |
+| DY (12M) — equities or FIIs | | | | |
+| DY vs. CDI spread — FIIs | | | | |
+| Vacância física — FIIs | | | | |
+| Intrinsic value estimate (R$) | | | | |
 | Margin of safety | | | | |
 
 ### B6: Output Tracking Report

@@ -1,8 +1,8 @@
-# Earnings Deep-Read Team: Four Masters Parallel Analysis + WeChat Publication
+# Earnings Deep-Read Team: Four Masters Parallel Analysis + Investment Article Publication
 
-Perform a team-based earnings deep-read analysis for $ARGUMENTS. Four masters analyze the earnings report in parallel, an editor polishes the draft into an article, a reader reviewer ensures quality, and the final output is a WeChat article ready for immediate publication.
+Perform a team-based earnings deep-read analysis for $ARGUMENTS. Four masters analyze the earnings report in parallel, an editor polishes the draft into an article, a reader reviewer ensures quality, and the final output is an investment newsletter article ready for immediate publication.
 
-**Supported input formats**: `Company Name Quarter`, for example: `Tencent 2025Q4`, `PDD 2025 Annual`, `Meituan Latest`
+**Supported input formats**: `Company Name Quarter`, for example: `WEGE3 2025Q4`, `VALE3 2025 Annual`, `ITUB4 Latest`
 
 ## Design Philosophy
 
@@ -13,7 +13,7 @@ A good earnings analysis must solve two problems:
 This Skill's workflow has three phases:
 - **Phase 1 · Research**: Four masters read the earnings report in parallel (Duan Yongping examines the business essence, Buffett audits financial quality, Munger reads competitive shifts, Li Lu hunts for risk signals)
 - **Phase 2 · Synthesis**: Team Lead consolidates the four perspectives and produces a research report draft
-- **Phase 3 · Publication**: Editor Agent rewrites into a WeChat article + Reader Reviewer Agent provides feedback → Team Lead finalizes
+- **Phase 3 · Publication**: Editor Agent rewrites into an investment newsletter article + Reader Reviewer Agent provides feedback → Team Lead finalizes
 
 ---
 
@@ -25,8 +25,8 @@ Use the Agent tool to launch background Agents **in parallel** to fetch the foll
 
 | Source Type | Where to Obtain | Priority |
 |-------------|----------------|----------|
-| Earnings report (original) | Company IR page, SEC EDGAR (US stocks), HKEx Disclosure Easy (HK stocks), CNINFO (A-shares) | Highest |
-| Earnings call transcript | Seeking Alpha, company IR page, Xueqiu | Highest |
+| Earnings report (original) | Company RI (investor relations) page, CVM filings (DFP/ITR), B3 disclosures, SEC EDGAR (US-listed BDRs) | Highest |
+| Earnings call transcript | Teleconferência de resultados (company RI page), Fundamentus, Status Invest | Highest |
 | Letter to shareholders from management | Extract from annual report | High (annual reports only) |
 | Prior period earnings report / call | Same as above | High (for commitment tracking) |
 
@@ -49,7 +49,7 @@ Inform each Agent of the source availability rating, which will affect the depth
 | Research | Financial Quality Auditor | Buffett | Is the money earned real or illusory? |
 | Research | Competitive Landscape Analyst | Munger | How is the competitive landscape shifting? |
 | Research | Risk Signal Hunter | Li Lu | What is management hiding? |
-| Publication | Editor | WeChat writing | Rewrite the research report into a compelling article |
+| Publication | Editor | Newsletter writing | Rewrite the research report into a compelling article |
 | Publication | Reader Reviewer | Ordinary investor | Can readers understand it? Do they gain from it? |
 
 ### Step 3: Launch 4 Parallel Research Agents
@@ -103,9 +103,9 @@ Analysis content:
 Analysis content:
 
 1. **Core financial data extraction and validation**
-   - Revenue, gross profit, operating profit, net income — both GAAP and Non-GAAP
-   - GAAP vs Non-GAAP gap: how large, where, and is the gap widening or narrowing
-   - Cross-validate key figures with at least two sources
+   - Revenue, gross profit, operating profit, net income — both IFRS reported and adjusted (Non-GAAP)
+   - IFRS vs adjusted gap: how large, where, and is the gap widening or narrowing
+   - Cross-validate key figures with at least two sources (e.g., Release de Resultados vs CVM filing)
 
    ```bash
    python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
@@ -134,12 +134,12 @@ Analysis content:
 
    ```bash
    python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
-     --price {price} --shares {shares} --reported {reported_market_cap} --currency {currency}
+     --price {price} --shares {shares} --reported {reported_market_cap} --currency BRL
    python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
-     --price {price} --eps {EPS} --bvps {book_value_per_share}
+     --price {price} --eps {LPA} --bvps {VPA}
    python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
-     --price {price} --eps {EPS} --shares {shares_in_100m} \
-     --growth {bull} {base} {bear} --pe {bull_PE} {base_PE} {bear_PE}
+     --price {price} --eps {LPA} --shares {shares_in_millions} \
+     --growth {bull} {base} {bear} --pe {bull_PL} {base_PL} {bear_PL}
    ```
 
 **Output requirements**: Attach tool output records for all calculations, earnings quality traffic lights 🟢/🟡/🔴, Buffett-style summary comment.
@@ -288,9 +288,9 @@ Commitment fulfillment table + tone change analysis
 
 After the research report is complete, launch two Agents **in parallel**:
 
-### Agent 5: Editor (WeChat Article Rewrite)
+### Agent 5: Editor (Investment Newsletter Rewrite)
 
-**Role**: Rewrite the hard-core research report into an article WeChat readers will enjoy and understand.
+**Role**: Rewrite the hard-core research report into an investment newsletter article that retail investors on B3 will enjoy and understand.
 
 **Core principles**:
 - Retain all key data and conclusions; do not reduce professional depth
@@ -301,12 +301,12 @@ After the research report is complete, launch two Agents **in parallel**:
 
 1. **Title and opening**
    - The title should be informative and encourage clicks, but not clickbait
-   - Good title example: "Kuaishou Bet 26 Billion on AI — Did It Pay Off?"
-   - Bad title example: "Shocking! Kuaishou Earnings Disaster!"
+   - Good title example: "WEGE3 Invested R$2 Billion in Automation — Did It Pay Off?"
+   - Bad title example: "Shocking! VALE3 Earnings Disaster!"
    - The opening (within 100 words) must clearly state: what is the most important conclusion of this earnings report, and why should the reader care
 
 2. **Structure optimization**
-   - A research report is for yourself; a WeChat article is for others — adjust the logical order accordingly
+   - A research report is for yourself; a newsletter article is for others — adjust the logical order accordingly
    - Put "The 3 Most Important Changes" at the very front (inverted pyramid structure)
    - Keep tables but trim them; convert long analytical passages into bullet points
    - Insert a "stage summary" approximately every 500 words to help readers absorb the content
@@ -322,11 +322,11 @@ After the research report is complete, launch two Agents **in parallel**:
    - The article must end with a clear "So what?" — provide specific action guidance for both holders and those on the sidelines
 
 5. **Format adaptation**
-   - WeChat-friendly layout: short paragraphs, clear subheadings, concise tables
+   - Newsletter-friendly layout: short paragraphs, clear subheadings, concise tables
    - Add appropriate dividers and block-quote formatting
    - Article length between 1,000–3,000 words (too long and readers will drop off)
 
-**Output**: The complete rewritten WeChat article.
+**Output**: The complete rewritten investment newsletter article.
 
 ---
 
@@ -400,7 +400,7 @@ After receiving the editor's rewrite and the reader review report:
 
 ```
 reports/{CompanyName}/
-├── {CompanyName}-earnings-{Period}.md              ← Final WeChat article (finalized)
+├── {CompanyName}-earnings-{Period}.md              ← Final investment newsletter article (finalized)
 ├── {CompanyName}-earnings-{Period}-research.md     ← Four-masters synthesized research report (internal use)
 ├── {CompanyName}-earnings-{Period}-DuanYongping.md ← Business essence analysis
 ├── {CompanyName}-earnings-{Period}-Buffett.md      ← Financial quality audit
@@ -429,7 +429,7 @@ python3 ~/ai-berkshire/tools/report_audit.py verdict \
 | Skill | Role | When to Use |
 |-------|------|-------------|
 | `/earnings-review` | Single-agent earnings deep-read | Quick pass, only one perspective needed |
-| **`/earnings-team` (this Skill)** | **Six-agent team deep-read + WeChat publication** | **Key earnings for important companies, requiring depth + publication** |
+| **`/earnings-team` (this Skill)** | **Six-agent team deep-read + investment newsletter publication** | **Key earnings for important companies, requiring depth + publication** |
 | `/investment-team` | Four-agent comprehensive company research | First-time research on a company |
 
 ## Key Principles

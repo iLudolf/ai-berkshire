@@ -22,7 +22,7 @@ Clarify the following with the user (if not provided in $ARGUMENTS):
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| **Company name** | Chinese / English / ticker all accepted | Required |
+| **Company name** | Brazilian / English / ticker (e.g. PETR4, VALE3) all accepted | Required |
 | **Time window** | Number of days to look back for news | Default 14 days; can narrow to 7 days during earnings season |
 | **Price movement** | Magnitude + timeframe, e.g. "down 12% / 3 days" | Optional — if provided, used to focus the attribution |
 | **Focus area** | Company events / regulatory / industry / sentiment | Default: all four equally |
@@ -37,14 +37,14 @@ Reference the A/B/C rating in `investment-team.md`, but with different dimension
 |-------|----------------|------------------------|
 | **Grade A (Information-rich)** | Large-cap, wide media coverage, earnings season | Focus on **noise reduction and attribution** — too much information makes finding the true cause harder; each Agent must exercise judgment and filter out "repeated paraphrase" secondary news |
 | **Grade B (Moderate information)** | Small/mid-cap, average coverage | Standard mode — each key event accompanied by 1-2 independent sources |
-| **Grade C (Information-scarce)** | Small HK-listed stocks, newly listed, obscure companies | Switch to "reconnaissance mode" — may find no news to explain the movement; **this conclusion itself is valuable** (may be technical/capital-flow driven rather than fundamental) |
+| **Grade C (Information-scarce)** | Small B3-listed stocks, newly listed, obscure companies | Switch to "reconnaissance mode" — may find no news to explain the movement; **this conclusion itself is valuable** (may be technical/capital-flow driven rather than fundamental) |
 
 Communicate the grade to each Agent — it affects their reconnaissance approach.
 
 ### Step 3: Create the Team
 
 Use TeamCreate to create the team:
-- `team_name`: `{company-name}-newspulse` (lowercase English, e.g. `pdd-newspulse`)
+- `team_name`: `{company-name}-newspulse` (lowercase English, e.g. `vale3-newspulse`)
 - `agent_type`: `team-lead`
 
 ### Step 4: Create 4 Reconnaissance Tasks
@@ -55,11 +55,11 @@ Use TaskCreate to create the following 4 tasks:
 
 - **subject**: `Scout {company name} company-level events over the past {N} days`
 - **description**:
-  1. **Official announcements**: Recent filings on HKEX / SEC / CNINFO and other regulatory disclosure platforms
+  1. **Official announcements**: Recent filings on CVM (DFP/ITR/FRE), company RI (investor relations) pages, and B3 disclosure platform (www.rad.cvm.gov.br)
   2. **Earnings and guidance**: Latest quarterly/annual report, earnings pre-announcement, key earnings call takeaways
   3. **Management actions**: Executive changes, insider buys/sells, buybacks, dividends, equity incentives
   4. **Major business events**: New product launches, mergers and acquisitions, divestitures, major customers / major orders
-  5. **Capital operations**: Secondary offerings, convertible bonds, ADR conversions, A-share relisting / delisting proposals
+  5. **Capital operations**: Secondary offerings (follow-on), debentures, BDR conversions, stock splits / reverse splits, delisting proposals
   6. **Litigation and compliance**: Lawsuits filed, voluntarily disclosed compliance events
   7. Each event annotated with: **date / source link / one-sentence summary / likely relevance to price movement (high/medium/low)**
   8. Output as a timeline table in reverse chronological order
@@ -69,11 +69,11 @@ Use TaskCreate to create the following 4 tasks:
 - **subject**: `Scout {industry/company} regulatory and policy changes over the past {N} days`
 - **description**:
   1. **Industry regulation**: New rules, fines, rectification orders, license changes in the relevant sector
-  2. **Cross-border policy**: China-US relations (for China ADRs), tariffs, export controls, data security
+  2. **Cross-border policy**: Brazil-US / Brazil-China trade relations, tariffs, export controls, LGPD (data privacy), BNDES financing changes
   3. **Tax policy**: VAT, corporate income tax, individual income tax related changes
   4. **Antitrust and competition law**: Investigations, fines, merger vetoes
-  5. **Sector-specific policy**: Pharmaceutical procurement (volume-based purchasing), education "double reduction", real estate "three red lines", internet platform regulation, etc.
-  6. **Monetary and foreign exchange**: Exchange rate / interest rate / capital control changes affecting the company
+  5. **Sector-specific policy**: ANS/ANVISA regulations (healthcare), ANEEL/ANATEL/ANP rules (utilities/telecom/oil), marco legal do saneamento, agronegócio export quotas, Petrobras pricing policy, real estate credit (SFH/SFI limits), etc.
+  6. **Monetary and foreign exchange**: Selic/CDI rate decisions (COPOM), BRL/USD exchange rate moves, capital flow controls, IPCA surprises affecting the company's cost base or debt
   7. Each policy annotated with: **date / source / degree of direct impact on the company (direct/indirect/unrelated)**
   8. Key judgment: whether any "policy black swan" has just landed
 
@@ -93,14 +93,12 @@ Use TaskCreate to create the following 4 tasks:
 
 - **subject**: `Scout {company name} market sentiment and institutional view changes over the past {N} days`
 - **description**:
-  1. **Sell-side rating changes**: Recent rating / price target adjustments from Goldman Sachs, Morgan Stanley, CICC, etc.
-  2. **Institutional position changes**: 13F filings (US stocks), Stock Connect holdings, northbound fund flows
-  3. **Short interest data**: Short ratio, newly published short-selling reports (if any)
-  4. **KOL views**: Use `python3 ~/ai-berkshire/tools/xueqiu_scraper.py` to fetch recent relevant posts from Duan Yongping and other KOLs
-     - Duan Yongping user_id: `1247347556`
-     - Example command: `python3 ~/ai-berkshire/tools/xueqiu_scraper.py --user-id 1247347556 --keywords {company-name},{ticker} --output /tmp/dyp-{company-name}.md`
-     - Only invoke if this company is a known holding of Duan Yongping / Li Lu; otherwise skip to save time
-  5. **Rumors and unverified reports**: Unverified media rumors, hot social media discussions (Xueqiu / X / Reddit)
+  1. **Sell-side rating changes**: Recent rating / price target adjustments from XP Investimentos, BTG Pactual Research, Itaú BBA, Goldman Sachs Brasil, UBS BB, etc.
+  2. **Institutional position changes**: CVM filings (Form 358 — significant shareholder changes), FII Informe Mensal updates, fund manager letters (cartas de gestão) from major asset managers
+  3. **Short interest data**: B3 aluguel de ações (short lending) data, short ratio changes, newly published short-selling reports (if any)
+  4. **KOL views**: Search for recent commentary from prominent Brazilian value investors and analysts on X / YouTube / Telegram investor channels / Infomoney / Suno Research
+     - Only invoke if relevant to the specific company being investigated
+  5. **Rumors and unverified reports**: Unverified media rumors, hot social media discussions (X / Reddit / Telegram investor groups / Infomoney forums)
   6. **Technical signals**: Whether key support/resistance levels have been hit, block trades, abnormal margin activity
   7. Key judgment: **Is this driven by fundamentals, or by sentiment / capital flows?**
 

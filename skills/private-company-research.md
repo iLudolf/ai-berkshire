@@ -1,6 +1,6 @@
 # Private Company Research: Multi-Agent Parallel Deep Research Framework
 
-Conduct a team-based deep research analysis on $ARGUMENTS. Designed specifically for private companies such as Ant Group, Xiaohongshu, SpaceX, Stripe, and similar firms.
+Conduct a team-based deep research analysis on $ARGUMENTS. Designed specifically for private companies such as Nubank (pre-IPO stage), C6 Bank, Mercado Bitcoin, iFood, Rappi Brasil, SpaceX, Stripe, and similar firms.
 
 **Ultimate Goal**: Under conditions of naturally scarce information, reconstruct the **true value** of this company as faithfully as possible — not the market's assigned valuation, but what the business itself is actually worth.
 
@@ -55,7 +55,7 @@ Show the user the following team structure and confirm before starting:
 ### Step 2: Create Team
 
 Use TeamCreate to create the team:
-- team_name: `{company-name}-private-research` (lowercase English, e.g., `ant-group-private-research`)
+- team_name: `{company-name}-private-research` (lowercase English, e.g., `c6-bank-private-research`)
 - agent_type: `team-lead`
 
 ### Step 3: Create 6 Tasks
@@ -124,7 +124,7 @@ Describe the business model using the following 9 elements:
 | Cost Structure | |
 
 ### 6. User Deep Analysis
-- User scale: MAU/DAU (estimated from QuestMobile, Sensor Tower, SimilarWeb, etc.)
+- User scale: MAU/DAU (estimated from Sensor Tower, SimilarWeb, data.ai, App Annie, etc.)
 - User growth curve: which stage of the S-curve? (substantiate with specific data)
 - User stickiness metrics:
   - DAU/MAU ratio
@@ -135,7 +135,7 @@ Describe the business model using the following 9 elements:
 - User reputation:
   - App Store / Google Play rating trends (changes over the last 12 months)
   - Social media sentiment analysis
-  - Real user feedback on Zhihu / Weibo / Xiaohongshu
+  - Real user feedback on Reclame Aqui / Reddit Brasil / Twitter/X
   - Main areas of concentration in negative reviews
 - User acquisition efficiency:
   - Ratio of paid acquisition vs. organic growth vs. word-of-mouth
@@ -185,16 +185,16 @@ Private companies have no standardized financial reports. Data must be pieced to
 
 | Priority | Source Type | Specific Source | Credibility | Search Method |
 |----------|-------------|-----------------|-------------|---------------|
-| 1 | Prospectus / Regulatory Filings | SEC Filing, HKEX, CSRC prospectus drafts | 🟢 High | Search "company name + prospectus/IPO filing" |
-| 2 | Parent / affiliated listed company reports | E.g., Ant Group data in Alibaba annual report, Google Cloud annual report | 🟢 High | Search related disclosures in parent annual reports |
-| 3 | Regulatory penalties / compliance disclosures | PBOC, CSRC, SAMR penalty documents | 🟢 High | Search "company name + penalty/fine/rectification" |
-| 4 | Bond / ABS issuance documents | E.g., underlying data in Ant Huabei ABS prospectus | 🟢 High | Search "company name + bond/ABS/trust" |
-| 5 | Business registration information | Tianyancha / Qichacha annual reports, paid-in capital | 🟡 Medium-High | |
-| 6 | Funding news | Valuation, funding amounts, investors | 🟡 Medium | Search "company name + funding/valuation" |
-| 7 | Third-party research reports | Broker, consulting firm, industry association reports | 🟡 Medium | Search "company name + research report" |
-| 8 | Deep media coverage | LatePost, The Information, 36Kr, Bloomberg | 🟡 Medium | Search these media + company name directly |
-| 9 | Industry data extrapolation | Back-calculate from industry total and market share | 🔴 Low-Medium | |
-| 10 | Former employee / insider leaks | Blind, Maimai, forums | 🔴 Low | For reference only, not a primary basis |
+| 1 | Prospectus / Regulatory Filings | CVM filings (DFP/ITR/FRE), SEC filing (if US-listed), B3 prospectus drafts | 🟢 High | Search "company name + prospecto/IPO/CVM" |
+| 2 | Parent / affiliated listed company reports | E.g., data in parent's DFP/ITR filed with CVM, Google Cloud annual report | 🟢 High | Search related disclosures in parent annual reports |
+| 3 | Regulatory penalties / compliance disclosures | BACEN, CVM, CADE, ANPD, ANATEL penalty documents | 🟢 High | Search "company name + multa/autuação/processo administrativo" |
+| 4 | Bond / CRI / CRA / debenture issuance documents | Underlying data in debt issuance prospectuses filed with CVM | 🟢 High | Search "company name + debenture/CRI/CRA/emissão" |
+| 5 | Business registration information | Receita Federal CNPJ data, Junta Comercial filings, Jusbrasil | 🟡 Medium-High | |
+| 6 | Funding news | Valuation, funding amounts, investors | 🟡 Medium | Search "company name + rodada/aporte/valuation" |
+| 7 | Third-party research reports | XP Investimentos, BTG Pactual Research, Itaú BBA, consulting firms, ABVCAP | 🟡 Medium | Search "company name + relatório/pesquisa" |
+| 8 | Deep media coverage | The Information, Pipeline (Valor), Bloomberg Línea, Startups.com.br, Sifted | 🟡 Medium | Search these media + company name directly |
+| 9 | Industry data extrapolation | Back-calculate from industry total and market share (ABECS, FEBRABAN, IBGE) | 🔴 Low-Medium | |
+| 10 | Former employee / insider leaks | Glassdoor Brasil, LinkedIn, forums | 🔴 Low | For reference only, not a primary basis |
 
 ### 2. Key Financial Metric Estimation
 Estimate the following data where possible. **Every data point must note**: source, date, confidence level, and estimation method.
@@ -417,7 +417,7 @@ Find overseas/domestic comparable companies (already listed) and analyze:
 | Post-IPO stock performance | | | |
 | Key success/failure factors | | | |
 
-- Note the limitations of benchmarking (China market specifics, regulatory differences, user behavior differences)
+- Note the limitations of benchmarking (Brazilian market specifics, regulatory differences, user behavior differences, Selic/interest rate environment impact on valuations)
 ```
 
 ---
@@ -463,7 +463,7 @@ Find overseas/domestic comparable companies (already listed) and analyze:
   - Net talent inflow or outflow?
 - Team complementarity: does the founding team have complementary capabilities? Any obvious gaps?
 - Team culture signals:
-  - Glassdoor / Maimai rating and trend (direction of change over the last 12 months matters more than the absolute value)
+  - Glassdoor Brasil / LinkedIn rating and trend (direction of change over the last 12 months matters more than the absolute value)
   - Employee willingness to recommend (Would recommend to a friend)
   - CEO approval rating
   - Sentiment around overtime culture and organizational atmosphere
@@ -514,10 +514,10 @@ Analysis:
 | Talent risk | Founder/core team departure | | | | | |
 | Funding risk | Capital shortage, down round, difficulty fundraising | | | | | |
 | IPO risk | Listing window, regulatory approval, market conditions | | | | | |
-| Geopolitical risk | US-China relations, cross-border data, sanctions | | | | | |
+| Geopolitical risk | Brazil-US relations, currency (BRL/USD) exposure, cross-border data, sanctions | | | | | |
 | Monetization risk | Monetization below expectations, user backlash | | | | | |
 | Governance risk | Related-party transactions, information opacity, investor conflicts | | | | | |
-| Compliance risk | Data privacy (GDPR / PIPL), content compliance | | | | | |
+| Compliance risk | Data privacy (LGPD / GDPR), content compliance, BACEN regulations | | | | | |
 | Macro risk | Economic cycle, interest rate environment, capital market sentiment | | | | | |
 | ESG risk | Environmental / social / governance related risks | | | | | |
 
@@ -525,9 +525,9 @@ Analysis:
 
 | Exit Method | Likelihood (★1-5) | Estimated Time Window | Expected Valuation Range | Key Prerequisites | Main Obstacles |
 |-------------|-------------------|-----------------------|--------------------------|-------------------|----------------|
-| A-share IPO | | | | | |
-| HK IPO | | | | | |
-| US IPO | | | | | |
+| B3 IPO (Novo Mercado) | | | | | |
+| US IPO (NYSE/Nasdaq) | | | | | |
+| CVM-registered offering | | | | | |
 | Acquisition | | Potential acquirers? | | | |
 | Secondary market transfer | | Liquidity? | | | |
 | SPAC | | | | | |
@@ -570,7 +570,7 @@ Analysis:
   - Frequent bug/outage complaints on the user side?
 
 ### 2. Patent Portfolio Analysis
-Search patent databases (Google Patents, CNIPA, USPTO):
+Search patent databases (Google Patents, INPI Brasil, USPTO):
 
 | Patent Metric | Data | Source |
 |---------------|------|--------|
@@ -608,7 +608,7 @@ Search patent databases (Google Patents, CNIPA, USPTO):
   | Name | Title | Education | Previous company | Technical influence |
   |------|-------|-----------|-----------------|---------------------|
 - **Technical talent density**:
-  - Which companies/labs do they come from? (Share from Google / Meta / MSRA / BAT and other top institutions)
+  - Which companies/labs do they come from? (Share from Google / Meta / Microsoft / Nubank / TOTVS / CI&T / Itaú / XP and other top institutions)
   - Compensation competitiveness of technical roles (estimated from job listings)
   - Attrition signals for the tech team (departure activity on LinkedIn)
 - **Hiring signals**:
@@ -659,7 +659,7 @@ Search patent databases (Google Patents, CNIPA, USPTO):
 > The goal of this task is: beyond conventional information sources, mine every potentially useful clue.
 
 ### 1. Hiring Signal Analysis
-Search LinkedIn, Boss Zhipin, Maimai, Indeed, Glassdoor for job listings:
+Search LinkedIn, Indeed Brasil, Glassdoor Brasil, Catho, InfoJobs for job listings:
 
 **Hiring scale & trends**:
 - Current total open positions
@@ -686,7 +686,7 @@ Search LinkedIn, Boss Zhipin, Maimai, Indeed, Glassdoor for job listings:
 - Tech stack / business direction mentioned in JDs = strategic direction
 
 ### 2. App / Product Data Analysis
-Search App Store, Google Play, Qimai, SimilarWeb:
+Search App Store, Google Play, SimilarWeb, data.ai (App Annie):
 
 | Metric | Data | Source | Trend |
 |--------|------|--------|-------|
@@ -702,7 +702,7 @@ Search App Store, Google Play, Qimai, SimilarWeb:
 - Web traffic data (SimilarWeb): UV, PV, session duration, bounce rate
 
 ### 3. Social Media & Sentiment Signals
-Search Weibo, Zhihu, Xiaohongshu, Twitter/X, Reddit:
+Search Twitter/X, Reddit, LinkedIn, Facebook Brasil, Instagram, Reclame Aqui:
 
 - Engagement data for official company accounts (follower / repost / comment trends)
 - Volume and sentiment of organic user discussion (positive / negative / neutral)
@@ -712,14 +712,14 @@ Search Weibo, Zhihu, Xiaohongshu, Twitter/X, Reddit:
 - Any leaks from insiders (former/current employees)
 
 ### 4. Corporate Registration & Legal Signals
-Search Tianyancha / Qichacha / Qixinbao:
+Search Receita Federal (CNPJ), Junta Comercial (JUCESP/JUCERJA), Jusbrasil, CVM EDGAR Brasil:
 
 **Business registration information**:
-- Registered capital and history of changes
-- Paid-in capital
-- Shareholder / equity change records
-- List of subsidiaries / affiliated companies (new = new business? deregistered = business contraction?)
-- Changes in business scope (newly added = new business direction)
+- Capital social (registered capital) and history of changes
+- Capital integralizado (paid-in capital)
+- Shareholder / equity change records (alterações contratuais)
+- List of subsidiaries / affiliated companies (new = new business? dissolved = business contraction?)
+- Changes in object social / business scope (newly added = new business direction)
 
 **Legal information**:
 | Type | Count | Summary of Important Cases |
@@ -754,7 +754,7 @@ Search domain/subdomain information:
 - Trend in frequency and quality of media coverage
 
 ### 8. Secondary Market Trading Signals (if applicable)
-- Is there a secondary market for old shares? (SharesPost, EquityZen, WeChat groups, etc.)
+- Is there a secondary market for old shares? (SharesPost, EquityZen, Brazilian secondary platforms, private WhatsApp/Telegram investor groups, etc.)
 - Implied valuation from secondary share trades vs. latest funding round valuation
 - Supply/demand conditions for buyers and sellers
 - Are large numbers of employees selling options/RSUs?
@@ -811,21 +811,21 @@ Specific requirements:
 **Research methodology**:
 1. Use WebSearch to search for the latest public information. Search at least 3-5 times per dimension using different keyword combinations
 2. Keyword strategy:
-   - Chinese: company name + revenue/valuation/funding/user count/MAU/IPO/prospectus/layoffs/rectification
-   - English: Company Name + revenue/valuation/funding/users/IPO/filing
+   - Portuguese: company name + receita/valuation/rodada/usuários/IPO/prospecto/demissões/autuação/fusão
+   - English: Company Name + revenue/valuation/funding/users/IPO/filing/acquisition
    - Specific person name + company name (for management-related information)
    - Company name + specific competitor name (for competitive dynamics)
 3. Priority information sources:
-   - High credibility: prospectuses, regulatory filings, related disclosures in listed company annual reports
-   - Medium credibility: LatePost, The Information, 36Kr, Bloomberg, Reuters, TechCrunch
-   - Supplemental validation: Zhihu, Maimai, Glassdoor, Tianyancha, Qichacha
+   - High credibility: CVM filings (DFP/ITR/FRE), prospectuses, related disclosures in listed company annual reports
+   - Medium credibility: Pipeline (Valor Econômico), Bloomberg Línea, The Information, Startups.com.br, Reuters, TechCrunch, NeoFeed
+   - Supplemental validation: Reclame Aqui, Glassdoor Brasil, LinkedIn, Jusbrasil, Receita Federal CNPJ
 4. Use WebFetch to retrieve full text of key articles (don't rely only on search snippets)
 5. For important data, cross-validate with at least 2 different sources
 
 **Data annotation standards (strictly enforced)**:
 - Note the source for every key data point (specific media name and article title)
 - Note the data date (accurate to year and month)
-- Note confidence level: 🟢 High (prospectus/official disclosure) / 🟡 Medium (credible media/research report) / 🔴 Low (estimate/rumor)
+- Note confidence level: 🟢 High (prospectus/CVM filing/official disclosure) / 🟡 Medium (credible media/research report) / 🔴 Low (estimate/rumor)
 - When data from different sources conflicts, **list all** and explain the discrepancy and your judgment
 - Distinguish "facts" from "reasoning": facts in normal text, reasoning/estimates in *italics* with the estimation method noted
 - Explicitly label unavailable information as "data missing" — do not fabricate
@@ -1064,7 +1064,7 @@ Use TeamDelete to clean up team resources.
 5. **Signal consistency check** — the consolidation phase must include cross-dimension signal consistency checks
 6. **Conclusions must be clear** — do not shy away from giving an Invest / Watch / Avoid recommendation, but also state the confidence level of the conclusion
 7. **Be patient** — research by 6 agents takes several minutes; update progress to the user in real time
-8. **Search in both Chinese and English** — private company information may be distributed across Chinese and English media; search in both languages
+8. **Search in both Portuguese and English** — private company information may be distributed across Portuguese and English media; search in both languages
 9. **Anti-bias core principle** — less material ≠ worse company; shorter AI analysis ≠ lower investment certainty. For companies with extremely scarce information, switch to "first-principles mode" and focus on core questions without chasing a formally complete report
 10. **Honest blanks** — clearly distinguish "evidence-based analysis" from "speculative fill-in" in the report; it is acceptable to state "insufficient data in this dimension to reach a meaningful conclusion"
 11. **Alternative data is not noise** — hiring, patents, litigation, App data, and other alternative data may be closer to the true operating reality than news coverage

@@ -34,7 +34,7 @@ Communicate the rating to each Agent so it influences their research approach.
 ### Step 2: Create the Team
 
 Use TeamCreate to create the team:
-- team_name: `{company-name}-research` (lowercase English, e.g., `meituan-research`)
+- team_name: `{company-name}-research` (lowercase English, e.g., `vale-research`)
 - agent_type: `team-lead`
 
 ### Step 3: Create 4 Tasks
@@ -113,7 +113,7 @@ Specific requirements:
 
 **Research methodology**:
 - Use WebSearch to find the latest publicly available information (earnings reports, industry research, news)
-- **Financial data must come from two independent sources**, following the `skills/financial-data.md` specification (US stocks: macrotrends + stockanalysis; HK stocks: aastocks + macrotrends; A-shares: Eastmoney + CNINFO) — discrepancies >1% between sources must be flagged
+- **Financial data must come from two independent sources**, following the `skills/financial-data.md` specification (Brazilian equities: Fundamentus + Status Invest; FIIs: FundsExplorer + Status Invest; US stocks: macrotrends + stockanalysis) — discrepancies >1% between sources must be flagged
 - Ensure data accuracy; annotate sources for all key data points
 - Analysis must be deep and substantive, not superficial
 

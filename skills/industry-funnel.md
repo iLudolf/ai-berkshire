@@ -5,7 +5,7 @@ Execute a funnel-based value investment screening of the $ARGUMENTS industry/the
 ## Use Cases
 
 When you name an industry or investment theme (e.g. "AI compute", "innovative drugs", "robotics") and want to:
-1. Miss no important names (including A-shares, HK stocks, US stocks, and unlisted candidates)
+1. Miss no important names (including B3 stocks, US stocks, and unlisted candidates)
 2. Filter out "story stocks" and low-quality companies using a consistent standard
 3. Focus your energy on the 3 top-tier names truly worth deep research
 4. Have clear keep/drop criteria at every layer — reviewable and traceable
@@ -41,7 +41,7 @@ Companies eliminated at each layer must have their rejection reasons recorded �
 ### 1.1 Definition of Active Stocks (Union of Three Categories)
 
 **Category A — Trading Activity**:
-- Top-ranked by average daily trading volume over the past 30 days within the industry (top 30 each for A-shares / HK stocks / US stocks)
+- Top-ranked by average daily trading volume over the past 30 days within the industry (top 30 each for B3 stocks / US-listed ADRs)
 
 **Category B — Gainers List**:
 - Top 20 gainers over the past 30 days
@@ -57,11 +57,11 @@ Final scan pool = A ∪ B ∪ C, expected 30–60 companies.
 
 | Market | Suggested Sources |
 |--------|------------------|
-| A-shares (Shanghai & Shenzhen) | Tonghuashun / Eastmoney industry sectors, Tongdaxin |
-| HK stocks | Futu / Tonghuashun HK, HKEX industry classification |
-| US stocks | NASDAQ/NYSE industry ETF holdings, Yahoo Finance |
-| International markets | Companies in Japan, South Korea, Taiwan, and Europe must not be missed (especially semiconductors and electronics) |
-| Unlisted companies | Include a separate "Future IPO Candidates" subsection with latest valuation and estimated IPO timeline |
+| B3 (Brazilian equities) | Fundamentus, Status Invest, B3 sector classification, CVM filings (DFP/ITR) |
+| FIIs (Brazilian REITs) | FundsExplorer, Status Invest, CVM Informe Mensal |
+| US stocks / ADRs | NASDAQ/NYSE industry ETF holdings, Yahoo Finance |
+| International markets | Companies in global peers relevant to the sector must not be missed |
+| Unlisted companies | Include a separate "Future IPO Candidates" subsection with latest valuation (estimated) and estimated IPO timeline |
 
 ### 1.3 Output Format
 
@@ -70,7 +70,7 @@ Final scan pool = A ∪ B ∪ C, expected 30–60 companies.
 
 **Key Self-Checks**:
 - Companies with industry revenue exposure < 30% are "peripheral plays" — flag them as "non-pure-play"
-- Do not miss Chinese/Asian companies simply because English-language materials are scarce
+- Do not miss small-cap B3 companies simply because data is less abundant than for large-caps
 - Do not miss small-cap companies just because AI tends to favor market leaders
 
 ---
@@ -83,7 +83,7 @@ Apply 5 hard criteria to each of the 30–60 companies from Step 1.
 
 | # | Criterion | Pass Standard | Relaxation Condition | Data Source |
 |---|-----------|--------------|---------------------|-------------|
-| 1 | PE valuation | Reasonable (vs. historical range and peer comparison) | High-growth companies: PEG < 1.5 acceptable | Earnings reports + Wind/Tonghuashun |
+| 1 | PE valuation (P/L) | Reasonable (vs. historical range and peer comparison) | High-growth companies: PEG < 1.5 acceptable | DFP/ITR filings + Fundamentus / Status Invest |
 | 2 | ROE | > 15%, or improving trend over the past 3 years | Asset-heavy industries may be relaxed | Earnings reports |
 | 3 | Operating cash flow | Positive and > 70% of net income | — | Earnings reports |
 | 4 | Debt-to-asset ratio | < 60% | Utilities/power may be relaxed to 70% | Earnings reports |
@@ -219,12 +219,12 @@ Integrate at the end of the report:
 
 ### 5.2 Industry-Level ETF Alternative
 
-If individual stock selection is not desired, list 1–3 relevant ETFs (A-shares / HK / US stocks).
+If individual stock selection is not desired, list 1–3 relevant ETFs (e.g. BOVA11 for broad B3 exposure, IVVB11 for S&P 500, or sector-specific B3 ETFs).
 
 ### 5.3 Overall Industry Positioning Assessment
 
 - Industry PE/PB historical percentile
-- Capital flows (northbound flows, ETF net subscriptions/redemptions, sell-side coverage density)
+- Capital flows (foreign investor flows on B3, ETF net subscriptions/redemptions, sell-side coverage density from XP/BTG/Itaú BBA)
 - Overall stage: "Early / Expansion / Mature / Declining"
 
 ### 5.4 Information Adequacy Self-Assessment (Required)
@@ -255,7 +255,7 @@ Common pitfalls AI tends to fall into during funnel screening:
 | Bias | Manifestation | Countermeasure |
 |------|--------------|---------------|
 | Large-cap preference | Big market cap companies have more data and longer analysis, making them appear "better" | Score by hard criteria and economic moat, not by report length |
-| English-language preference | US stock data is abundant; A-shares and HK stocks are easily underweighted | Must search in both Chinese and English; A/H-share companies must not be missed |
+| Large-cap preference on B3 | Ibovespa components have more data; small/mid-cap B3 names are easily underweighted | Search full B3 sector classification, not just Ibovespa constituents |
 | Story preference | High gains + media attention = AI "concept stock" that looks better | Distinguish "AI revenue %" vs "AI story %"; focus on actual business |
 | Recency preference | Companies with strong current financials tend to get picked; turnaround dark horses may be missed | Layer 2 rough screen allows "improving trend" as a relaxation condition |
 | Listed-company preference | Only looking at listed companies may miss the best players in the sector | Must list "Future IPO Candidates" with valuation and time window |

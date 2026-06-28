@@ -6,10 +6,10 @@ Run quality elimination screening on $ARGUMENTS, rapidly filtering out companies
 
 | Input Type | Example | Notes |
 |-----------|---------|-------|
-| Individual stocks | `Tencent, Meituan, Nvidia` | Screen each one |
-| Industry | `China beer industry` `Global cloud computing` `HK sportswear` | Search for 10-20 major listed companies first, then screen each |
-| Market/Index | `Hang Seng Index constituents` `CSI 300` `Nasdaq 100` | Fetch constituent list, screen each |
-| Theme | `China top-50 dividend stocks` `Global AI compute chain` | Search for related companies first, then screen |
+| Individual stocks | `WEGE3, ITUB4, Nvidia` | Screen each one |
+| Industry | `Brazil energy sector` `Global cloud computing` `B3 financials` | Search for 10-20 major listed companies first, then screen each |
+| Market/Index | `Ibovespa constituents` `SMLL (small caps)` `Nasdaq 100` | Fetch constituent list, screen each |
+| Theme | `Brazil top-50 dividend stocks` `Global AI compute chain` | Search for related companies first, then screen |
 
 In industry/market/theme mode, output additionally includes: pass rate statistics, intra-industry rankings, and sector comparison summary.
 
@@ -42,7 +42,7 @@ A company may be exempted from the ROE threshold if it simultaneously meets all 
 2. Gross margin > 30% (proves the business model itself has pricing power)
 3. Operating cash flow positive in the last 2 years (proves earning capacity is established)
 
-**Logic**: High gross margin + positive cash flow means the business model is sound; low ROE is only because it's still in investment mode. Typical case: Meituan.
+**Logic**: High gross margin + positive cash flow means the business model is sound; low ROE is only because it's still in investment mode. Typical case: RDOR3 (Rede D'Or) in its post-IPO expansion phase.
 
 ### Exemption B: Deliberate Low Margin (applies to #6)
 
@@ -90,7 +90,7 @@ Launch an independent background agent for each company to search the following 
 6. **Net margin**: Net margin trend over the past 10 years, calculate average
 7. **Share count change**: Total shares 5 years ago vs. current, calculate growth percentage
 
-Data source priority: Company annual reports > Broker research > Financial data platforms
+Data source priority: CVM filings (DFP/ITR) > Fundamentus / Status Invest > Broker research (XP, BTG, Itaú BBA) > Financial data platforms
 
 ### Step 3: Check Each Indicator
 
@@ -152,7 +152,7 @@ If a company triggers a failure, check whether it meets the corresponding exempt
 ## Notes
 
 1. **Banks/Insurance**: Not subject to #3 (interest coverage) — their business model is fundamentally interest-margin based
-2. **REITs**: ROE may fluctuate significantly due to property revaluations; use "core operating profit ROE" instead
+2. **FIIs (Brazilian REITs)**: ROE/FCF metrics do not apply — use DY (dividend yield), P/VP (price/book), and vacância (vacancy rate) instead; screen FIIs separately using the FII-specific checklist
 3. **Insufficient data**: If a data point is unavailable, note "data unavailable" rather than defaulting to pass/fail
 4. **Cyclical industries**: Use averages across a full cycle (covering at least one peak and one trough), not a single year
 5. **Short listing history**: Companies listed fewer than 5 years — use all available data, but note "limited data window" in results

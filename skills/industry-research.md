@@ -7,7 +7,7 @@ Conduct a systematic supply chain investment research on the $ARGUMENTS industry
 Starting from an investment thesis/logic chain, complete:
 1. Validate every link in the investment logic chain
 2. Map a complete industry supply chain panorama
-3. Scan all global listed companies (A-shares / HK stocks / US stocks / international)
+3. Scan all relevant listed companies (B3 / US stocks / international)
 4. Apply the Four Masters framework analysis to the leading companies in each sub-segment
 5. Output industry-level portfolio allocation recommendations
 
@@ -72,7 +72,7 @@ In industry research, AI data bias can be amplified in unique ways:
 | Underestimation of emerging industries | New industries (AI applications / synthetic biology, etc.) have sparse data, causing AI analysis to skew conservative | Use "end-state thinking" rather than "current data" to judge industry value |
 | Large-cap bias | Big companies have far more data than small ones; AI naturally tends to recommend industry leaders | Small companies may have better risk-reward ratios — do not overlook them just because AI analysis is brief |
 | Listed-company bias | Scanning only listed companies will miss key unlisted players in the supply chain | Must search for unlisted companies and flag them as "future IPO candidates" |
-| English-language bias | AI processes English-language materials more effectively and may underestimate Chinese / Asian market players | Must search both Chinese and English sources simultaneously |
+| Portuguese-language bias | AI processes English-language materials more effectively and may underestimate Brazilian / LatAm market players | Must search both Portuguese and English sources simultaneously |
 
 **Anti-Bias Measures in Supply Chain Scanning**:
 1. For each segment, not only list "companies easy for AI to find," but also actively search for "obscure but potentially high-quality targets"
@@ -84,15 +84,22 @@ In industry research, AI data bias can be amplified in unique ways:
 Use the Task tool to launch a background Agent for a comprehensive search of all listed companies in this industry.
 
 ### Search Checklist
+- B3 (São Paulo) relevant companies — primary focus; use B3 sector classification (Petróleo/Gás, Mineração, Financeiro, Saúde, Consumo, Construção Civil, Energia Elétrica, Agronegócio)
 - US stocks (NYSE / NASDAQ / NYSE American) relevant companies
-- A-shares (Shanghai / Shenzhen) relevant companies
-- Hong Kong stocks relevant companies
-- Other international markets (Japan / South Korea / Europe / Australia, etc.)
-- Industry ETFs
-- Key unlisted companies (potential future IPO candidates)
+- Other international markets (Europe / Australia / LatAm, etc.)
+- Brazilian industry ETFs (e.g., BOVA11, IVVB11, sector ETFs on B3)
+- Key unlisted companies (potential future IPO candidates on B3)
+
+### Primary Data Sources (Brazil)
+- **Fundamentus** — financials, multiples, historical data for B3 stocks
+- **Status Invest** — dividend history, charts, sector comparisons
+- **FundsExplorer** — FII-specific data (DY, P/VP, vacância, patrimônio)
+- **CVM filings** — DFP (annual), ITR (quarterly), FRE (reference form), Informe Mensal (FIIs)
+- **Company RI pages** — teleconferência de resultados (earnings calls), Release de Resultados
+- **Analyst research** — XP Investimentos, BTG Pactual Research, Itaú BBA, Goldman Sachs Brasil, UBS BB
 
 ### Collect for Each Company
-- Company name (Chinese and English)
+- Company name (Portuguese and English)
 - Ticker symbol and exchange
 - Market cap (approximate)
 - One-sentence description (position and role in the supply chain)
@@ -144,7 +151,9 @@ Score using five types of economic moat (★1-5):
 - Brief rating (Grade A / B / C)
 
 ### 4.5 Valuation Snapshot
-- Current PE / PS / EV/EBITDA
+- Current P/L (P/E), P/VPA (P/B), EV/EBITDA, DY (dividend yield), Dívida/EBITDA
+- For FIIs: P/VP, DY (monthly and annualized), taxa de gestão, vacância, type (Tijolo / Papel / Híbrido / FOF)
+- Benchmark against Selic/CDI (~14.75% risk-free rate) — not just sector peers
 - Comparison with competitors in the same segment
 - Brief comment: expensive / fair / cheap
 
@@ -243,7 +252,7 @@ Using quote format, simulate how each of the Four Masters would comment on the i
 2. Use Markdown tables to present key data
 3. Supply chain panorama to be shown as a text diagram in a code block
 4. Analyze at least 2–3 leading companies per segment
-5. Global company scan should be as complete as possible (A-shares / HK stocks / US stocks / international)
+5. Company scan should be as complete as possible (B3 / US stocks / international), with B3-listed companies as the primary focus
 6. Write the complete final report to `~/[industry-name]-supply-chain-investment-research.md`
 7. Conclusions must be specific — provide concrete targets, position sizes, and price range recommendations
 8. Each analysis module ends with the corresponding master's "follow-up question"
