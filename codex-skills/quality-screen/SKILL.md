@@ -1,6 +1,6 @@
 ---
 name: quality-screen
-description: "AI Berkshire skill: 去劣筛选：7条指标快速排除非一流公司. Source: skills/quality-screen.md."
+description: "AI Berkshire skill: Quality screen — 7 metrics to quickly eliminate non-first-rate companies. Source: skills/quality-screen.md."
 ---
 
 ## Codex adapter note
@@ -12,171 +12,171 @@ This skill is generated from `skills/quality-screen.md` so Claude Code and Codex
 - Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
-# 去劣筛选：7条指标快速排除非一流公司
+# Quality Screen: 7 Metrics to Quickly Eliminate Non-First-Rate Companies
 
-对 $ARGUMENTS 执行去劣指标筛选，快速排除不符合一流公司标准的标的。
+Run the quality screen on $ARGUMENTS to quickly eliminate candidates that do not meet first-rate company standards.
 
-**支持输入格式**：
+**Supported input formats**:
 
-| 输入方式 | 示例 | 说明 |
-|---------|------|------|
-| 个股 | `腾讯, 美团, 英伟达` | 逐家筛选 |
-| 行业 | `中国啤酒行业` `全球云计算` `港股运动品牌` | 先搜索该行业主要上市公司（10-20家），再逐家筛选 |
-| 市场/指数 | `恒生指数成分股` `沪深300` `纳斯达克100` | 拉取成分股列表，逐家筛选 |
-| 主题 | `中国高股息50强` `全球AI算力链` | 先搜索主题相关公司，再逐家筛选 |
+| Input type | Example | Notes |
+|-----------|---------|-------|
+| Individual stock | `Tencent, Meituan, Nvidia` | Screen each company individually |
+| Industry | `China beer industry` `Global cloud computing` `HK-listed sportswear brands` | Search for the industry's major listed companies (10–20) first, then screen each |
+| Market / index | `Hang Seng Index constituents` `CSI 300` `Nasdaq 100` | Pull the constituent list, then screen each |
+| Theme | `China high-dividend top 50` `Global AI compute chain` | Search for theme-related companies first, then screen each |
 
-行业/市场/主题模式下，输出额外包含：通过率统计、行业内排名、板块对比总结。
+In industry / market / theme mode, the output additionally includes: pass-rate statistics, intra-industry ranking, and sector comparison summary.
 
-## 设计原则
+## Design Principles
 
-- **目标**：不错杀任何一流好公司，但能排除确定的非一流公司
-- **逻辑**：7条硬指标 + 2条豁免规则，宁可漏网不可误杀
-- **适用范围**：所有上市公司（银行/保险不适用第3条利息覆盖倍数）
-
----
-
-## 7条去劣指标
-
-| # | 指标 | 排除条件 | 衡量的是什么 |
-|---|------|---------|-------------|
-| 1 | 10年平均ROE | < 8% | 资本效率——股东的钱能不能跑赢机会成本 |
-| 2 | 5年累计自由现金流 | 为负 | 真金白银——利润是不是"纸面富贵" |
-| 3 | 利息覆盖倍数（EBIT/利息） | < 2倍 | 偿债安全——还利息的能力 |
-| 4 | 长期毛利率 | < 15% | 定价权——产品/服务有没有差异化 |
-| 5 | 经营现金流 / 净利润（5年均值） | < 0.7 | 利润质量——赚到的利润能不能收回现金 |
-| 6 | 长期净利率 | < 5% | 抗风险能力——收入波动时利润是否归零 |
-| 7 | 5年总股本膨胀 | > 20%（非并购原因） | 股东利益——管理层是否在稀释你的权益 |
-
-## 3条豁免规则
-
-### 豁免A：战略投入期豁免（适用于第1条）
-
-如果同时满足以下3个条件，可豁免第1条ROE不达标：
-1. 上市不足10年
-2. 毛利率 > 30%（证明商业模式本身有定价权）
-3. 最近2年经营现金流为正（证明造血能力已具备）
-
-**逻辑**：高毛利率+现金流转正说明商业模式没问题，ROE低只是因为还在投入期。典型案例：美团。
-
-### 豁免B：主动低利润率豁免（适用于第6条）
-
-如果同时满足以下2个条件，可豁免第6条净利率不达标：
-1. 毛利率 > 30%（有能力赚但选择不赚）
-2. 近2年净利率已回升至5%以上，或呈明确上升趋势
-
-**逻辑**：毛利率高说明有定价权，净利率低是战略选择（再投资）而非能力缺失。典型案例：亚马逊。
-
-### 豁免C：高周转薄利模式豁免（适用于第4条和第6条）
-
-如果同时满足以下3个条件，可豁免第4条毛利率和第6条净利率不达标：
-1. ROE > 20%（证明虽然利润率低，但资本回报率极高）
-2. 经营现金流/净利润 > 1.0（利润质量无问题）
-3. 商业模式属于"会员制/平台佣金/高周转薄利"类型（利润不体现在商品加价上）
-
-**逻辑**：有些一流公司的利润不藏在毛利率里，而是藏在会员费、周转效率或平台抽成中。它们的毛利率和净利率天然很低，但ROE极高说明资本效率一流。典型案例：Costco（毛利率12%、净利率2.5%，但ROE 25%+、会员续费率90%+）。
+- **Goal**: Never mistakenly eliminate any genuinely first-rate company, while reliably excluding confirmed non-first-rate companies
+- **Logic**: 7 hard metrics + 3 exemption rules — better to let one slip through than to wrongly discard one
+- **Scope**: All listed companies (banks / insurers are exempt from Metric 3 — interest coverage)
 
 ---
 
-## 执行流程
+## 7 Quality-Screen Metrics
 
-### 第一步：解析输入，确定筛选范围
+| # | Metric | Elimination condition | What it measures |
+|---|--------|-----------------------|-----------------|
+| 1 | 10-year average ROE | < 8% | Capital efficiency — can shareholder capital beat its opportunity cost? |
+| 2 | 5-year cumulative free cash flow | Negative | Real cash — are reported profits just "paper wealth"? |
+| 3 | Interest coverage ratio (EBIT / interest) | < 2× | Debt safety — ability to service interest payments |
+| 4 | Long-term gross margin | < 15% | Pricing power — is the product / service differentiated? |
+| 5 | Operating cash flow / net income (5-year average) | < 0.7 | Earnings quality — can reported profits actually be collected in cash? |
+| 6 | Long-term net profit margin | < 5% | Resilience — does profit go to zero when revenue fluctuates? |
+| 7 | 5-year share-count dilution | > 20% (excluding M&A) | Shareholder alignment — is management diluting your equity? |
 
-**模式判断**：
-- 如果输入是具体公司名/代码 → **个股模式**，直接进入第二步
-- 如果输入是行业/市场/主题 → **批量模式**，先执行以下操作：
-  1. 用 WebSearch 搜索该行业/市场/主题下的主要上市公司
-  2. 行业模式：覆盖该行业市值前15-20家上市公司
-  3. 指数模式：拉取完整成分股列表
-  4. 主题模式：搜索相关公司，覆盖15-30家
-  5. 列出完整公司清单供确认（如公司数>30，分批并行处理）
+## 3 Exemption Rules
 
-对每家公司确定全称、代码、交易所。
+### Exemption A: Strategic Investment Phase (applies to Metric 1)
 
-### 第二步：并行数据收集
+If all 3 of the following conditions are met, Metric 1 (ROE below threshold) may be waived:
+1. Listed for fewer than 10 years
+2. Gross margin > 30% (proving the business model itself has pricing power)
+3. Operating cash flow positive in the most recent 2 years (proving cash-generation capability exists)
 
-为每家公司启动独立后台Agent，使用 WebSearch 搜索以下数据：
+**Rationale**: High gross margin + positive cash flow signals that the business model is sound; the low ROE simply reflects an ongoing investment phase. Typical example: Meituan.
 
-1. **ROE**：近10年（或上市以来）的逐年ROE，计算平均值
-2. **自由现金流**：近5年的经营现金流和资本开支，计算5年累计FCF
-3. **利息覆盖**：最新年度EBIT和利息支出，计算倍数
-4. **毛利率**：近5年毛利率趋势
-5. **经营现金流/净利润**：近5年的比值，计算均值
-6. **净利率**：近10年净利率趋势，计算均值
-7. **总股本变化**：5年前和当前的总股本，计算膨胀比例
+### Exemption B: Deliberate Low-Margin Strategy (applies to Metric 6)
 
-数据来源优先级：公司年报 > 券商研报 > 财经数据平台
+If both of the following conditions are met, Metric 6 (net profit margin below threshold) may be waived:
+1. Gross margin > 30% (the company is capable of earning but chooses not to at this stage)
+2. Net profit margin has recovered above 5% in the past 2 years, or shows a clear upward trend
 
-### 第三步：逐条检验
+**Rationale**: A high gross margin confirms pricing power; the low net margin is a strategic reinvestment choice, not a capability deficit. Typical example: Amazon.
 
-对每家公司，逐条检验7个指标：
-- ✅ 通过
-- ❌ 未通过
-- ⚠️ 边界（附数值说明）
+### Exemption C: High-Turnover Thin-Margin Model (applies to Metrics 4 and 6)
 
-如果触犯某条，检查是否满足对应豁免条件。
+If all 3 of the following conditions are met, Metrics 4 (gross margin) and 6 (net margin) may be waived:
+1. ROE > 20% (proving that despite thin margins, return on capital is outstanding)
+2. Operating cash flow / net income > 1.0 (earnings quality is not in question)
+3. Business model is of the "membership fee / platform commission / high-turnover thin-margin" type (profits are not reflected in product markup)
 
-### 第四步：输出结果
+**Rationale**: Some first-rate companies hide their profits not in gross margins but in membership fees, turnover efficiency, or platform take rates. Their gross and net margins are naturally low, yet their extremely high ROE signals world-class capital efficiency. Typical example: Costco (gross margin ~12%, net margin ~2.5%, but ROE 25%+ and membership renewal rate 90%+).
 
-#### 输出格式
+---
+
+## Execution Workflow
+
+### Step 1: Parse input and define the screening universe
+
+**Mode determination**:
+- If the input is a specific company name / ticker → **individual-stock mode**: proceed directly to Step 2
+- If the input is an industry / market / theme → **batch mode**: first perform the following:
+  1. Use WebSearch to find major listed companies in the industry / market / theme
+  2. Industry mode: cover the top 15–20 listed companies by market cap in that industry
+  3. Index mode: pull the complete constituent list
+  4. Theme mode: search for related companies, covering 15–30
+  5. List the complete company roster for confirmation (if >30 companies, process in parallel batches)
+
+Confirm the full name, ticker, and exchange for each company.
+
+### Step 2: Parallel data collection
+
+Launch an independent background Agent for each company and use WebSearch to gather the following data:
+
+1. **ROE**: Annual ROE for the past 10 years (or since listing), compute the average
+2. **Free cash flow**: Operating cash flow and capex for the past 5 years, compute cumulative 5-year FCF
+3. **Interest coverage**: Most recent fiscal year EBIT and interest expense, compute the ratio
+4. **Gross margin**: Gross margin trend over the past 5 years
+5. **Operating cash flow / net income**: Annual ratio for the past 5 years, compute the average
+6. **Net profit margin**: Net margin trend over the past 10 years, compute the average
+7. **Share count change**: Total shares 5 years ago vs. current, compute the dilution percentage
+
+Data source priority: company annual reports > broker research reports > financial data platforms
+
+### Step 3: Check each metric
+
+For each company, check all 7 metrics one by one:
+- ✅ Pass
+- ❌ Fail
+- ⚠️ Borderline (include numerical explanation)
+
+If a metric is failed, check whether the corresponding exemption conditions are met.
+
+### Step 4: Output results
+
+#### Output format
 
 ```markdown
-# 去劣筛选结果
+# Quality Screen Results
 
-**筛选日期**：{当天日期}
-**公司数量**：{N}家
+**Screen date**: {today's date}
+**Companies screened**: {N}
 
-## 汇总表
+## Summary table
 
-| 公司 | ①ROE | ②FCF | ③利息覆盖 | ④毛利率 | ⑤OCF/NI | ⑥净利率 | ⑦稀释 | 结果 |
-|------|------|------|----------|---------|---------|---------|-------|------|
-| xxx | ✅ 24% | ✅ | ✅ | ✅ 56% | ✅ | ✅ 30% | ✅ | **通过** |
-| yyy | ❌ 3% | ❌ | ❌ | ✅ 20% | ✅ | ❌ 2% | ✅ | **排除** |
-| zzz | ⚠️→✅ | ✅ | ✅ | ✅ 35% | ✅ | ⚠️→✅ | ✅ | **豁免通过** |
+| Company | ①ROE | ②FCF | ③Interest cov. | ④Gross margin | ⑤OCF/NI | ⑥Net margin | ⑦Dilution | Result |
+|---------|------|------|----------------|--------------|---------|-------------|-----------|--------|
+| xxx | ✅ 24% | ✅ | ✅ | ✅ 56% | ✅ | ✅ 30% | ✅ | **Pass** |
+| yyy | ❌ 3% | ❌ | ❌ | ✅ 20% | ✅ | ❌ 2% | ✅ | **Eliminated** |
+| zzz | ⚠️→✅ | ✅ | ✅ | ✅ 35% | ✅ | ⚠️→✅ | ✅ | **Exemption pass** |
 
-## 通过的公司（N家）
-[列表]
+## Companies that passed (N)
+[List]
 
-## 排除的公司（N家）
-| 公司 | 触犯指标 | 具体数据 | 排除理由 |
-|------|---------|---------|---------|
+## Companies eliminated (N)
+| Company | Failed metrics | Specific data | Reason for elimination |
+|---------|---------------|---------------|----------------------|
 
-## 豁免通过的公司（N家）
-| 公司 | 豁免条款 | 具体数据 | 豁免理由 |
-|------|---------|---------|---------|
+## Companies passing via exemption (N)
+| Company | Exemption clause | Specific data | Exemption rationale |
+|---------|-----------------|---------------|---------------------|
 
-## 边界争议（如有）
-[对处于阈值附近的公司做补充说明]
+## Borderline cases (if any)
+[Additional notes for companies near the threshold]
 
-## 板块总结（行业/市场模式专用）
+## Sector summary (industry / market mode only)
 
-**通过率**：{通过数}/{总数} = {百分比}
-**行业质量判断**：[根据通过率给出行业整体质量评价]
+**Pass rate**: {passed}/{total} = {percentage}
+**Industry quality assessment**: [Overall quality assessment of the industry based on pass rate]
 
-| 质量分层 | 公司 | 共同特征 |
-|---------|------|---------|
-| 一流（全过+高ROE） | xxx, yyy | ... |
-| 合格（全过但指标平庸） | aaa, bbb | ... |
-| 淘汰 | ccc, ddd | ... |
+| Quality tier | Companies | Common characteristics |
+|-------------|-----------|----------------------|
+| First-rate (all pass + high ROE) | xxx, yyy | ... |
+| Qualified (all pass but metrics are mediocre) | aaa, bbb | ... |
+| Eliminated | ccc, ddd | ... |
 
-**行业选股结论**：[一句话总结该行业值不值得深挖，最值得关注的2-3家是谁]
+**Industry stock-selection conclusion**: [One sentence summarizing whether this industry is worth deeper research, and the 2–3 most noteworthy companies]
 ```
 
 ---
 
-## 注意事项
+## Notes
 
-1. **银行/保险**：不适用第3条（利息覆盖），其商业模式本质就是利差经营
-2. **REIT**：ROE可能因物业重估波动大，用"核心营运利润ROE"代替
-3. **数据不足**：如果某项数据无法获取，标注为"数据不足"而非直接判定通过/不通过
-4. **周期性行业**：用完整周期（至少覆盖一个高点和一个低点）的平均值，不用单一年份
-5. **上市时间短**：不足5年的公司用全部可得数据，但在结果中标注"数据窗口不足"
+1. **Banks / insurers**: Metric 3 (interest coverage) does not apply — their business model is inherently based on interest rate spread
+2. **REITs**: ROE may fluctuate significantly due to property revaluations; use "core operating profit ROE" instead
+3. **Insufficient data**: If a data point cannot be obtained, label it "data unavailable" rather than defaulting to pass or fail
+4. **Cyclical industries**: Use averages over a complete cycle (covering at least one peak and one trough), not a single year
+5. **Short listing history**: For companies listed fewer than 5 years, use all available data but note "insufficient data window" in the results
 
-## 局限性声明
+## Limitations
 
-这套指标能排除"确定不好"的公司，但通过筛选不等于"确定好"。通过的公司仍需进一步研究：
-- 商业模式是否可持续
-- 管理层是否值得信赖
-- 当前估值是否合理
-- 竞争格局是否在恶化
+These metrics can eliminate companies that are "certainly bad," but passing the screen does not mean "certainly good." Companies that pass still require further research:
+- Is the business model sustainable?
+- Is management trustworthy?
+- Is the current valuation reasonable?
+- Is the competitive landscape deteriorating?
 
-去劣是第一步，不是最后一步。
+Eliminating the inferior is the first step, not the last.

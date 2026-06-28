@@ -1,6 +1,6 @@
 ---
 name: deep-company-series
-description: "AI Berkshire skill: 深度公司系列：8 篇长文拆一家公司. Source: skills/deep-company-series.md."
+description: "AI Berkshire skill: Deep Company Series: 8 long-form articles to dissect one company. Source: skills/deep-company-series.md."
 ---
 
 ## Codex adapter note
@@ -12,199 +12,199 @@ This skill is generated from `skills/deep-company-series.md` so Claude Code and 
 - Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
 - Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
 
-# 深度公司系列：8 篇长文拆一家公司
+# Deep Company Series: 8 Long-Form Articles to Dissect One Company
 
-为 $ARGUMENTS 撰写一个 8 篇深度长文系列，发布在公众号/视频号等公开渠道。**核心 IP 不是"会写"，而是"会改"——99% 的财经文章在违反本 skill 的事实核查标准**。
+Write an 8-article deep-dive series for $ARGUMENTS, to be published on public channels such as WeChat Official Account / Video Account. **The core IP is not "writing well" — it's "editing rigorously" — 99% of financial articles violate this skill's fact-checking standards**.
 
-参考样本：`reports/腾讯/《看懂腾讯》/`
-
----
-
-## 一、触发场景
-
-用户希望为一家公司做"教科书级别"的深度研究，并以**系列长文**形式公开发布。区别于一篇研报：
-- 8 篇约 12 万字，从认知重置到决策框架完整闭环
-- 每篇独立成文（适合单篇分享），但贯穿一套估值/管理层/价格判断
-- 写给"愿意花 90 分钟读懂一家公司"的读者，不是写给券商客户
-
-**不适合用本 skill 的场景**：单篇研报、季报点评、行业研究——那些用 `/investment-research`、`/earnings-review`、`/industry-research`。
+Reference sample: `reports/Tencent/Understanding-Tencent/`
 
 ---
 
-## 二、系列篇目模板（8 篇）
+## I. When to Use This Skill
 
-| # | 篇名模板 | 核心问题 | 字数 |
-|---|---------|---------|------|
-| 01 | 你以为你看懂了 X，其实没有 | 认知重置：破 3 个常见错觉 | 4,000-5,000 |
-| 02 | X 的护城河——`<生意本质一句话>` | 护城河深不深、未来 5/10 年还在不在 | 6,000-8,000 |
-| 03 | X 的最大利润引擎——`<最赚钱业务>` | 主业是什么、为什么能持续 | 6,000-8,000 |
-| 04 | X 藏在账上的另一家公司——`<隐藏资产>` | 投资组合 / 子公司 / 隐藏价值 | 8,000-10,000 |
-| 05 | AI（或当下叙事）时代，X 是赢家还是输家 | 时代变量：分业务拆 AI 影响 | 8,000-10,000 |
-| 06 | 用巴菲特方式拆 X 的财报 | 财务深度：毛利率/FCF/ROE/SBC | 8,000-10,000 |
-| 07 | `<管理层金句>`——X 的管理层值不值得托付 | 资本配置纪律 + 诚信检验 + 接班人 | 8,000-10,000 |
-| 08 | 多少钱值得买，什么信号必须卖（系列终章） | DCF 三情景 + 红线清单 + 仓位框架 | 10,000-12,000 |
+The user wants to conduct "textbook-level" deep research on a company and publish it publicly as a **long-form series**. This is distinct from a single research report:
+- 8 articles totaling ~120,000 words, forming a complete loop from cognitive reset to decision framework
+- Each article stands alone (suitable for individual sharing), but runs through a unified valuation / management / price judgment
+- Written for readers "willing to spend 90 minutes to truly understand a company" — not for brokerage clients
 
-加一篇 `00-系列说明.md` 作为目录索引，不发表。
+**Scenarios where this skill is NOT appropriate**: single research reports, earnings commentary, industry research — use `/investment-research`, `/earnings-review`, `/industry-research` for those.
 
 ---
 
-## 三、写作风格规范
+## II. Series Article Template (8 Articles)
 
-### 语气
+| # | Title Template | Core Question | Word Count |
+|---|---------------|--------------|-----------|
+| 01 | You Think You Understand X — You Don't | Cognitive reset: debunking 3 common misconceptions | 4,000-5,000 |
+| 02 | X's Economic Moat — `<business essence in one sentence>` | How deep is the moat; will it still exist in 5/10 years | 6,000-8,000 |
+| 03 | X's Biggest Profit Engine — `<most profitable business>` | What the core business is and why it can sustain | 6,000-8,000 |
+| 04 | The Hidden Company Buried in X's Balance Sheet — `<hidden asset>` | Investment portfolio / subsidiaries / hidden value | 8,000-10,000 |
+| 05 | In the Age of AI (or Current Narrative), Is X a Winner or Loser | Time variable: break down AI impact by business segment | 8,000-10,000 |
+| 06 | Dissecting X's Earnings Report the Buffett Way | Financial depth: gross margin / FCF / ROE / SBC | 8,000-10,000 |
+| 07 | `<Management quote>` — Is X's Management Worth Trusting | Capital allocation discipline + integrity test + succession | 8,000-10,000 |
+| 08 | At What Price Is It Worth Buying, and What Signals Mean You Must Sell (Series Finale) | DCF three scenarios + red line list + position framework | 10,000-12,000 |
 
-- **直接、犀利、不说废话**——第一句就给数字或反常识结论
-- **价值投资框架**——巴菲特/芒格/段永平/李录视角穿插（但不堆砌名言）
-- **不预设立场**——先摆数据、再推逻辑、最后得结论
-- **呈现正反两面**——每个核心判断都附"但另一方面..."的反方
-- **公众号体感**——前 18-20 字必须能独立站住（手机预览）
-
-### 禁用词
-
-| 禁用 | 原因 | 替代 |
-|------|------|------|
-| 显然 / 必然 / 一定 | 主观绝对化 | 数据显示 / 证据表明 |
-| 我认为 / 我觉得 | 主观腔调 | 删除或改为"按本框架" |
-| 教科书级别 / 神来之笔 | 流量党褒奖 | 描述具体事实 |
-| 严重不匹配 / 严重低估 | 强主观词 | 给具体折让百分比 |
-| 完美 / 无可挑剔 | 单边判断 | 加上反方观察 |
-
-### 标题风格
-
-- 用**反差数字**或**反共识结论**做钩子（"15 年 7 次挑战全失败"、"年薪 4292 万占利润 0.0017%"）
-- 副标题中性、概括内容（"——`<本质判断>`"）
-- **避免流量党比喻**："小巴菲特"、"中国版 X"、"YYDS" 一律避开
-- 用专业读者熟悉的术语（"伯克希尔"而不是"巴菲特"，公司名优于人名）
+Add a `00-series-overview.md` as a table of contents — not for publication.
 
 ---
 
-## 四、严苛事实核查 Checklist（核心 IP）
+## III. Writing Style Standards
 
-### 写之前就要警惕的"伪精确"陷阱
+### Tone
 
-1. **概率加权期望值**：`30% × A + 50% × B + 20% × C = 期望 +X%` 这种计算几乎全是垃圾——概率分配是纯主观，给读者错误精确感。**只列情景 + 触发条件 + 方向，不算加权期望**。
-2. **第三方测算 MAU/份额**：QuestMobile/七麦/CBNData 等口径差异巨大（同一时点能差 2-3 倍）。**只用最可信的两个对比作 anchor，其他做定性描述**。
-3. **历史增速线性外推**：`2025 年 +33% × 5 年复合 → 2030 年 X` 是金融文盲式预测。**情景假设 + 高/低区间 + 不是承诺**。
-4. **未公开的持股比例**：字节、Halti 类未上市公司持股**从未公开披露**。**给区间，标"不可知"**。
-5. **强归因**：竞争对手失败 = 因为 X。多重原因都列出来，**本文不做单一归因**。
+- **Direct, sharp, no filler** — lead with numbers or counter-intuitive conclusions in the first sentence
+- **Value investing framework** — weave in Buffett / Munger / Duan Yongping / Li Lu perspectives (without piling on quotes)
+- **No predetermined stance** — present data first, then logic, then conclusions
+- **Present both sides** — every core judgment must include a "but on the other hand..." counter-argument
+- **WeChat-friendly format** — the first 18-20 characters must stand on their own (mobile preview)
 
-### 修订时必跑的 7 项检查
+### Prohibited Words
+
+| Prohibited | Reason | Replacement |
+|-----------|--------|-------------|
+| Obviously / Inevitably / Certainly | Subjective absolutism | Data shows / Evidence indicates |
+| I think / I feel | Subjective tone | Delete or replace with "Under this framework" |
+| Textbook-level / Stroke of genius | Clickbait praise | Describe specific facts |
+| Severely undervalued / Severely mismatched | Strongly subjective | Give a specific discount percentage |
+| Perfect / Flawless | One-sided judgment | Add counter-observations |
+
+### Title Style
+
+- Use **contrasting numbers** or **counter-consensus conclusions** as hooks ("Failed 7 Challenges Over 15 Years", "Annual salary of 42.92 million = 0.0017% of profit")
+- Subtitles are neutral and descriptive ("— `<core judgment>`")
+- **Avoid clickbait comparisons**: "mini-Buffett", "China's version of X", "GOAT" — avoid all of these
+- Use terminology familiar to professional readers ("Berkshire" not "Buffett", company names over personal names)
+
+---
+
+## IV. Rigorous Fact-Checking Checklist (Core IP)
+
+### "False Precision" Traps to Watch Before Writing
+
+1. **Probability-weighted expected values**: `30% × A + 50% × B + 20% × C = expected +X%` — these calculations are almost always garbage. Probability assignments are purely subjective and give readers a false sense of precision. **Only list scenarios + trigger conditions + direction; do not calculate weighted expected values**.
+2. **Third-party MAU/market share estimates**: QuestMobile / Qimai / CBNData and similar sources have huge methodology differences (can vary 2-3x at the same point in time). **Only use the two most reliable sources as anchors; describe others qualitatively**.
+3. **Linear extrapolation of historical growth**: `2025 +33% × 5-year CAGR → 2030 X` is amateur-level forecasting. **Scenario assumptions + high/low range + not a promise**.
+4. **Undisclosed ownership percentages**: Stake in unlisted companies like ByteDance or Halti has **never been publicly disclosed**. **Give a range, label "unknowable"**.
+5. **Strong causal attribution**: Competitor failure = caused by X. List multiple causes; **this article does not make single-cause attributions**.
+
+### 7 Checks to Run During Revision
 
 ```
-□ 1. 跨篇数字一致性：总市值、Non-IFRS 净利润、关键持股 % 全系列对齐
-□ 2. 口径标注：Non-IFRS / GAAP / Non-IFRS-SBC / FCF 各用哪个，全文清楚
-□ 3. 重复加计扫描：已并表子公司不在"投资组合"里、SOTP 不双算
-□ 4. 横向比较公平性：不能"主业 PE（剔除现金+组合）" vs "对手 PE（不剔）"
-□ 5. 概率加权全删：见上一条
-□ 6. 绝对化表述全弱化：grep "显然|必然|严重|教科书|完美"
-□ 7. 第三方数据来源标注：每条非财报数据后跟"（来源：X）"
+□ 1. Cross-article number consistency: total market cap, Non-IFRS net income, key ownership % aligned across the full series
+□ 2. Metric labeling: Non-IFRS / GAAP / Non-IFRS-SBC / FCF — which is used where, clearly stated throughout
+□ 3. Double-counting scan: already-consolidated subsidiaries not in "investment portfolio"; no double-counting in SOTP
+□ 4. Fairness of cross-comparisons: don't compare "core business PE (ex-cash+portfolio)" vs "competitor PE (not ex)"
+□ 5. Delete all probability-weighted figures: see above
+□ 6. Soften all absolute statements: grep "obviously|inevitably|severely|textbook|perfect"
+□ 7. Third-party data source attribution: every non-earnings-report data point followed by "(Source: X)"
 ```
 
-### 模型偏好
+### Known Hard-Error Risks
 
-写之前**先列出已知硬错误风险**：
-- 历史回报倍数：必须用累计投入口径（如 Riot 33 倍 不是 58 倍）
-- 持股比例：必须看最新富途/财报口径（如腾讯持有美团 1.5% 不是 6.4%）
-- "派息分派"会计处理：视同处置收益按 IFRIC 17 在宣派日确认（如京东在 2021，美团在 2022 但金额小）
-- 总股本会反弹：SBC 集中年初授予会让股本短期上升
+Before writing, **list known hard-error risks upfront**:
+- Historical return multiples: must use cumulative-investment basis (e.g., Riot 33x not 58x)
+- Ownership percentages: must use latest Futu/earnings report data (e.g., Tencent holds Meituan 1.5% not 6.4%)
+- "Dividend-in-specie" accounting: treated as disposal gain recognized on declaration date per IFRIC 17 (e.g., JD.com in 2021, Meituan in 2022 but smaller amount)
+- Total shares can rebound: SBC granted heavily at year-start can temporarily increase share count
 
 ---
 
-## 五、执行流程
+## V. Execution Workflow
 
-### 阶段 1：调研（写 01-02 篇前完成）
+### Phase 1: Research (Complete Before Writing Articles 01-02)
 
-1. 阅读公司近 5 年年报、最新季报
-2. 阅读至少 3 份独立卖方研报（找共识 + 反共识）
-3. 用 `/investment-team` 或 `/investment-research` 先生成内部研究底稿
-4. 与用户确认 8 篇的核心论点（避免写完才发现方向不对）
+1. Read the company's annual reports for the past 5 years, plus the latest quarterly report
+2. Read at least 3 independent sell-side research reports (find consensus + counter-consensus)
+3. Use `/investment-team` or `/investment-research` to generate an internal research draft first
+4. Confirm the core thesis of all 8 articles with the user (to avoid finishing and finding the direction was wrong)
 
-### 阶段 2：写作（按 01→08 顺序写，不跳）
+### Phase 2: Writing (Write in order 01→08, no skipping)
 
-- 每篇写完先存 `reports/{公司名}/《看懂{公司名}》/0X-XX.md`
-- 不立即推 GitHub——等用户审阅
-- 用户提修订意见后修改
-- 修订完才 git push
+- Save each article after writing to `reports/{Company Name}/Understanding-{Company Name}/0X-XX.md`
+- Do not push to GitHub immediately — wait for user review
+- Make revisions after user feedback
+- Only `git push` after revisions are complete
 
-### 阶段 3：跨篇一致性扫描（08 篇全部写完后）
+### Phase 3: Cross-Article Consistency Scan (After All 8 Articles Are Written)
 
-派 Explore agent 并行扫描 8 篇做以下检查：
-1. 同一数字（市值、净利润、持股比例）跨篇是否一致
-2. 同一术语（FBS、SBC、Non-IFRS）首次出现是否解释
-3. 引用关系：02 篇说"详见 06 篇"是否真的对应
-4. 要点回顾 vs 正文是否数字一致
+Deploy an Explore agent to scan all 8 articles in parallel for the following:
+1. Whether the same numbers (market cap, net income, ownership %) are consistent across articles
+2. Whether the same terms (FBS, SBC, Non-IFRS) are explained on first occurrence
+3. Reference integrity: if article 02 says "see article 06," does it actually correspond
+4. Whether key takeaways vs. body text numbers are consistent
 
-### 阶段 4：发布前最终核查
+### Phase 4: Pre-Publication Final Check
 
 ```bash
-# 推送前必须本地 grep 一次（按 ai-berkshire 隐私规则）
-grep -r "linxuan\|/Users/\|<用户公司花名>" reports/ | head
+# Must grep locally before pushing (per ai-berkshire privacy rules)
+grep -r "linxuan\|/Users/\|<user company alias>" reports/ | head
 ```
 
-确认无误后才 `git pull --rebase && git commit && git push`。
+Only proceed with `git pull --rebase && git commit && git push` after confirming clean.
 
 ---
 
-## 六、修订意见处理流程
+## VI. Revision Handling Workflow
 
-用户给修订意见时，按以下顺序处理：
+When the user provides revision feedback, process in the following order:
 
-### 1. 先核查事实（不要直接改）
+### 1. Verify Facts First (Do Not Edit Directly)
 
-如果用户说"X 数据不对"，先用 Bash/Read 找原始数据交叉验证：
-- 看 ai-berkshire 项目里同公司的 earnings/财报报告
-- 看富途/官方披露
-- 给出"用户说的数据 vs 我查到的数据 vs 我之前用的数据"三方对比
+If the user says "X data is wrong," first use Bash/Read to cross-validate with source data:
+- Check earnings/financial reports for the same company in the ai-berkshire project
+- Check Futu / official disclosures
+- Provide a three-way comparison: "what the user said vs. what I found vs. what I previously used"
 
-### 2. 判断修订级别
+### 2. Classify the Revision Level
 
-| 级别 | 类型 | 处理 |
-|------|------|------|
-| 🔥 硬错误 | 数字错、归因错、口径错 | 必改，不需犹豫 |
-| ⚠️ 主观化 | 强主观词、绝对化、流量党比喻 | 弱化或删除 |
-| 🔬 颗粒度 | 来源标注、口径细化 | 优先级低，按可读性平衡 |
-| ❓ 不可靠 | 第三方测算差异大 | **删比改更稳**（用户明确指示） |
+| Level | Type | Action |
+|-------|------|--------|
+| 🔥 Hard error | Wrong number, wrong attribution, wrong metric basis | Must fix, no hesitation |
+| ⚠️ Subjective | Strongly subjective words, absolutes, clickbait comparisons | Soften or delete |
+| 🔬 Granularity | Source labeling, metric refinement | Lower priority, balance with readability |
+| ❓ Unreliable | Third-party estimates with large variance | **Deleting is safer than editing** (per user instruction) |
 
-### 3. 修订后联动检查
+### 3. Cascade Check After Revision
 
-修一处先想"哪些地方还会引用这个数字/概念"。例：
-- 改了总市值 → 全系列联动改 PE / 主业 PE / 折让 / FCF Yield
-- 改了持股 % → 改 TOP 10 排序 + 历史持股表 + 减持清单
-- 改了术语口径 → 改首次定义 + 后续引用 + 要点回顾
+Before fixing one item, think "where else is this number/concept referenced?" For example:
+- Changed total market cap → cascade-update PE / core PE / discount / FCF Yield across the full series
+- Changed ownership % → update TOP 10 ranking + historical ownership table + reduction list
+- Changed metric definition → update first definition + subsequent references + key takeaways
 
-### 4. 推送后立即报告
+### 4. Report Immediately After Pushing
 
 ```
-推送成功（commit hash）。
-[N] 处修订总结 [带表]：
-- 改了什么
-- 联动改了什么
-- 还有什么没改
+Push successful (commit hash).
+[N] revisions summary [with table]:
+- What was changed
+- What was cascade-changed
+- What has not yet been changed
 
-下一步等指示。
+Awaiting further instructions.
 ```
 
 ---
 
-## 七、本 skill 不做什么
+## VII. What This Skill Does NOT Do
 
-- **不替读者做投资决策**——所有篇章末尾"不构成投资建议"
-- **不预测股价**——只给"情景 + 触发条件"
-- **不算"期望年化回报"加权值**——主观概率分配会误导读者
-- **不写"X 大佬也持有"** —— 用别人的持仓为自己的判断背书是反价值投资的
-- **不强求 8 篇都写**——如果某篇没足够独立内容（如某公司管理层不够特别），合并到其他篇或减篇数
-
----
-
-## 八、合规与隐私
-
-- 所有公开报告**只用公开信息**（财报、官方披露、券商研报、知名第三方机构）
-- 不用任何**用户个人信息**（公司花名、内部 IM、未公开持仓信息）
-- 推送前必须用 grep 扫描 `linxuan` / `/Users/` / 用户公司花名 等隐私字段（参见 `~/.claude/projects/-Users-linxuan/memory/feedback_privacy_upload.md`）
-- 公开署名按用户多层身份策略，不混用
+- **Does not make investment decisions for readers** — all articles end with "this does not constitute investment advice"
+- **Does not predict stock prices** — only provides "scenarios + trigger conditions"
+- **Does not calculate "expected annualized return" weighted values** — subjective probability assignments mislead readers
+- **Does not write "X celebrity also holds this"** — using others' positions to endorse your own judgment is anti-value-investing
+- **Does not require all 8 articles** — if a particular article lacks sufficient independent content (e.g., management isn't distinctive enough), merge with another article or reduce the count
 
 ---
 
-## 一句话总结
+## VIII. Compliance and Privacy
 
-**写《看懂 X 系列》的核心能力 ≠ 写得好，而是改得严**——
-89% 的财经长文死于伪精确数字、主观加权期望值、绝对化表述。本 skill 的存在就是为了把这些坑全部标记出来，写之前避开，写之后扫干净。
+- All public reports **use only public information** (earnings reports, official disclosures, brokerage research, well-known third-party institutions)
+- Do not use any **user personal information** (company aliases, internal IM, undisclosed position information)
+- Before pushing, must grep `linxuan` / `/Users/` / user company aliases and other private fields (see `~/.claude/projects/-Users-linxuan/memory/feedback_privacy_upload.md`)
+- Public attribution follows the user's multi-layer identity strategy — do not mix
+
+---
+
+## One-Line Summary
+
+**The core competency of writing the "Understanding X Series" is not writing well — it's editing rigorously** —
+89% of long-form financial articles fail due to false-precision numbers, subjective weighted expected values, and absolute statements. This skill exists to flag all these pitfalls, avoid them before writing, and clean them up after.

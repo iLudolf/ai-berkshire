@@ -1,239 +1,239 @@
-# 巴菲特价值投资买入前 Checklist
+# Buffett Value Investing Pre-Purchase Checklist
 
-对 $ARGUMENTS 执行巴菲特价值投资买入前 Checklist 分析。
+Run a Buffett value investing pre-purchase Checklist analysis on $ARGUMENTS.
 
-**支持输入格式**：单个或多个公司，用逗号/顿号/空格分隔。例如：`腾讯, 茅台, 英伟达` 或 `NVDA AAPL MSFT`
+**Supported input formats**: Single or multiple companies, separated by commas / Chinese enumeration marks / spaces. Example: `Tencent, Moutai, Nvidia` or `NVDA AAPL MSFT`
 
-## 执行流程
+## Execution Flow
 
-### 第一步：解析输入，识别所有待分析公司
+### Step 1: Parse Input and Identify All Companies to Analyze
 
-从 $ARGUMENTS 中解析出所有公司名称/代码。对每家公司确定：
-- 公司全称、股票代码、上市交易所
-- 如果公司未上市，标记为"未上市"并给出简要说明（是否有间接投资途径），跳过完整Checklist
+Parse all company names / ticker symbols from $ARGUMENTS. For each company, determine:
+- Full company name, ticker symbol, listing exchange
+- If the company is not publicly listed, mark as "Not Listed" and provide a brief note (whether indirect investment routes exist), then skip the full Checklist
 
-### 第一步半：AI研究偏见预警
+### Step 1.5: AI Research Bias Warning
 
-对每家公司进行"信息丰富度"快速评级（A/B/C），并在报告中标注：
+Perform a quick "information richness" rating (A/B/C) for each company and annotate in the report:
 
-| 等级 | 判断标准 | 对Checklist的影响 |
-|------|---------|-----------------|
-| A级 | 上市多年、数据充裕 | 正常执行，但警惕"共识陷阱"——所有指标看起来都清晰不代表真的确定 |
-| B级 | 数据有限需推算 | 每个推算指标标注置信度，"好生意"判断加权考虑数据可靠性 |
-| C级 | 信息极度稀缺 | 不勉强填满六关表格，诚实标注"数据不足无法判断"，聚焦可验证的核心问题 |
+| Grade | Criteria | Impact on Checklist |
+|-------|----------|---------------------|
+| A | Listed for many years, data is abundant | Execute normally, but beware of "consensus trap" — all indicators looking clear does not mean true certainty |
+| B | Limited data, requires estimation | Annotate each estimated indicator with confidence level; weight "good business" judgment against data reliability |
+| C | Extremely scarce information | Do not force-fill the six-gate table; honestly annotate "insufficient data, cannot judge"; focus on verifiable core questions |
 
-**核心原则**：Checklist的目标是**排除坏选择**。对于C级公司，"数据不足"不等于"不通过"，也不等于"通过"——应诚实标注为"灰色地带，需补充一手信息"，而不是因为AI无法填满表格就判为否决。
+**Core principle**: The Checklist's goal is to **eliminate bad choices**. For Grade C companies, "insufficient data" does not equal "failed" nor "passed" — honestly annotate as "gray area, requires first-hand information to supplement" rather than rejecting because the AI cannot fill the table.
 
-段永平说过："看不懂"有两种——一种是生意太复杂真的看不懂，一种是你还没花时间去看。AI研究的局限是容易把"资料少"和"看不懂"混为一谈。
+Duan Yongping once said: "Cannot understand" comes in two forms — one is a business genuinely too complex to understand, the other is that you haven't spent the time to look. The limitation of AI research is that it easily conflates "scarce data" with "cannot understand."
 
-### 第二步：并行数据收集
+### Step 2: Parallel Data Collection
 
-使用 Task 工具为**每家公司**启动独立的后台 Agent 进行数据收集（所有公司同时并行启动），每个Agent负责收集：
+Use the Task tool to launch an independent background Agent for **each company** to collect data (all companies launched simultaneously in parallel). Each Agent is responsible for collecting:
 
-1. **盈利能力**：ROE（5-10年趋势）、毛利率、净利率、自由现金流
-2. **估值数据**：当前股价、市值、PE(TTM)、前瞻PE、PB、股息率
-3. **增长趋势**：近3年收入/利润增速
-4. **财务健康**：负债水平、资本开支需求、现金储备、净现金/净负债
-5. **竞争格局**：市场份额、主要竞争对手、份额变化趋势
-6. **护城河证据**：品牌/转换成本/网络效应/规模效应/技术壁垒的具体证据
-7. **管理层记录**：CEO履历、关键决策、持股、资本配置记录
-8. **最新动态**：近6个月重大事件（业绩、并购、监管、管理层变动等）
+1. **Profitability**: ROE (5–10 year trend), gross margin, net margin, free cash flow
+2. **Valuation data**: Current share price, market cap, PE (TTM), forward PE, PB, dividend yield
+3. **Growth trends**: Revenue / earnings growth over the past 3 years
+4. **Financial health**: Debt levels, CapEx requirements, cash reserves, net cash / net debt
+5. **Competitive landscape**: Market share, key competitors, share trend changes
+6. **Economic moat evidence**: Specific evidence of brand / switching costs / network effects / scale advantages / technology barriers
+7. **Management track record**: CEO background, key decisions, shareholding, capital allocation record
+8. **Latest developments**: Major events in the past 6 months (earnings, M&A, regulatory, management changes, etc.)
 
-### 第三步：逐公司执行六关 Checklist
+### Step 3: Execute the Six-Gate Checklist Company by Company
 
-对每家已上市公司，依次过六关：
-
----
-
-#### 第一关：我能理解这门生意吗（能力圈）
-
-必须回答：
-- [ ] 能用一句话说清楚这家公司靠什么赚钱吗？
-- [ ] 10年后大概率还在做什么生意？
-- [ ] 哪些关键变量决定成败？
-- [ ] 对这个行业的认知是来自深度研究还是道听途说？
-
-**评分标准**（★1-5）：
-- ★★★★★：商业模式极其简单清晰，10年确定性高（如茅台：酿酒卖酒）
-- ★★★★☆：模式清晰但有技术门槛，需要一定专业知识理解
-- ★★★☆☆：模式可理解但10年确定性不高，行业变化快
-- ★★☆☆☆：业务线复杂或行业剧变中，难以预判未来
-- ★☆☆☆☆：完全不在能力圈内
-
-**硬性否决**：如果连赚钱方式都说不清，直接标记为"不在能力圈，不做分析"。
+For each listed company, go through six gates in order:
 
 ---
 
-#### 第二关：这是一门好生意吗（经济特征）
+#### Gate 1: Do I Understand This Business? (Circle of Competence)
 
-用数据说话，**关键指标必须通过工具精确计算**：
+Must answer:
+- [ ] Can you explain in one sentence how this company makes money?
+- [ ] With high probability, what business will it still be doing in 10 years?
+- [ ] What are the key variables that determine success or failure?
+- [ ] Is your understanding of this industry based on deep research or hearsay?
+
+**Scoring criteria** (★1–5):
+- ★★★★★: Business model is extremely simple and clear; 10-year certainty is high (e.g., Moutai: brew and sell liquor)
+- ★★★★☆: Model is clear but has a technical threshold; requires some domain knowledge to understand
+- ★★★☆☆: Model is understandable but 10-year certainty is low; industry changes fast
+- ★★☆☆☆: Business lines are complex or the industry is in upheaval; future is hard to predict
+- ★☆☆☆☆: Completely outside the circle of competence
+
+**Hard veto**: If you cannot explain how it makes money, immediately mark as "Outside circle of competence — no analysis."
+
+---
+
+#### Gate 2: Is This a Good Business? (Economic Characteristics)
+
+Let data do the talking — **key metrics must be calculated precisely using tools**:
 
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
-  --price {股价} --eps {EPS} --bvps {每股净资产} --fcf-per-share {每股FCF} --dividend {每股股息}
+  --price {share price} --eps {EPS} --bvps {book value per share} --fcf-per-share {FCF per share} --dividend {dividend per share}
 ```
 
-| 指标 | 该公司数值 | 参考标准 | 判断 |
-|------|-----------|---------|------|
-| ROE（5年均值） | | >15%优秀, >20%卓越 | |
-| 毛利率 | | >40%暗示定价权 | |
-| 自由现金流 | | 持续为正、≈净利润 | |
-| 资本开支强度 | | 轻资产优于重资产 | |
-| 负债水平 | | 有息负债/净利润<3年 | |
+| Metric | Company Value | Reference Standard | Judgment |
+|--------|--------------|-------------------|----------|
+| ROE (5-year average) | | >15% excellent, >20% exceptional | |
+| Gross margin | | >40% implies pricing power | |
+| Free cash flow | | Consistently positive, ≈ net income | |
+| CapEx intensity | | Asset-light beats asset-heavy | |
+| Debt level | | Interest-bearing debt / net income < 3 years | |
 
-**评分标准**（★1-5）：
-- ★★★★★：ROE>25%、高毛利、强FCF、轻资产、低负债（全部达标）
-- ★★★★☆：4项达标
-- ★★★☆☆：3项达标
-- ★★☆☆☆：2项达标或趋势恶化
-- ★☆☆☆☆：多数不达标或FCF持续为负
-
----
-
-#### 第三关：护城河够不够深（竞争优势）
-
-逐项检查：
-
-| 护城河类型 | 是否具备 | 具体证据 | 变宽还是变窄？ |
-|-----------|---------|---------|--------------|
-| 品牌/定价权 | | | |
-| 转换成本 | | | |
-| 网络效应 | | | |
-| 成本/规模优势 | | | |
-| 技术/专利壁垒 | | | |
-
-追加检验：如果给竞争对手100亿，能否复制这门生意？
-
-**评分标准**（★1-5）：
-- ★★★★★：多重护城河叠加且在变宽
-- ★★★★☆：至少一条强护城河且稳定
-- ★★★☆☆：有护城河但不够深，或趋势不明
-- ★★☆☆☆：护城河正在被侵蚀
-- ★☆☆☆☆：无明显护城河
+**Scoring criteria** (★1–5):
+- ★★★★★: ROE >25%, high gross margin, strong FCF, asset-light, low debt (all criteria met)
+- ★★★★☆: 4 criteria met
+- ★★★☆☆: 3 criteria met
+- ★★☆☆☆: 2 criteria met or trend deteriorating
+- ★☆☆☆☆: Most criteria not met or FCF consistently negative
 
 ---
 
-#### 第四关：管理层是否值得信任（人的因素）
+#### Gate 3: Is the Economic Moat Deep Enough? (Competitive Advantage)
 
-| 检查项 | 评估 |
-|--------|------|
-| 诚实度（承诺vs交付） | |
-| 资本配置能力（回购/分红/并购记录） | |
-| 股东利益导向（持股、薪酬） | |
-| 所有者心态（创始人 vs 职业经理人） | |
-| 公司治理（关联交易、商誉、审计） | |
-| CEO离开后能否照常运转？ | |
+Check each item:
 
-**评分标准**（★1-5）：
-- ★★★★★：创始人掌舵、资本配置卓越、利益完全一致
-- ★★★★☆：管理层优秀但有小瑕疵
-- ★★★☆☆：管理层合格但有治理隐患
-- ★★☆☆☆：有诚信或治理问题
-- ★☆☆☆☆：严重诚信问题（→硬性否决）
+| Moat Type | Present? | Specific Evidence | Widening or Narrowing? |
+|-----------|----------|------------------|------------------------|
+| Brand / pricing power | | | |
+| Switching costs | | | |
+| Network effects | | | |
+| Cost / scale advantages | | | |
+| Technology / patent barriers | | | |
+
+Additional test: If you gave a competitor $10 billion, could they replicate this business?
+
+**Scoring criteria** (★1–5):
+- ★★★★★: Multiple moats stacked and widening
+- ★★★★☆: At least one strong moat and stable
+- ★★★☆☆: Moat exists but not deep enough, or trend is unclear
+- ★★☆☆☆: Moat is being eroded
+- ★☆☆☆☆: No obvious economic moat
 
 ---
 
-#### 第五关：价格是否足够便宜（安全边际）
+#### Gate 4: Is Management Trustworthy? (The Human Factor)
 
-| 指标 | 数值 | 历史分位 | 判断 |
-|------|------|---------|------|
+| Check Item | Assessment |
+|------------|-----------|
+| Integrity (promises vs. delivery) | |
+| Capital allocation ability (buyback / dividend / M&A track record) | |
+| Shareholder-oriented (shareholding, compensation) | |
+| Owner mindset (founder vs. professional manager) | |
+| Corporate governance (related-party transactions, goodwill, audit) | |
+| Can it operate normally after the CEO leaves? | |
+
+**Scoring criteria** (★1–5):
+- ★★★★★: Founder at the helm, exceptional capital allocation, interests fully aligned
+- ★★★★☆: Excellent management with minor flaws
+- ★★★☆☆: Competent management but with governance concerns
+- ★★☆☆☆: Integrity or governance issues present
+- ★☆☆☆☆: Serious integrity issues (→ hard veto)
+
+---
+
+#### Gate 5: Is the Price Cheap Enough? (Margin of Safety)
+
+| Metric | Value | Historical Percentile | Judgment |
+|--------|-------|-----------------------|----------|
 | PE (TTM) | | | |
-| 前瞻PE | | | |
+| Forward PE | | | |
 | PB | | | |
-| 股息率 | | | |
+| Dividend yield | | | |
 | FCF Yield | | | |
 
-追加检验（**必须通过工具精确计算，禁止心算**）：
+Additional test (**must be calculated precisely using tools — mental math is prohibited**):
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
-  --price {股价} --eps {EPS} --shares {股本亿} \
-  --growth {乐观} {中性} {悲观} --pe {乐观PE} {中性PE} {悲观PE} --currency {币种}
+  --price {share price} --eps {EPS} --shares {shares in hundreds of millions} \
+  --growth {bull} {base} {bear} --pe {bull PE} {base PE} {bear PE} --currency {currency}
 ```
-- 三情景下的估值区间（取工具输出结果）
-- 如果判断有误，在当前价格买入最多亏多少？
-- 股价腰斩你敢加仓吗？
+- Valuation range under three scenarios (use tool output)
+- If your judgment is wrong, what is the maximum loss at the current price?
+- If the share price is cut in half, would you dare to add to your position?
 
-**评分标准**（★1-5）：
-- ★★★★★：相对内在价值打5折以下，极端安全边际
-- ★★★★☆：打7折，有良好安全边际
-- ★★★☆☆：合理估值，安全边际一般
-- ★★☆☆☆：偏贵，安全边际不足
-- ★☆☆☆☆：严重高估
-
----
-
-#### 第六关：仓位与决策纪律（防止情绪失控）
-
-检查以下情绪信号：
-- 是否因为FOMO想买？
-- 是否因为别人推荐才想买？
-- 如果停牌5年你能接受吗？
-- 买入论述能否用200字以内写清楚？
+**Scoring criteria** (★1–5):
+- ★★★★★: Below 50% of intrinsic value — extreme margin of safety
+- ★★★★☆: 70% of intrinsic value — good margin of safety
+- ★★★☆☆: Fair valuation, average margin of safety
+- ★★☆☆☆: Somewhat expensive, insufficient margin of safety
+- ★☆☆☆☆: Severely overvalued
 
 ---
 
-### 第四步：镜子测试
+#### Gate 6: Position Sizing and Decision Discipline (Preventing Emotional Breakdown)
 
-对每家公司写出镜子测试语句：
-
-> "我以 ___元 买入 ___公司，因为：
-> 1. 这门生意的本质是___，我理解它；
-> 2. 它的护城河是___，而且在变宽/变窄；
-> 3. 管理层___，值得/不值得信赖；
-> 4. 当前价格相当于内在价值的___折，有/无足够安全边际；
-> 5. 即使我错了，下行风险可控/不可控，因为___。"
-
-**5句话说不完整 = 不买。** 明确标注"通过"或"未通过"。
+Check the following emotional signals:
+- Are you buying because of FOMO?
+- Are you buying because someone recommended it?
+- If it were suspended for 5 years, could you accept that?
+- Can you write out your buy thesis in under 200 words?
 
 ---
 
-### 第五步：快速否决清单
+### Step 4: Mirror Test
 
-对每家公司逐条检查，触发任何一条直接标注为"否决"：
+Write a mirror test statement for each company:
 
-- [ ] 说不清楚这家公司怎么赚钱
-- [ ] 连续3年自由现金流为负且看不到改善
-- [ ] 管理层有诚信污点
-- [ ] 竞争优势正在被不可逆侵蚀
-- [ ] 需要靠"下一个接盘者出更高价"来赚钱（博傻）
-- [ ] 无法承受这笔投资归零的后果
-- [ ] 买入理由主要是"别人都在买"或"最近涨得好"
-- [ ] 无法用200字以内写清楚买入理由
+> "I am buying ___ Company at ___ per share, because:
+> 1. The essence of this business is ___, and I understand it;
+> 2. Its economic moat is ___, and it is widening / narrowing;
+> 3. Management ___, is / is not trustworthy;
+> 4. The current price represents ___% of intrinsic value, with / without sufficient margin of safety;
+> 5. Even if I am wrong, the downside risk is manageable / unmanageable, because ___."
+
+**If you cannot complete all 5 sentences = do not buy.** Explicitly annotate "Passed" or "Not Passed."
 
 ---
 
-### 第六步：输出总览对比表（多公司时必须输出）
+### Step 5: Quick Veto Checklist
 
-当分析多家公司时，必须生成对比总览表：
+Check each item for every company; if any one is triggered, immediately annotate as "Vetoed":
 
-| 公司 | Checklist通过？ | 能力圈 | 好生意 | 护城河 | 管理层 | 安全边际 | 核心结论 |
-|------|----------------|--------|--------|--------|--------|---------|---------|
+- [ ] Cannot explain how this company makes money
+- [ ] Free cash flow has been negative for 3 consecutive years with no sign of improvement
+- [ ] Management has an integrity blemish
+- [ ] Competitive advantage is being irreversibly eroded
+- [ ] Requires "the next greater fool to pay a higher price" to profit (momentum speculation)
+- [ ] Cannot accept the consequence of this investment going to zero
+- [ ] The primary buy reason is "everyone is buying" or "it has been performing well recently"
+- [ ] Cannot write out the buy thesis in under 200 words
+
+---
+
+### Step 6: Summary Comparison Table (Required for Multiple Companies)
+
+When analyzing multiple companies, a comparison summary table must be generated:
+
+| Company | Checklist Passed? | Circle of Competence | Good Business | Economic Moat | Management | Margin of Safety | Core Conclusion |
+|---------|-------------------|----------------------|---------------|---------------|------------|-----------------|----------------|
 | | | ★☆☆☆☆ | ★☆☆☆☆ | ★☆☆☆☆ | ★☆☆☆☆ | ★☆☆☆☆ | |
 
 ---
 
-### 第七步：最终结论与写入文件
+### Step 7: Final Conclusion and Write to File
 
-对每家公司给出明确结论（不回避）：
-- ✅ **通过 Checklist**（X/6关）— 可以进入深度研究阶段
-- ❌ **未通过 Checklist** — 说明哪条红线被触发
-- ❓ **灰色地带** — 说明关键争议点是什么，投资者需要自行判断什么
-- N/A — 未上市/无法买入
+Give a clear conclusion for each company (no hedging):
+- ✅ **Checklist Passed** (X/6 gates) — Ready to enter the deep research phase
+- ❌ **Checklist Not Passed** — State which red line was triggered
+- ❓ **Gray Area** — State what the key point of contention is and what the investor needs to judge for themselves
+- N/A — Not listed / cannot be purchased
 
-将完整报告写入 `~/巴菲特Checklist-[公司名或"多公司对比"].md`
+Write the complete report to `~/Buffett-Checklist-[company name or "multi-company-comparison"].md`
 
-## 输出格式要求
+## Output Format Requirements
 
-1. 每家公司独立成章，包含：六关评分表 + 核心数据表 + 关键风险（3-5条）+ 镜子测试 + 明确结论
-2. 多公司时在最后附总览对比表
-3. 所有评分必须使用★符号（★1-5），不含半星
-4. 数据必须标注来源时间，估计值必须注明"估计"
-5. 文末附结语，呼应巴菲特名言："投资的第一条规则是不要亏损"
-6. 语言风格：直接、犀利、不说废话。用巴菲特/芒格/段永平的语录穿插点评
+1. Each company gets its own section, including: six-gate scoring table + core data table + key risks (3–5 items) + mirror test + explicit conclusion
+2. For multiple companies, append a summary comparison table at the end
+3. All ratings must use the ★ symbol (★1–5), no half stars
+4. Data must be annotated with source date; estimated values must be noted as "estimated"
+5. End with a closing remark echoing Buffett's quote: "The first rule of investing is not to lose money"
+6. Language style: direct, sharp, no filler. Intersperse quotes from Buffett / Munger / Duan Yongping
 
-## 关键原则
+## Core Principles
 
-- **宁可错过，不可做错**：Checklist的目标是排除坏选择，不是找到最好的
-- **诚实面对能力圈**：看不懂就说看不懂，不要勉强分析
-- **安全边际是生命线**：好公司买贵了也会亏钱
-- **镜子测试不可跳过**：说不清楚理由就不买，没有例外
+- **Better to miss than to err**: The Checklist's goal is to eliminate bad choices, not to find the best one
+- **Be honest about your circle of competence**: If you don't understand it, say so — don't force the analysis
+- **Margin of safety is the lifeline**: Even a great company bought at too high a price will lose money
+- **The mirror test cannot be skipped**: If you cannot articulate the reason, do not buy — no exceptions

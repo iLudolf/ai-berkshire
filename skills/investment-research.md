@@ -1,235 +1,235 @@
-# 投资研究：巴菲特-芒格-段永平-李录 四大师综合分析框架
+# Investment Research: Four Masters Integrated Analysis Framework
 
-对 $ARGUMENTS 进行系统化投资研究分析。
+Run systematic investment research analysis on $ARGUMENTS.
 
-## 研究框架
+## Research Framework
 
-基于巴菲特、芒格、段永平、李录四位投资大师的方法论，按以下七个模块顺序执行研究：
+Based on the methodologies of Buffett, Munger, Duan Yongping, and Li Lu, execute the research in the following seven modules in order.
 
-### 前置步骤：AI研究偏见自觉（必须执行）
+### Pre-Step: AI Research Bias Awareness (Mandatory)
 
-在开始研究前，先评估该公司的"AI可研究性"，识别潜在的数据偏见：
+Before starting the research, evaluate the company's "AI researchability" and identify potential data biases:
 
-**信息丰富度评级**：
-| 等级 | 特征 | AI研究陷阱 | 应对策略 |
-|------|------|-----------|---------|
-| A级（信息充裕） | 上市多年、券商覆盖多、媒体报道密集 | 共识过强，AI输出趋同于市场定价，alpha有限 | 重点做反面检验：聪明人为什么不买？被忽略的风险是什么？ |
-| B级（信息适中） | 上市1-3年、覆盖有限、部分数据需推算 | AI可能用"合理推测"填补空白，看起来完整实则虚假确定性 | 每个推算数据标注置信度，区分"有据推算"和"凭空填充" |
-| C级（信息稀缺） | 刚上市/冷门股/新兴市场、几乎无覆盖 | AI会因资料不足而过度保守，误判为"看不清=不好" | 用第一性原理提问（见下方），从有限信息中提取商业本质 |
+**Information Richness Rating**:
+| Rating | Characteristics | AI Research Pitfall | Mitigation Strategy |
+|--------|----------------|--------------------|--------------------|
+| A (Information-rich) | Long-listed, wide broker coverage, dense media reporting | Consensus too strong; AI output converges with market pricing, limited alpha | Focus on adversarial testing: why don't smart people buy? What risks are being ignored? |
+| B (Moderate information) | Listed 1-3 years, limited coverage, some data requires estimation | AI may fill gaps with "reasonable guesses," appearing complete but falsely certain | Annotate confidence level on every estimated data point; distinguish "evidence-based estimates" from "made-up filler" |
+| C (Information-scarce) | Newly listed / niche / emerging market, almost no coverage | AI may be excessively conservative due to limited data, misreading "hard to see = not good" | Use first-principles questions (see below); extract business essence from limited information |
 
-**C级公司的第一性原理研究法**：
-当公开资料不足时，不要试图拼凑出"看起来完整"的报告，而是聚焦以下底层问题：
-1. 客户是谁？为什么付钱？有没有替代选择？
-2. 复购靠什么驱动？是习惯、锁定、还是持续创造新价值？
-3. 竞争对手拿100亿能复制这门生意吗？
-4. 管理层做过什么关键决策？这些决策反映了什么判断力和价值观？
+**First-principles research approach for C-rated companies**:
+When public information is insufficient, do not try to assemble a "seemingly complete" report. Instead, focus on these fundamental questions:
+1. Who are the customers? Why do they pay? Are there alternatives?
+2. What drives repeat purchases — habit, lock-in, or continuous new value creation?
+3. Could a competitor replicate this business with $1 billion?
+4. What key decisions has management made? What judgment and values do those decisions reflect?
 
-**偏见自查清单**（研究全程保持警惕）：
-- [ ] 我的"确定性"感受是来自生意本质，还是来自资料数量？
-- [ ] 如果把这家公司的资料量减少一半，我的结论会变吗？
-- [ ] AI输出的分析是否与市场共识高度雷同？如果是，我的信息优势在哪？
-- [ ] 是否存在"公开资料很少但生意本质极好"的可能性被低估了？
+**Bias self-check list** (maintain vigilance throughout the research):
+- [ ] Is my sense of "certainty" coming from the business fundamentals, or from the volume of information?
+- [ ] If I cut this company's available information in half, would my conclusion change?
+- [ ] Is the AI-generated analysis highly similar to market consensus? If so, where is my information edge?
+- [ ] Is there a possibility being underestimated that "little public data but an excellent business model"?
 
-将信息丰富度评级结果写入报告开头，并在最终结论中注明"AI研究置信度"与"实际投资确定性"的区别。
+Include the information richness rating at the start of the report; at the end, distinguish between "AI research confidence" and "actual investment certainty."
 
-### 第一步：数据收集
+### Step 1: Data Collection
 
-> **数据源规范**：参见 `skills/financial-data.md`。所有财务数据必须来自两个独立来源，误差>1%须标记。
-> - 美股：macrotrends（主）+ stockanalysis（副）
-> - 港股：aastocks（主）+ macrotrends ADR（副）
-> - A股：东方财富（主）+ 巨潮资讯（副）
+> **Data source protocol**: See `skills/financial-data.md`. All financial data must come from two independent sources; deviations > 1% must be flagged.
+> - US stocks: Macrotrends (primary) + Stock Analysis (secondary)
+> - HK stocks: AAStocks (primary) + Macrotrends ADR (secondary)
+> - A-shares: Eastmoney (primary) + CNINFO (secondary)
 
-使用 Task 工具启动后台 Agent，从网络收集以下数据：
+Launch a background agent via the Task tool to collect the following data from the web:
 
-1. 收入结构：最近财年及近4季度分部收入、增速、毛利率
-2. 财务指标：近5年收入、净利润、毛利率、经营利润率、自由现金流、现金储备
-3. 竞争格局：市场份额、主要竞争对手对比
-4. 商业模式与护城河：核心竞争优势来源
-5. 技术能力：核心技术栈、研发投入
-6. 管理层：创始人/CEO履历、持股比例、关键决策记录
-7. 行业前景：TAM（总可寻址市场）、增长预测
-8. 风险因素：地缘政治、监管、供应链等
-9. 当前估值：市值、PE、PS、PEG、EV/Revenue
-10. 多空双方核心论点
+1. Revenue structure: Most recent fiscal year and last 4 quarters' segment revenues, growth rates, gross margins
+2. Financial metrics: Past 5 years' revenue, net income, gross margin, operating margin, free cash flow, cash reserves
+3. Competitive landscape: Market share, key competitor comparisons
+4. Business model and moat: Sources of core competitive advantage
+5. Technology capability: Core tech stack, R&D spending
+6. Management: Founder/CEO background, ownership stake, key decision track record
+7. Industry outlook: TAM (total addressable market), growth forecasts
+8. Risk factors: Geopolitical, regulatory, supply chain, etc.
+9. Current valuation: Market cap, PE, PS, PEG, EV/Revenue
+10. Core bull and bear arguments
 
-#### 数据交叉验证（必须执行，使用金融严谨性工具）
+#### Data Cross-Validation (Mandatory — use the financial rigor tool)
 
-数据收集完成后，**必须调用 `tools/financial_rigor.py` 对关键数据进行程序化验证**，杜绝LLM心算误差。
+After data collection, **must call `tools/financial_rigor.py` to programmatically validate key data** to eliminate LLM mental math errors.
 
-**必须验证的数据点**：
-- 总股本（从交易所、Yahoo Finance、StockAnalysis 等至少2个源确认）
-- 当前股价和市值（**手动计算 股价×总股本 并与报告市值对比，防止单位错误**）
-- 最近财年收入和净利润（从公司年报+至少1个第三方源确认）
-- 现金储备和净现金（现金+短期投资-总债务，注意口径差异）
-- 管理层持股比例（区分经济权益和投票权，注意AB股结构）
+**Data points that must be verified**:
+- Total shares outstanding (confirmed from at least 2 sources: exchange, Yahoo Finance, Stock Analysis, etc.)
+- Current price and market cap (**manually calculate price × shares and compare with reported market cap to catch unit errors**)
+- Most recent fiscal year revenue and net income (confirmed from company annual report + at least 1 third-party source)
+- Cash reserves and net cash (cash + short-term investments − total debt; watch for scope differences)
+- Management ownership stake (distinguish economic interest from voting rights; note dual-class share structures)
 
-**强制验证步骤（使用Bash调用工具）**：
+**Mandatory verification steps (use Bash to call the tool)**:
 
-Step 1 — 市值验算（精确十进制，非浮点）：
+Step 1 — Market cap verification (decimal-precise, not floating-point):
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
-  --price {股价} --shares {总股本} --reported {报告市值} --currency {币种}
+  --price {price} --shares {shares} --reported {reported_market_cap} --currency {currency}
 ```
 
-Step 2 — 关键数据多源交叉验证：
+Step 2 — Key data multi-source cross-validation:
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
-  --field {字段名} --values '{"来源1": 数值, "来源2": 数值}' --unit {单位}
+  --field {field_name} --values '{"Source1": value, "Source2": value}' --unit {unit}
 ```
-对收入、净利润、现金储备分别执行。
+Run separately for revenue, net income, and cash reserves.
 
-Step 3 — 估值指标精确验算（PE/PB/ROE/FCF Yield 等）：
+Step 3 — Precise valuation metric verification (PE/PB/ROE/FCF Yield, etc.):
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
-  --price {股价} --eps {EPS} --bvps {每股净资产} --fcf-per-share {每股FCF} --dividend {每股股息}
+  --price {price} --eps {EPS} --bvps {book_value_per_share} --fcf-per-share {FCF_per_share} --dividend {dividend_per_share}
 ```
 
-**验证规则**：
-1. 每个关键数据点至少2个独立来源
-2. 发现来源间有差异时，优先采用公司年报/交易所数据，并注明差异原因
-3. **所有涉及计算的数据必须通过工具验算，禁止LLM心算**
-4. 工具输出结果直接嵌入报告附录"关键数据交叉验证记录"
-5. 如果工具报告 ❌ 偏差过大，必须排查原因后才能继续分析
+**Verification rules**:
+1. At least 2 independent sources for each key data point
+2. When sources disagree, prioritize company annual report / exchange data; note the reason for the discrepancy
+3. **All data involved in calculations must be verified by the tool — LLM mental math is forbidden**
+4. Tool output results embedded directly into the report appendix "Key Data Cross-Validation Record"
+5. If the tool reports ❌ deviation too large, investigate the cause before proceeding
 
-**常见错误防范**：
-- 市值单位：港币亿 vs 人民币亿 vs 美元亿，容易漏写/多写一个零
-- FCF口径：不同来源对资本支出的定义可能不同（是否含租赁、收购等）
-- 债务口径：是否包含经营租赁负债
-- 持股比例：AB股公司的经济权益 ≠ 投票权
+**Common error prevention**:
+- Market cap units: HKD billions vs. CNY billions vs. USD billions — easy to misplace a zero
+- FCF definition: different sources may define capex differently (include/exclude lease payments, acquisitions, etc.)
+- Debt scope: whether operating lease liabilities are included
+- Ownership stake: for dual-class share companies, economic interest ≠ voting rights
 
-### 第二步：生意本质分析 — 段永平"对的生意"
+### Step 2: Business Nature Analysis — Duan Yongping's "Right Business"
 
-分析要点：
-- 用一句话定义这门生意的本质
-- 收入结构拆解（图表）
-- 5年盈利能力趋势（图表）
-- 商业模式画布：一次性销售 vs 订阅/复购？硬件 vs 软件 vs 平台？
-- 生态粘性/客户锁定强度
-- 毛利率水平与同行对比，解释为什么高/低
-- 经营杠杆分析
-- **段永平式追问**：这门生意好在哪？如果只能用一句话描述，是什么？
+Key analysis points:
+- Define the essence of this business in one sentence
+- Revenue structure breakdown (table)
+- 5-year profitability trend (table)
+- Business model canvas: one-time sale vs. subscription/repeat? Hardware vs. software vs. platform?
+- Ecosystem stickiness / customer lock-in strength
+- Gross margin level vs. peer comparison, explain why it's high/low
+- Operating leverage analysis
+- **Duan Yongping's follow-up question**: What's great about this business? If you had to describe it in one sentence, what would it be?
 
-### 第三步：护城河评估 — 巴菲特"经济护城河"
+### Step 3: Moat Assessment — Buffett's "Economic Moat"
 
-逐一验证五类护城河：
+Verify each of the five moat types one by one:
 
-| 护城河类型 | 验证方法 |
-|-----------|---------|
-| 品牌/定价权 | 是否能在不损失销量的情况下提价？ |
-| 转换成本 | 客户迁移到竞品的成本有多高？ |
-| 网络效应 | 用户越多产品越好吗？ |
-| 规模效应 | 规模带来的成本优势有多大？ |
-| 技术/专利壁垒 | 技术领先几年？能否被复制？ |
+| Moat Type | Verification Method |
+|-----------|---------------------|
+| Brand / pricing power | Can they raise prices without losing volume? |
+| Switching costs | How costly is it for customers to move to a competitor? |
+| Network effects | Does the product get better as more users join? |
+| Scale economies | How large are the cost advantages from scale? |
+| Technology / patent barriers | How many years ahead? Can it be replicated? |
 
-分析护城河趋势：过去5年变宽还是变窄？未来5年预判。
+Analyze moat trend: has it widened or narrowed over the past 5 years? Forecast for the next 5 years.
 
-**巴菲特式追问**：10年后这条护城河还在吗？什么能摧毁它？
+**Buffett's follow-up question**: Will this moat still exist in 10 years? What could destroy it?
 
-### 第四步：逆向思考与风险清单 — 芒格"反过来想"
+### Step 4: Reverse Thinking and Risk Checklist — Munger's "Think It Through Backwards"
 
-- 列出"这家公司可能失败的所有路径"（表格：路径/概率/影响程度）
-- 历史类比：找到历史上处于相似位置的公司，结局如何？
-- 跨学科分析：用网络效应理论、技术采纳曲线、竞争博弈等模型交叉验证
-- 偏误自查：叙事偏差、锚定效应、幸存者偏差
-- 收集空方核心论点
+- List "all the paths this company could fail" (table: path / probability / impact severity)
+- Historical analogies: find companies that were in a similar position historically; how did they end up?
+- Cross-disciplinary analysis: cross-validate using network effects theory, technology adoption curves, competitive game theory, etc.
+- Bias self-check: narrative bias, anchoring effect, survivorship bias
+- Collect the core bear arguments
 
-**芒格式追问**：我最可能在哪里犯错？聪明人为什么会不买/做空这家公司？
+**Munger's follow-up question**: Where am I most likely to be wrong? Why would smart people not buy / sell short this company?
 
-### 第五步：管理层评估 — 段永平"对的人" + 巴菲特"管理层诚信"
+### Step 5: Management Assessment — Duan Yongping's "Right People" + Buffett's "Management Integrity"
 
-- CEO/创始人关键决策复盘（表格：时间/决策/结果/评分）
-- 资本配置能力：研发回报率、并购成功率、回购时机
-- 股东利益一致性：管理层持股、薪酬结构、减持记录
-- 组织能力：团队稳定性、关键人才风险
-- 企业文化特征
+- CEO/founder key decisions post-mortem (table: date / decision / outcome / score)
+- Capital allocation capability: R&D ROI, M&A success rate, buyback timing
+- Shareholder interest alignment: management ownership, compensation structure, insider selling record
+- Organizational capability: team stability, key talent risks
+- Corporate culture characteristics
 
-**段永平式追问**：如果CEO退休，这家公司还能保持竞争力吗？
+**Duan Yongping's follow-up question**: If the CEO retired tomorrow, could this company maintain its competitiveness?
 
-### 第六步：行业与文明趋势 — 李录"文明演进框架"
+### Step 6: Industry and Civilization Trends — Li Lu's "Civilization Evolution Framework"
 
-- 判断所在行业是否处于"文明级范式转移"
-- 历史技术革命类比（蒸汽机/电力/互联网/AI）
-- TAM增长曲线与天花板分析
-- 公司在产业价值链中的位置
-- 技术路线风险
-- 客户/供应商集中度分析
+- Assess whether the industry is in a "civilization-level paradigm shift"
+- Historical technology revolution analogies (steam engine / electricity / internet / AI)
+- TAM growth curve and ceiling analysis
+- Company's position in the industry value chain
+- Technology path risks
+- Customer / supplier concentration analysis
 
-**李录式追问**：站在20年后回看，这家公司是"这个时代的标准石油"还是"昙花一现的3Com"？
+**Li Lu's follow-up question**: Looking back from 20 years in the future, will this company be "the Standard Oil of its era" or "a flash-in-the-pan 3Com"?
 
-### 第七步：估值与安全边际 — 巴菲特"内在价值" + 段永平"对的价格"
+### Step 7: Valuation and Margin of Safety — Buffett's "Intrinsic Value" + Duan Yongping's "Right Price"
 
-- 当前市场定价（关键估值指标表格）—— **必须通过工具验算**
-- 反向DCF：当前股价隐含了什么增长预期？
-- 三情景估值 —— **必须通过工具精确计算，禁止心算**：
+- Current market pricing (key valuation metrics table) — **must be verified by the tool**
+- Reverse DCF: what growth expectations are implied in the current price?
+- Three-scenario valuation — **must be precisely calculated by the tool; mental math is forbidden**:
 ```bash
 python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
-  --price {股价} --eps {EPS} --shares {总股本亿} \
-  --growth {乐观增速} {中性增速} {悲观增速} \
-  --pe {乐观PE} {中性PE} {悲观PE} --years 3 --currency {币种}
+  --price {price} --eps {EPS} --shares {shares_in_billions} \
+  --growth {optimistic_growth} {neutral_growth} {pessimistic_growth} \
+  --pe {optimistic_PE} {neutral_PE} {pessimistic_PE} --years 3 --currency {currency}
 ```
-- 与自身历史估值对比
-- 与同行估值对比
+- Comparison with historical valuation
+- Comparison with peer valuations
 
-**段永平式追问**：如果股市明天关闭5年，你愿意以这个价格持有吗？
+**Duan Yongping's follow-up question**: If the stock market closed for 5 years tomorrow, would you be willing to hold at this price?
 
-### 第八步：综合决策备忘录
+### Step 8: Comprehensive Decision Memo
 
-汇总表格：
+Summary table:
 
-| 维度 | 结论 | 信心度 |
-|------|------|--------|
-| 生意质量（段永平） | | |
-| 护城河（巴菲特） | | |
-| 管理层（段永平+巴菲特） | | |
-| 最大风险（芒格） | | |
-| 文明趋势（李录） | | |
-| 估值（巴菲特+段永平） | | |
+| Dimension | Conclusion | Confidence |
+|-----------|-----------|-----------|
+| Business quality (Duan Yongping) | | |
+| Moat (Buffett) | | |
+| Management (Duan Yongping + Buffett) | | |
+| Biggest risk (Munger) | | |
+| Civilization trend (Li Lu) | | |
+| Valuation (Buffett + Duan Yongping) | | |
 
-最终决策表格：
+Final decision table:
 
-| 策略 | 建议 |
-|------|------|
-| 空仓者 | |
-| 持仓者 | |
-| 卖出信号 | |
-| 加仓信号 | |
+| Strategy | Recommendation |
+|----------|---------------|
+| No position | |
+| Current holder | |
+| Sell signal | |
+| Add signal | |
 
-四位大师的模拟点评（用引用格式）。
+Simulated commentary from each of the four masters (in quote format).
 
-## 输出要求
+## Output Requirements
 
-1. 所有分析必须有数据支撑，附数据来源
-2. 使用 Markdown 表格呈现关键数据
-3. 每个模块末尾必须有对应大师的"追问"
-4. 最终将完整报告写入 `~/[公司名]投资研究报告.md`
-5. 结论要明确，不回避给出买入/观望/回避的建议
-6. 估值部分必须给出具体的价格区间
-7. **报告开头**必须包含"信息丰富度评级"（A/B/C）和"AI研究局限性声明"
-8. **报告结尾**必须区分"AI分析置信度"与"投资确定性"——前者取决于资料量，后者取决于生意本质。明确告知读者：本报告的哪些结论基于充分数据，哪些基于有限信息的推理
-9. 如果公司属于C级（信息稀缺），报告末尾必须列出"需要一手验证的问题清单"——建议读者通过田野调查、产品体验、供应链访谈等方式补充AI的盲区
+1. All analysis must be data-backed, with data sources cited
+2. Use Markdown tables for key data
+3. Every module must end with the corresponding master's "follow-up question"
+4. Save the complete report to `~/[company_name]-investment-research.md`
+5. Conclusions must be clear — do not shy away from giving a buy / wait / avoid recommendation
+6. The valuation section must give a specific price range
+7. **Report opening** must include an "Information Richness Rating" (A/B/C) and "AI Research Limitations Disclaimer"
+8. **Report closing** must distinguish "AI analysis confidence" from "investment certainty" — the former depends on data volume; the latter depends on business fundamentals. Explicitly tell the reader: which conclusions are based on adequate data, and which are based on reasoning from limited information
+9. If the company is C-rated (information-scarce), the report must end with a "Questions Requiring First-Hand Verification" checklist — recommending the reader supplement AI blind spots through field research, product trials, supply chain interviews, etc.
 
-## 数据抽检（准出流程）
+## Data Audit (Publication Gate)
 
-报告写入文件后，**必须**执行数据抽检，通过后方可发布：
+After writing the report to file, **must** execute the data audit before publishing:
 
-**Step 1 — 提取抽检清单（15%随机抽样）：**
+**Step 1 — Extract audit checklist (15% random sampling)**:
 ```bash
 python3 ~/ai-berkshire/tools/report_audit.py extract \
-  --report <报告文件路径>
+  --report <report_file_path>
 ```
-输出 JSON 模板，每项含 `fetched_value`（待填）。
+Outputs a JSON template; each item contains `fetched_value` (to be filled in).
 
-**Step 2 — 取数核验：**
-对清单中每个数据点，按 `skills/financial-data.md` 规范从可靠信源取数
-（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），
-填入 `fetched_value` / `fetched_source` / `fetched_value2` / `fetched_source2`。
+**Step 2 — Verify each data point**:
+For each data point in the checklist, retrieve values from reliable sources per `skills/financial-data.md`
+(US stocks: Macrotrends + Stock Analysis; HK stocks: AAStocks + Macrotrends; A-shares: Eastmoney + CNINFO),
+fill in `fetched_value` / `fetched_source` / `fetched_value2` / `fetched_source2`.
 
-**Step 3 — 输出判决：**
+**Step 3 — Output verdict**:
 ```bash
 python3 ~/ai-berkshire/tools/report_audit.py verdict \
-  --results '<填好的JSON>' \
-  --report <报告文件名>
+  --results '<filled_JSON>' \
+  --report <report_filename>
 ```
 
-- **【准出】**：所有抽检点偏差 ≤ 1% → 报告可发布
-- **【打回】**：任意点偏差 > 1% → 修正对应数据后重新抽检，直到准出
+- **[PASS]**: All audit points deviate ≤ 1% → report may be published
+- **[REJECT]**: Any point deviates > 1% → correct the relevant data and re-audit until passing

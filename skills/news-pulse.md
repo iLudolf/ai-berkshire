@@ -1,234 +1,234 @@
 ---
 name: news-pulse
-description: 公司新闻脉搏：股价异动时快速归因。用 4 个并行 Agent 侦察公司事件/监管政策/行业对手/市场情绪，产出"事件时间线 + 异动主因判断 + 是否触发论文重审"。
+description: Company News Pulse — rapid attribution of stock price movements. Uses 4 parallel Agents to scout company events / regulatory policy / industry peers / market sentiment, producing an "event timeline + primary cause of movement + whether to trigger thesis review".
 ---
 
-# 公司新闻脉搏：股价异动快速归因团队
+# Company News Pulse: Rapid Stock Movement Attribution Team
 
-对 $ARGUMENTS 进行最近新闻侦察与异动归因。**这不是深度投研，是情报快速响应**——目标是 10 分钟内回答："这家公司最近发生了什么？股价异动的真因是什么？要不要重审投资论文？"
+Conduct a recent news reconnaissance and movement attribution analysis for $ARGUMENTS. **This is not deep investment research — it is rapid intelligence response** — the goal is to answer within 10 minutes: "What has happened with this company recently? What is the true cause of the stock price movement? Should we re-examine the investment thesis?"
 
-## 适用场景
+## Use Cases
 
-- 持仓/关注股票股价大涨/大跌（一般触发线：单日 ±5%、一周 ±10%）
-- 财报后股价异动，想快速搞清市场在反应什么
-- 看到新闻标题，但不确定是噪音还是真信号
-- **不适用**：完整投研（用 `/investment-team`）、财报深读（用 `/earnings-review`）、长期论文跟踪（用 `/thesis-tracker`）
+- A position or watchlist stock surges/drops sharply (typical trigger: ±5% in a single day, ±10% in a week)
+- Stock moves after earnings and you want to quickly understand what the market is reacting to
+- You see a news headline but are unsure whether it is noise or a real signal
+- **Not applicable for**: full investment research (use `/investment-team`), deep earnings analysis (use `/earnings-review`), long-term thesis tracking (use `/thesis-tracker`)
 
-## 执行流程
+## Execution Flow
 
-### 第一步：确认参数与场景
+### Step 1: Confirm Parameters and Scenario
 
-向用户澄清以下信息（如未在 $ARGUMENTS 中提供）：
+Clarify the following with the user (if not provided in $ARGUMENTS):
 
-| 参数 | 说明 | 默认 |
-|------|------|------|
-| **公司名** | 中文/英文/股票代码均可 | 必填 |
-| **时间窗口** | 侦察新闻的回溯天数 | 默认 14 天，财报季可缩到 7 天 |
-| **股价异动** | 涨/跌幅度 + 时间，如"跌 12%/3 天" | 选填，有则用于聚焦归因 |
-| **关注侧重** | 公司事件 / 监管 / 行业 / 情绪 | 默认四方平均 |
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| **Company name** | Chinese / English / ticker all accepted | Required |
+| **Time window** | Number of days to look back for news | Default 14 days; can narrow to 7 days during earnings season |
+| **Price movement** | Magnitude + timeframe, e.g. "down 12% / 3 days" | Optional — if provided, used to focus the attribution |
+| **Focus area** | Company events / regulatory / industry / sentiment | Default: all four equally |
 
-如果用户只说了公司名，先反问："最近多少天的新闻？有具体的股价异动要解释吗？"——**不要默默假设**。
+If the user only provides a company name, ask first: "How many days of news? Is there a specific price movement to explain?" — **do not assume silently**.
 
-### 第二步：信息可得性分级
+### Step 2: Information Availability Classification
 
-参考 `investment-team.md` 的 A/B/C 评级，但维度不同：
+Reference the A/B/C rating in `investment-team.md`, but with different dimensions:
 
-| 等级 | 特征 | 侦察策略 |
-|------|------|---------|
-| **A 级（信息充裕）** | 大盘股、媒体覆盖广、财报季 | 重点是**降噪和归因**——信息太多反而难找真因，每个 Agent 要有判断力，过滤掉"重复转述"的二手新闻 |
-| **B 级（信息适中）** | 中小盘、覆盖一般 | 标准模式，每条关键事件附 1-2 个独立信源 |
-| **C 级（信息稀缺）** | 港股小票、新上市、冷门 | 转入"扫盲模式"——可能找不到任何能解释异动的新闻，**这个结论本身就有价值**（可能是技术性/资金面而非基本面） |
+| Grade | Characteristics | Reconnaissance Strategy |
+|-------|----------------|------------------------|
+| **Grade A (Information-rich)** | Large-cap, wide media coverage, earnings season | Focus on **noise reduction and attribution** — too much information makes finding the true cause harder; each Agent must exercise judgment and filter out "repeated paraphrase" secondary news |
+| **Grade B (Moderate information)** | Small/mid-cap, average coverage | Standard mode — each key event accompanied by 1-2 independent sources |
+| **Grade C (Information-scarce)** | Small HK-listed stocks, newly listed, obscure companies | Switch to "reconnaissance mode" — may find no news to explain the movement; **this conclusion itself is valuable** (may be technical/capital-flow driven rather than fundamental) |
 
-将评级告知每个 Agent，影响其侦察方式。
+Communicate the grade to each Agent — it affects their reconnaissance approach.
 
-### 第三步：创建团队
+### Step 3: Create the Team
 
-使用 TeamCreate 创建团队：
-- `team_name`: `{公司名}-newspulse`（英文小写，如 `pdd-newspulse`）
+Use TeamCreate to create the team:
+- `team_name`: `{company-name}-newspulse` (lowercase English, e.g. `pdd-newspulse`)
 - `agent_type`: `team-lead`
 
-### 第四步：创建 4 个侦察任务
+### Step 4: Create 4 Reconnaissance Tasks
 
-使用 TaskCreate 创建以下 4 个任务：
+Use TaskCreate to create the following 4 tasks:
 
-#### 任务 1：公司事件侦察（company-event-scout）
+#### Task 1: Company Event Scout (company-event-scout)
 
-- **subject**: `侦察 {公司名} 近 {N} 天的公司本体事件`
+- **subject**: `Scout {company name} company-level events over the past {N} days`
 - **description**:
-  1. **官方公告**：港交所/SEC/巨潮 等监管披露平台最近披露
-  2. **财报与业绩指引**：最新季报/年报、业绩预告、业绩会要点
-  3. **管理层动作**：高管变动、增减持、回购、分红、股权激励
-  4. **重大业务事件**：新产品发布、并购重组、业务剥离、大客户/大订单
-  5. **资本运作**：再融资、可转债、ADR 转换、回 A/退市动议
-  6. **诉讼与合规**：被起诉、自行披露的合规事件
-  7. 每条事件标注：**日期 / 来源链接 / 一句话摘要 / 与股价异动可能相关性（高/中/低）**
-  8. 输出按时间倒序的时间线表格
+  1. **Official announcements**: Recent filings on HKEX / SEC / CNINFO and other regulatory disclosure platforms
+  2. **Earnings and guidance**: Latest quarterly/annual report, earnings pre-announcement, key earnings call takeaways
+  3. **Management actions**: Executive changes, insider buys/sells, buybacks, dividends, equity incentives
+  4. **Major business events**: New product launches, mergers and acquisitions, divestitures, major customers / major orders
+  5. **Capital operations**: Secondary offerings, convertible bonds, ADR conversions, A-share relisting / delisting proposals
+  6. **Litigation and compliance**: Lawsuits filed, voluntarily disclosed compliance events
+  7. Each event annotated with: **date / source link / one-sentence summary / likely relevance to price movement (high/medium/low)**
+  8. Output as a timeline table in reverse chronological order
 
-#### 任务 2：监管与政策（regulatory-watcher）
+#### Task 2: Regulatory and Policy Watcher (regulatory-watcher)
 
-- **subject**: `侦察 {行业/公司} 近 {N} 天的监管与政策变化`
+- **subject**: `Scout {industry/company} regulatory and policy changes over the past {N} days`
 - **description**:
-  1. **行业监管**：所在行业的新规、罚款、整改、牌照变化
-  2. **跨境政策**：中美关系（中概股）、关税、出口管制、数据安全
-  3. **税收政策**：增值税、企业所得税、个税相关变化
-  4. **反垄断与竞争法**：调查、罚款、并购否决
-  5. **特殊行业政策**：医药集采、教育双减、地产三道红线、互联网平台规制等
-  6. **货币与外汇**：影响该公司的汇率/利率/资本管制变化
-  7. 每条政策标注：**日期 / 来源 / 直接影响该公司的程度（直接/间接/无关）**
-  8. 重点判断：是否有"政策黑天鹅"刚刚落地
+  1. **Industry regulation**: New rules, fines, rectification orders, license changes in the relevant sector
+  2. **Cross-border policy**: China-US relations (for China ADRs), tariffs, export controls, data security
+  3. **Tax policy**: VAT, corporate income tax, individual income tax related changes
+  4. **Antitrust and competition law**: Investigations, fines, merger vetoes
+  5. **Sector-specific policy**: Pharmaceutical procurement (volume-based purchasing), education "double reduction", real estate "three red lines", internet platform regulation, etc.
+  6. **Monetary and foreign exchange**: Exchange rate / interest rate / capital control changes affecting the company
+  7. Each policy annotated with: **date / source / degree of direct impact on the company (direct/indirect/unrelated)**
+  8. Key judgment: whether any "policy black swan" has just landed
 
-#### 任务 3：行业与竞争对手（industry-peer-analyst）
+#### Task 3: Industry and Peer Analyst (industry-peer-analyst)
 
-- **subject**: `侦察 {公司名} 行业格局与对手近 {N} 天的动态`
+- **subject**: `Scout {company name} competitive landscape and peer activity over the past {N} days`
 - **description**:
-  1. **直接对手**：列出 3-5 个核心竞争对手，逐个查最近事件（财报、产品、价格战、人事）
-  2. **产业链上下游**：上游原材料/供应商、下游客户/渠道，最近的价格、产能、订单变化
-  3. **行业整体**：行业景气度数据、出货量、需求侧信号（消费数据、招标数据等）
-  4. **替代品威胁**：新技术、新业态对该行业的冲击
-  5. **行业指数表现**：同行业股票最近表现，该公司是跑赢/跑输/同步
-  6. 关键判断：**这是公司个体事件，还是整个行业的 beta 波动？**
-  7. 每条事件标注来源和日期
+  1. **Direct competitors**: List 3-5 core competitors and check recent events for each (earnings, products, price wars, personnel)
+  2. **Supply chain upstream and downstream**: Upstream raw materials / suppliers, downstream customers / channels — recent price, capacity, order changes
+  3. **Industry overall**: Industry health indicators, shipment data, demand-side signals (consumption data, tender data, etc.)
+  4. **Substitution threat**: Impact of new technologies and new business models on the industry
+  5. **Sector index performance**: Recent performance of peer stocks — is this company outperforming / underperforming / in line with the sector?
+  6. Key judgment: **Is this a company-specific event, or a beta-level fluctuation across the entire industry?**
+  7. Each event annotated with source and date
 
-#### 任务 4：市场情绪与卖方/大V（sentiment-tracker）
+#### Task 4: Market Sentiment and Sell-Side / KOL Tracker (sentiment-tracker)
 
-- **subject**: `侦察 {公司名} 近 {N} 天的市场情绪与机构观点变化`
+- **subject**: `Scout {company name} market sentiment and institutional view changes over the past {N} days`
 - **description**:
-  1. **卖方评级变动**：高盛、摩根、中金等最近的评级/目标价调整
-  2. **机构持仓变化**：13F 披露（美股）、港股通持仓、北上资金流向
-  3. **做空数据**：做空比例、新发布的做空报告（如有）
-  4. **大 V 观点**：可调用 `python3 ~/ai-berkshire/tools/xueqiu_scraper.py` 抓段永平等大 V 最近相关发言
-     - 段永平 user_id: `1247347556`
-     - 命令示例：`python3 ~/ai-berkshire/tools/xueqiu_scraper.py --user-id 1247347556 --keywords {公司名},{股票代码} --output /tmp/dyp-{公司名}.md`
-     - 仅在该公司是段永平/李录关注标的时调用，否则跳过节省时间
-  5. **传言与小作文**：媒体未证实的传言、社交媒体讨论热点（雪球/X/Reddit）
-  6. **技术面信号**：是否触及关键支撑/阻力、是否有大宗交易、融资融券异常
-  7. 关键判断：**是基本面驱动还是情绪/资金面驱动？**
+  1. **Sell-side rating changes**: Recent rating / price target adjustments from Goldman Sachs, Morgan Stanley, CICC, etc.
+  2. **Institutional position changes**: 13F filings (US stocks), Stock Connect holdings, northbound fund flows
+  3. **Short interest data**: Short ratio, newly published short-selling reports (if any)
+  4. **KOL views**: Use `python3 ~/ai-berkshire/tools/xueqiu_scraper.py` to fetch recent relevant posts from Duan Yongping and other KOLs
+     - Duan Yongping user_id: `1247347556`
+     - Example command: `python3 ~/ai-berkshire/tools/xueqiu_scraper.py --user-id 1247347556 --keywords {company-name},{ticker} --output /tmp/dyp-{company-name}.md`
+     - Only invoke if this company is a known holding of Duan Yongping / Li Lu; otherwise skip to save time
+  5. **Rumors and unverified reports**: Unverified media rumors, hot social media discussions (Xueqiu / X / Reddit)
+  6. **Technical signals**: Whether key support/resistance levels have been hit, block trades, abnormal margin activity
+  7. Key judgment: **Is this driven by fundamentals, or by sentiment / capital flows?**
 
-### 第五步：并行启动 4 个 Agent
+### Step 5: Launch 4 Agents in Parallel
 
-**必须在同一条消息中并行调用 4 次 Task 工具**。每个 Agent 配置：
+**All 4 Task tool calls must be made in a single message in parallel.** Configuration for each Agent:
 - `subagent_type`: `general-purpose`
 - `run_in_background`: `true`
-- `team_name`: `{公司名}-newspulse`
-- `name`: 对应角色名（company-event-scout / regulatory-watcher / industry-peer-analyst / sentiment-tracker）
+- `team_name`: `{company-name}-newspulse`
+- `name`: corresponding role name (company-event-scout / regulatory-watcher / industry-peer-analyst / sentiment-tracker)
 
-每个 Agent 的 prompt 模板：
+Prompt template for each Agent:
 
 ```
-你是 {公司名} 新闻脉搏团队中的"{角色中文名}"，负责侦察 {侦察维度} 维度的最近 {N} 天事件。
+You are the "{role name}" in the {company name} News Pulse team, responsible for scouting the {reconnaissance dimension} dimension over the past {N} days.
 
-时间窗口：{起始日期} ~ {今日日期}
-股价异动背景：{用户提供的异动信息，无则写"无特定异动，常规体检"}
-信息可得性等级：{A/B/C}
+Time window: {start date} ~ {today's date}
+Price movement context: {user-provided movement info, or write "No specific movement — routine check" if none}
+Information availability grade: {A/B/C}
 
-请完成任务 #{任务编号}：{任务subject}
+Please complete Task #{task number}: {task subject}
 
-具体侦察要求：
-{任务description的内容}
+Detailed reconnaissance requirements:
+{task description content}
 
-**侦察方法**：
-- 优先使用 WebSearch 搜索时效性查询（关键词加日期或"最近"、"latest"、"2026"）
-- 关键事件用 WebFetch 精读原始来源（公告原文、财报、监管文件）
-- 对每个事件做"独立信源验证"——传言至少要 2 个独立来源
-- **不要被标题党误导**：标题与正文不符的事件要标注"标题误导"
+**Reconnaissance methods**:
+- Prioritize WebSearch for time-sensitive queries (add date or "recently", "latest", "2026" to keywords)
+- Use WebFetch to read original sources for key events (announcement text, earnings reports, regulatory filings)
+- Apply "independent source verification" for each event — rumors require at least 2 independent sources
+- **Do not be misled by clickbait headlines**: flag any event where the headline does not match the body as "headline misleading"
 
-**输出格式（重要）**：
-1. **核心发现**：3-5 条最关键的事件，每条 1-2 句话
-2. **完整事件时间线表格**（按日期倒序）：
-   | 日期 | 事件 | 来源 | 与股价异动相关性 | 持续性 |
-3. **本维度归因结论**：基于侦察到的事件，回答"这个维度能否解释股价异动？置信度多少？"
-4. **数据缺口声明**：哪些信息没找到、哪些有疑点、哪些需要等更多信息
-5. 严格区分"事实"与"推测"，遵循 CLAUDE.md 客观性原则
+**Output format (important)**:
+1. **Key findings**: 3-5 most critical events, 1-2 sentences each
+2. **Full event timeline table** (reverse chronological):
+   | Date | Event | Source | Relevance to Price Movement | Persistence |
+3. **Dimension-level attribution conclusion**: Based on events found, answer "Can this dimension explain the price movement? What is the confidence level?"
+4. **Data gap declaration**: What information was not found, what is questionable, what needs more data
+5. Strictly distinguish "fact" from "speculation" — follow CLAUDE.md objectivity principles
 
-**完成后**：
-1. 使用 TaskUpdate 将任务标记为 completed
-2. 通过 SendMessage 把完整侦察报告发送给 team-lead（type: "message", recipient: "team-lead"）
+**Upon completion**:
+1. Use TaskUpdate to mark the task as completed
+2. Send the full reconnaissance report to team-lead via SendMessage (type: "message", recipient: "team-lead")
 ```
 
-### 第六步：实时跟踪进度
+### Step 6: Track Progress in Real Time
 
-- 每收到一份侦察报告，向用户展示该维度的 3 条核心发现
-- 等待全部 4 份到齐
-- 全部到齐后，通过 SendMessage 向 4 个 Agent 发送 shutdown_request
+- Each time a reconnaissance report is received, show the user the top 3 key findings from that dimension
+- Wait for all 4 reports to arrive
+- Once all 4 are received, send a shutdown_request to all 4 Agents via SendMessage
 
-### 第七步：team-lead 综合归因
+### Step 7: Team-Lead Consolidated Attribution
 
-汇总 4 份侦察报告，输出**异动归因报告**（不是研究报告，重点是"判断"）：
+Aggregate the 4 reconnaissance reports and produce a **movement attribution report** (not a research report — the focus is "judgment"):
 
 ---
 
-#### 1. 一句话归因
-> 用一段话（30-60 字）说明：这次股价异动的主因 + 次因 + 性质判断（价值事件/情绪波动/不明）
+#### 1. One-Sentence Attribution
+> One paragraph (30-60 words): primary cause + secondary cause + nature judgment (value event / sentiment fluctuation / unknown)
 
-#### 2. 完整事件时间线（合并 4 个维度）
+#### 2. Full Event Timeline (merged across 4 dimensions)
 
-按日期倒序，合并所有维度的事件：
+Reverse chronological, merging all dimension events:
 
-| 日期 | 维度 | 事件 | 来源 | 异动归因权重 |
-|------|------|------|------|-----------|
-| 2026-04-30 | 公司 | XX | 链接 | 🔴 高 |
-| 2026-04-29 | 行业 | XX | 链接 | 🟡 中 |
-| 2026-04-28 | 情绪 | XX | 链接 | ⚪ 低 |
+| Date | Dimension | Event | Source | Attribution Weight |
+|------|-----------|-------|--------|--------------------|
+| 2026-04-30 | Company | XX | link | 🔴 High |
+| 2026-04-29 | Industry | XX | link | 🟡 Medium |
+| 2026-04-28 | Sentiment | XX | link | ⚪ Low |
 
-权重图例：🔴 高（足以单独解释异动）/ 🟡 中（贡献一部分）/ ⚪ 低（背景噪音）
+Weight legend: 🔴 High (sufficient to explain movement on its own) / 🟡 Medium (partial contributor) / ⚪ Low (background noise)
 
-#### 3. 异动归因表
+#### 3. Movement Attribution Table
 
-| 候选解释 | 证据 | 反证 | 置信度 | 持续性 |
-|---------|------|------|------|--------|
-| 例：财报 miss | 营收低于预期 5%、毛利率下滑 | 一次性因素管理层有解释 | 高 | 短期 1-2 周 |
-| 例：行业 beta | 同行同期跌 8% | 该股跌幅明显大于行业 | 中 | 与行业同步 |
+| Candidate Explanation | Evidence | Counter-Evidence | Confidence | Persistence |
+|-----------------------|----------|-----------------|------------|-------------|
+| Example: earnings miss | Revenue 5% below expectations, gross margin declined | Management cited one-time factors | High | Short-term 1-2 weeks |
+| Example: industry beta | Peers down 8% in same period | This stock fell significantly more than the sector | Medium | In line with sector |
 
-#### 4. 性质判断（核心结论）
+#### 4. Nature Judgment (Core Conclusion)
 
-打勾其一：
+Check one:
 
-- [ ] **价值事件**：基本面发生了真实变化（业绩、护城河、管理层、终局），需要重审投资论文
-- [ ] **情绪/技术波动**：基本面无变化，是资金面/情绪/Beta 驱动，可视为机会或噪音
-- [ ] **真因不明**：找不到能匹配股价异动幅度的事件——**这是最危险的结论**，要么是市场提前知道了什么（内幕/抢跑），要么是我们漏掉了信息源
-- [ ] **混合**：部分价值事件 + 部分情绪放大
+- [ ] **Value event**: A real fundamental change has occurred (earnings, economic moat, management, end-game thesis) — investment thesis review required
+- [ ] **Sentiment / technical fluctuation**: No fundamental change — driven by capital flows / sentiment / beta; treat as opportunity or noise
+- [ ] **True cause unknown**: No event found that matches the magnitude of the price movement — **this is the most dangerous conclusion**: either the market has advance knowledge (insider / front-running), or we missed an information source
+- [ ] **Mixed**: Partial value event + partial sentiment amplification
 
-#### 5. 各维度侦察摘要
+#### 5. Per-Dimension Scout Summary
 
-每维度 3-5 条最重要发现 + 该维度归因贡献度。
+3-5 most important findings per dimension + that dimension's attribution contribution.
 
-#### 6. 行动建议
+#### 6. Action Recommendations
 
-| 行动 | 是否建议 | 理由 |
-|------|--------|------|
-| 触发投资论文重审（`/thesis-tracker`） | | |
-| 触发深度财报研读（`/earnings-review`） | | |
-| 触发管理层重审（`/management-deep-dive`） | | |
-| 调仓动作（加仓/减仓/不动） | | 仅做提示，最终决策权在用户 |
-| 仅观察 | | |
+| Action | Recommended | Rationale |
+|--------|-------------|-----------|
+| Trigger investment thesis review (`/thesis-tracker`) | | |
+| Trigger deep earnings analysis (`/earnings-review`) | | |
+| Trigger management review (`/management-deep-dive`) | | |
+| Position adjustment (add / reduce / hold) | | Note only — final decision rests with the user |
+| Observe only | | |
 
-#### 7. 接下来 7-30 天的跟踪清单
+#### 7. Tracking Checklist for the Next 7-30 Days
 
-- [ ] 待披露事件 1（如：5/15 业绩会）
-- [ ] 待跟踪指标 2
-- [ ] 关键观察信号 3
+- [ ] Upcoming event 1 (e.g., 5/15 earnings call)
+- [ ] Metric to track 2
+- [ ] Key observation signal 3
 
-#### 8. 信息缺口声明
+#### 8. Information Gap Declaration
 
-诚实列出本次侦察没能解决的疑点、找不到的信息、需要等更多披露的事项。**宁可标"不确定"，也不用推测填满**。
+Honestly list any unresolved questions from this reconnaissance, information that could not be found, and items awaiting further disclosure. **Prefer marking "uncertain" over filling gaps with speculation**.
 
 ---
 
-### 第八步：保存报告
+### Step 8: Save the Report
 
-写入 `reports/{公司名}/{公司名}-news-{YYYYMMDD}.md`。如果 `reports/{公司名}/` 目录不存在则创建（说明该公司还没建过任何研究报告）。
+Write to `reports/{company-name}/{company-name}-news-{YYYYMMDD}.md`. If the `reports/{company-name}/` directory does not exist, create it (indicating no prior research reports have been filed for this company).
 
-### 第九步：清理团队
+### Step 9: Clean Up the Team
 
-使用 TeamDelete 清理团队资源。
+Use TeamDelete to clean up team resources.
 
-## 关键原则
+## Core Principles
 
-1. **快胜过全**——这个 skill 的核心价值是 10-15 分钟内给出归因判断，不要陷入深度分析（那是其他 skill 的职责）
-2. **归因优先于罗列**——发现事件不难，难的是判断"哪个事件配得上这次股价异动"。要做减法，不要做加法
-3. **诚实面对"不明"**——找不到主因时，明确写"真因不明"。这比硬凑因果链更有价值（市场可能在抢跑利空消息）
-4. **不预设立场**——不要因为持仓就倾向于"这是情绪波动，没事"。证据指向哪边就写哪边
-5. **区分"催化剂"和"巧合"**——同一时间发生的事件不一定是异动主因，要看影响量级是否匹配
-6. **尊重信息可得性**——C 级公司可能就是查不到任何新闻，这个结论本身就要写出来
-7. **遵循 `CLAUDE.md` 客观性原则**——所有判断附数据来源，区分事实与观点
-8. **不替用户做决策**——给出归因和行动建议清单，但买卖决策由用户做
+1. **Speed over completeness** — the core value of this skill is delivering an attribution judgment within 10-15 minutes; do not fall into deep analysis (that is the responsibility of other skills)
+2. **Attribution over enumeration** — finding events is not hard; the challenge is judging "which event is proportionate to this price movement". Make cuts, not additions
+3. **Be honest about "unknown"** — when the primary cause cannot be found, explicitly write "true cause unknown". This is more valuable than forcing a causal chain (the market may be front-running negative news)
+4. **No predetermined stance** — do not lean toward "this is just sentiment noise, no big deal" simply because you hold a position. Follow where the evidence points
+5. **Distinguish "catalyst" from "coincidence"** — events that happen simultaneously are not necessarily the primary cause; check whether the magnitude of impact is proportionate
+6. **Respect information availability** — for Grade C companies, it may simply be impossible to find any news; this conclusion must be written up
+7. **Follow `CLAUDE.md` objectivity principles** — all judgments accompanied by data sources; distinguish fact from opinion
+8. **Do not make decisions for the user** — provide attribution and an action recommendation checklist, but buy/sell decisions belong to the user
