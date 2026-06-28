@@ -3,8 +3,8 @@
 Run portfolio review and optimization on $ARGUMENTS.
 
 **Supported input formats**:
-- Holdings list, e.g.: `Tencent 30%, Meituan 20%, Moutai 20%, Nvidia 15%, Cash 15%`
-- Or: `Tencent 500 shares @HK$480, Meituan 1000 shares @HK$130, ...`
+- Holdings list, e.g.: `PETR4 25%, VALE3 20%, MXRF11 15%, KNRI11 10%, BOVA11 15%, Cash 15%`
+- Or: `PETR4 500 shares @R$38.50, MXRF11 1000 shares @R$9.80, BOVA11 200 shares @R$125.00, ...`
 - Or: `my portfolio` (if a saved portfolio file `reports/portfolio-latest.md` already exists)
 
 > "Diversification is protection against ignorance. If you know what you're doing, diversification makes no sense." — Buffett
@@ -37,10 +37,13 @@ Also check whether an existing portfolio file exists (`reports/portfolio-latest.
 ### Step 2: Fetch Latest Data
 
 Launch a background agent to fetch the following for each holding in parallel via WebSearch:
-1. Current price and valuation metrics (PE, PB, dividend yield)
-2. Key financial changes in the most recent quarter
-3. Recent major events
-4. Analyst consensus estimates (forward PE, price targets)
+1. Current price and valuation metrics:
+   - **Ações B3**: P/L, P/VPA, ROE, Dividend Yield, Dívida Líquida/EBITDA (Fundamentus primary)
+   - **FIIs**: DY (12M), P/VP, vacância física/financeira, tipo (Tijolo/Papel/Híbrido/FOF) (FundsExplorer primary)
+   - **ETFs**: TER (taxa de administração), índice de referência, desempenho vs. benchmark
+2. Key financial changes in the most recent quarter (ITR/DFP for ações; Relatório Gerencial + CVM Informe Mensal for FIIs)
+3. Recent major events (dividends announced, portfolio changes for FIIs, management updates)
+4. Analyst consensus estimates (forward P/L, price targets from XP, Itaú BBA, BTG, Goldman Sachs Brasil)
 
 Use `tools/financial_rigor.py verify-valuation` to validate valuation data for each holding. Rate each holding's information richness (A/B/C level); annotate C-level holdings with low confidence.
 
@@ -48,15 +51,35 @@ Use `tools/financial_rigor.py verify-valuation` to validate valuation data for e
 
 Run a quick health check on each holding:
 
-| Security | Current PE | Has buying thesis changed? | Thesis health | Position recommendation |
-|----------|:----------:|:-------------------------:|:----------:|------------------------|
-| Tencent | 18x | No change | 8/10 | Appropriate |
-| Meituan | 25x | Competition intensifying | 6/10 | Slightly high, consider trimming |
+**Ações / ETFs:**
+
+| Security | Metric | Has buying thesis changed? | Thesis health | Position recommendation |
+|----------|:------:|:-------------------------:|:----------:|------------------------|
+| PETR4 | P/L 5x | No change — oil prices stable | 8/10 | Appropriate |
+| VALE3 | P/L 7x | Iron ore demand slowing | 6/10 | Slightly high, consider trimming |
+| BOVA11 | TER 0.10% | Index diversification thesis intact | 9/10 | Appropriate |
+
+**FIIs:**
+
+| FII | DY 12M | P/VP | Vacância | Thesis health | Recommendation |
+|-----|:------:|:----:|:--------:|:----------:|----------------|
+| MXRF11 | 14% | 0.98 | N/A (Papel) | 8/10 | Appropriate |
+| KNRI11 | 8% | 0.95 | 8% físico | 7/10 | Monitor vacancy trend |
 
 For each holding, answer:
 - [ ] **If you had no position today, would you buy at the current price?**
 - [ ] **If you couldn't trade tomorrow, are you comfortable holding for 5 years?**
 - [ ] **Is the buying thesis still intact?**
+
+**Additional checks for FIIs:**
+- [ ] Is the DY still competitive vs. current Selic/CDI? (DY - Selic spread must justify illiquidity + risk)
+- [ ] Vacancy trending up or down? Any lease renewals at risk?
+- [ ] Is the fund manager executing consistently? (check Relatório Gerencial quality)
+- [ ] For Papel FIIs: any CRI/CRA default risk in the portfolio?
+
+**Additional checks for ETFs:**
+- [ ] Is the tracked index still aligned with your thesis?
+- [ ] Is TER competitive vs. alternatives (e.g., BOVA11 vs. BOVV11)?
 
 **Duan Yongping**: "If you don't want to hold a stock for 10 years, don't hold it for a single day."
 
@@ -81,14 +104,19 @@ Identify hidden correlations across holdings:
 
 | Holding A | Holding B | Correlation Type | Risk |
 |-----------|-----------|-----------------|------|
-| Tencent | Kuaishou | Both Chinese internet | Regulatory risk resonance |
-| Nvidia | TSMC | AI supply chain (upstream/downstream) | AI CapEx moves in tandem |
-| Meituan | Pinduoduo | Both Chinese consumer | Macro consumption moves in tandem |
+| PETR4 | PRIO3 / RECV3 | Both oil producers | Oil price moves in tandem |
+| VALE3 | CSNA3 / GGBR4 | Commodity / steel chain | Iron ore price sensitivity |
+| MXRF11 | KNCR11 | Both Papel FIIs | CDI drop compresses yield together |
+| KNRI11 | HGLG11 | Both Tijolo (logistics/office) | Vacancy cycle / rent correction |
+| ITUB4 | BBDC4 | Both large-cap banks | Selic + default cycle resonance |
+| BOVA11 | Any individual B3 stock | Index overlap | Ibovespa concentration (PETR+VALE+ITUB = ~30% of BOVA11) |
 
 **Checklist**:
-- [ ] More than 50% of positions exposed to the same theme/sector?
-- [ ] More than 50% of positions exposed to the same country/currency?
-- [ ] If US-China relations deteriorate, how much would the portfolio lose?
+- [ ] More than 50% of positions exposed to the same commodity (oil / iron ore)?
+- [ ] More than 50% of FII allocation in the same FII type (all Papel or all Tijolo)?
+- [ ] If Selic rises 200bps, how much would the FII portion fall?
+- [ ] If commodity prices drop 30%, how much would the portfolio lose?
+- [ ] If BRL depreciates 20% vs. USD, is there any natural hedge?
 - [ ] If global recession hits, how much would the portfolio lose?
 
 #### 4.3 Opportunity Cost Analysis
@@ -108,16 +136,18 @@ Expected return estimation method (use `tools/financial_rigor.py three-scenario`
 - **Value stock verification**: Margin of safety reversion + earnings growth + dividend yield
 - **Growth stock verification**: Earnings growth × change in justified PE
 
-**Key question**: Is the expected return on the lowest-ranked holding higher than cash (risk-free rate ~4%)? If not, sell and move to cash.
+**Key question for Brazilian portfolios**: Is the expected return on the lowest-ranked holding higher than **Selic/CDI** (the Brazilian risk-free rate, currently ≈14.75%)? This is a uniquely high hurdle — any asset that doesn't clearly beat Selic with a margin of safety should be replaced by Tesouro Selic (LFT) or a CDB 100% CDI. This is why Brazilian value investing requires exceptional conviction — the risk-free bar is very high.
 
 #### 4.4 Stress Tests
 
 | Scenario | Assumption | Estimated Portfolio Impact | Maximum Drawdown |
 |----------|------------|--------------------------|-----------------|
-| Global recession | Corporate earnings down 20–30% | | |
-| US-China conflict escalates | Chinese stocks discount 50% | | |
-| Interest rates spike | 10-yr Treasury → 6% | | |
-| Tech bubble bursts | Tech PE compresses 40% | | |
+| Global recession | Commodity prices −30%, Ibovespa −35% | | |
+| Selic spike | Selic → 16%+ (FII P/VP compress, credit tightens) | | |
+| BRL depreciation | USD/BRL → 7.00 (inflationary, raises Selic pressure) | | |
+| Political / fiscal shock | Debt ceiling concerns, market repricing of Brazil risk | | |
+| Commodity super-cycle end | Iron ore < $80/t, oil < $60/bbl sustained | | |
+| FII sector correction | Office vacancy > 20%, logistics oversupply | | |
 
 For each scenario, provide a qualitative + rough quantitative assessment (based on each holding's sector characteristics and historical valuation range):
 - Which holdings are hit hardest? Approximate direction and magnitude
@@ -148,6 +178,8 @@ If the portfolio has positions "worse than cash," or if cash allocation is too h
 |:------------:|:---------------:|----------|
 
 **Buffett**: Currently holds $382B in cash, over 25% of total assets — when you can't find good opportunities, cash is the best position.
+
+**Brazilian context**: "Cash" in Brazil = Tesouro Selic (LFT) or CDB 100%+ CDI — liquidity with ≈14.75% annual return. Holding idle BRL in a checking account while waiting for opportunities is a capital allocation error: the risk-free rate in Brazil is one of the highest in the world.
 
 ### Step 6: Output Portfolio Report
 
