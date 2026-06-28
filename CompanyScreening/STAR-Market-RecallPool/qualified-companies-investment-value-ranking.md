@@ -2,7 +2,7 @@
 
 > Ranking Date: May 17, 2026
 > Ranking Criteria: Business Model Quality × Competitive Moat × Profitability × Growth Certainty
-> Deep Research Link: [reports/STAR-Market-RecallPool/deep-research/](../../reports/科创板召回池/深度研究/)
+> Deep Research Link: CompanyScreening/STAR-Market-RecallPool/
 
 ---
 

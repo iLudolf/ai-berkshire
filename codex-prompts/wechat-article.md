@@ -1,5 +1,5 @@
 ---
-description: "AI Berkshire slash entry for 微信公众号文章：作者-编辑-读者三Agent协作."
+description: "AI Berkshire slash entry for WeChat public account article: Author-Editor-Reader three-Agent collaboration."
 argument-hint: $ARGUMENTS
 ---
 

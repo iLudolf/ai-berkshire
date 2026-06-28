@@ -1,5 +1,5 @@
 ---
-description: "AI Berkshire slash entry for 财报精读：一手资料深度解读."
+description: "AI Berkshire slash entry for Earnings Deep Read: In-Depth Interpretation of Primary Sources."
 argument-hint: $ARGUMENTS
 ---
 

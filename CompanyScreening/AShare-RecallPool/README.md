@@ -8,16 +8,16 @@
 
 | No. | Sector | Companies | File |
 |------|------|--------|------|
-| 01 | Food & Beverage | 10 | [01-食品饮料.md](01-食品饮料.md) |
-| 02 | Tech Hardware (Semiconductors / AI Compute / Optical Modules) | 10 | [02-科技硬件.md](02-科技硬件.md) |
-| 03 | New Energy (Batteries / Solar / Energy Storage / EVs) | 10 | [03-新能源.md](03-新能源.md) |
-| 04 | Healthcare | 10 | [04-医药健康.md](04-医药健康.md) |
-| 05 | Home Appliances & Consumer Electronics | 10 | [05-家电与消费电子.md](05-家电与消费电子.md) |
-| 06 | Financials | 10 | [06-金融.md](06-金融.md) |
-| 07 | High-End Manufacturing & Defense | 10 | [07-高端制造与军工.md](07-高端制造与军工.md) |
-| 08 | Chemicals & New Materials | 10 | [08-化工与新材料.md](08-化工与新材料.md) |
-| 09 | Power & Resources | 10 | [09-电力与资源.md](09-电力与资源.md) |
-| 10 | Software, Telecom & Services | 10 | [10-软件通信与服务.md](10-软件通信与服务.md) |
+| 01 | Food & Beverage | 10 | [01-food-beverage.md](01-food-beverage.md) |
+| 02 | Tech Hardware (Semiconductors / AI Compute / Optical Modules) | 10 | [02-tech-hardware.md](02-tech-hardware.md) |
+| 03 | New Energy (Batteries / Solar / Energy Storage / EVs) | 10 | [03-new-energy.md](03-new-energy.md) |
+| 04 | Healthcare | 10 | [04-pharma-health.md](04-pharma-health.md) |
+| 05 | Home Appliances & Consumer Electronics | 10 | [05-home-appliances-consumer-electronics.md](05-home-appliances-consumer-electronics.md) |
+| 06 | Financials | 10 | [06-financials.md](06-financials.md) |
+| 07 | High-End Manufacturing & Defense | 10 | [07-premium-manufacturing-defense.md](07-premium-manufacturing-defense.md) |
+| 08 | Chemicals & New Materials | 10 | [08-chemicals-new-materials.md](08-chemicals-new-materials.md) |
+| 09 | Power & Resources | 10 | [09-power-resources.md](09-power-resources.md) |
+| 10 | Software, Telecom & Services | 10 | [10-software-telecom-services.md](10-software-telecom-services.md) |
 
 ## Full List of 100 Companies
 

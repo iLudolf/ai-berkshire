@@ -15,9 +15,9 @@
 
 | File | Content |
 |------|---------|
-| [科创板100-去劣筛选-20260517.md](科创板100-去劣筛选-20260517.md) | Full screening process with eliminated / passed / boundary classifications |
-| [通过公司-投资价值排序.md](通过公司-投资价值排序.md) | 27 passed companies ranked by investment value + one-line commentary |
-| [中国通号-688009-研究.md](中国通号-688009-研究.md) | China Railway Signal & Communication in-depth research (remaining 26 company research in reports/科创板召回池/深度研究/) |
+| [STAR100-quality-screen-20260517.md](STAR100-quality-screen-20260517.md) | Full screening process with eliminated / passed / boundary classifications |
+| [qualified-companies-investment-value-ranking.md](qualified-companies-investment-value-ranking.md) | 27 passed companies ranked by investment value + one-line commentary |
+| [ChinaRailwayComms-688009-research.md](ChinaRailwayComms-688009-research.md) | China Railway Signal & Communication in-depth research |
 
 ## Quick View: 27 Passed Companies
 
@@ -50,7 +50,7 @@
 | 26 | Cathay Biotech | 688065 | 33.1 | 17% | Synthetic biology global leader |
 | 26 | Huitai Medical | 688617 | 33.0 | 32% | Electrophysiology interventional devices |
 
-> Note: China Railway Signal & Communication (688009) was moved to boundary observation after in-depth research revealed ROE has declined to ~7% in recent years (below the 8% threshold) and operating cash flow turned negative in 2025. Research report: [中国通号-688009-研究.md](中国通号-688009-研究.md).
+> Note: China Railway Signal & Communication (688009) was moved to boundary observation after in-depth research revealed ROE has declined to ~7% in recent years (below the 8% threshold) and operating cash flow turned negative in 2025. Research report: [ChinaRailwayComms-688009-research.md](ChinaRailwayComms-688009-research.md).
 
 ## Key Findings
 

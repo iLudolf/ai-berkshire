@@ -1,5 +1,5 @@
 ---
-description: "AI Berkshire slash entry for 组合管理：从\"研究公司\"到\"管理组合\"."
+description: "AI Berkshire slash entry for Portfolio Management: from \"researching companies\" to \"managing a portfolio\"."
 argument-hint: $ARGUMENTS
 ---
 
